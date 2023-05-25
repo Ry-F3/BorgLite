@@ -36,6 +36,7 @@ class Player:
         print(f"Player Health: {self.health}")
         print(f"Player Attack: {self.attack}")
         print(f"Player Defence: {self.defence}")
+        print(f"Processing Power: {self.processing}")
 
 
 # Define the Planet Class
@@ -58,8 +59,9 @@ class Planet:
             print("Player has been assimilated. Game Over.")
             sys.exit()
             
-    def assimilate(self):
+    def assimilate(self, p1layer):
         self.assimilated = True
+        player.processing += self.resources.get("processing", 0)
 
     def is_assimilated(self):
         return self.assimilated
@@ -71,14 +73,15 @@ class System:
         self.enemy_resistance = enemy_resistance
         self.planets = planets
 
-    def assimilate_planet(self, planet_index):
+    def assimilate_planet(self, planet_index, player):
         if planet_index in range(len(self.planets)):
             planet = self.planets[planet_index]
             if not planet.is_assimilated():
                 if planet.has_defences:
-                    self.hack_defence(planet)
+                    # self.hack_defence(planet)
+                    planet.assimilate(player)
                 else:
-                    planet.assimilate()
+                    planet.assimilate(player)
                     return True
             else:
                 print(planet.name, "is already assimilated!")
@@ -172,7 +175,7 @@ def attack_system(system, player):
                 print(f"{i + 1}. {planet.name}")
 
         choice = int(input("Select a planet to assimilate: ")) - 1
-        assimilated = system.assimilate_planet(choice)
+        assimilated = system.assimilate_planet(choice, player)
         if assimilated:
             player.level += 1
             player.increase_attack()
