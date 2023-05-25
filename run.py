@@ -31,6 +31,24 @@ class Player:
         print(f"Player Attack: {self.attack}")
         print(f"Player Defence: {self.defence}")
 
+
+# Define the Planet Class 
+
+class Planet: 
+    def __init__(self, name, resources, level):
+        self.name = name
+        self.resources = resources
+        self.assimilated = False
+        self.level = random.randint(1, 20)
+        self.attack_points = random.randomint(1, 5) + level
+        self.defence_points = random.randint(1, 5) + level
+        
+    def assimilated(self):
+        self.assimilated = True
+        
+    def is_assimilated(self):
+        return self.assimilated
+        
 # Main game loop
 def main_game_loop():
     
@@ -39,6 +57,7 @@ def main_game_loop():
     
 
 # Display opening screen 
+
 def opening_page():
     
     print("=== BorgLite ===\n")
