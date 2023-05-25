@@ -57,13 +57,35 @@ class Planet:
 # Define System Class 
 
 class System:
-    def __init__ (self, enemy_resistance):
+    def __init__ (self, enemy_resistance, planets):
         self.name = name
         self.enemy_resistance = enemy_resistance
         self.planets = planets
+        
+    def assimilate_planet(self, planet_index):
+        if planet_index in range(len(self.planets)):
+            planet = self.planets[planet_index]
+            if not planet.is_assimilated():
+                planet.assimilate()
+                self.resources_gained = planet.resources
+                planet.resources = {"processing": 0}
+                return True
+            else:
+                print(planet.name, "is already assimilated!")
+        else:
+            print("Invalid selection")
+        return False
     
-    def add_planet(self, planet):
-        self.planets.append(planet)
+    def attack(self, attack_power):
+        success_chance = attack_power / self.enemy_resistance
+        return random.random() <= success_chance
+    
+    def display_planets(self):
+        for i, planet in enumerate(self.planets):
+            print(f"{i+1}. {planet.name}")
+    
+    # def add_planet(self, planet):
+    #     self.planets.append(planet)
         
 # Load systems data
 def load_systems_data():
@@ -125,6 +147,32 @@ def load_systems_data():
         }
     ]
     return systems_data  
+
+# Assimilate a planet within a system 
+
+def assimilate_planet(system, player):
+    print("\nAvailable Systems for attack: ")
+    for i, system in enumerate(systems):
+        print(f"{i+1}. {system.name}")
+        
+    system_index = int(input("Select a system to attack: ")) - 1
+    selected_system = systems[system_index]
+    print(f"\nAvailable planets for attack in {selected_system.name}:")
+    selected_system.display_planets()
+    
+    planet_index = int(input("Select a planet to attack: ")) - 1
+    assimilated = selected_system.assimilate_planet(planet_index)
+    if assimilated:
+        player.level += 1
+        player.increase_attack()
+        player.increase_defence()
+        print("You have assimilated", assimilated.name)
+    else:
+        print("Assimilation failed!")
+        
+# Attack a player
+
+
         
 # Main game loop
 
