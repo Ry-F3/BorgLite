@@ -1,6 +1,36 @@
 import random 
 import sys
 
+# Define the Player class
+
+class Player:
+    def __init__(self):
+        self.health = 100
+        self.defence = 10
+        self.attack = 10
+        self.level = 1
+        
+    def increase_attack(self):
+        self.attack += 5
+        
+    def increase_defence(self):
+        self.defence += 5
+    
+    def take_damage(self, damage):
+        damage -= self.defence
+        if damage > 0:
+            self.health -= damage
+            
+    def is_alive():
+        return self.health > 0
+    
+    def display_stats():
+        print("Player Stats:")
+        print(f"Player Level: {self.level}")
+        print(f"Player Health: {self.health}")
+        print(f"Player Attack: {self.attack}")
+        print(f"Player Defence: {self.defence}")
+
 # Main game loop
 def main_game_loop():
     
