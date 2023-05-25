@@ -170,9 +170,23 @@ def assimilate_planet(system, player):
     else:
         print("Assimilation failed!")
         
-# Attack a player
+# Attack a system
 
+def attack_system(system, player):
+    print("\nAttacking", system.name, "with resistance level:", system.enemy_resistance)
+    if success: 
+        print("We are Borg. Existance as you know it is over")
+        assimilate_planet(system, player)
+    else:
+        print("Resistance was too strong. Assimilation failed.")
+        player.take_damage(system.enemy_resistance)
 
+# Decrease player life 
+
+def decrease_player_life(player):
+    player.health -= damage_dealt
+    print("Your collective has been damaged! Player health remaining:", player.health)
+    
         
 # Main game loop
 
