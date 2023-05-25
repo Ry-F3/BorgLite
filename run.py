@@ -47,6 +47,7 @@ class Planet:
         self.level = level + 1
         self.attack_points = random.randint(5, 25) + level
         self.defence_points = random.randint(5, 25) + level
+        self.has_defences = random.choice([True, False]) # Randomise defences for planets
 
     def attack_player(self, player):
         damage_dealt = self.attack_points
@@ -56,7 +57,7 @@ class Planet:
         if not player.is_alive():
             print("Player has been assimilated. Game Over.")
             sys.exit()
-
+            
     def assimilate(self):
         self.assimilated = True
 
@@ -74,25 +75,26 @@ class System:
         if planet_index in range(len(self.planets)):
             planet = self.planets[planet_index]
             if not planet.is_assimilated():
-                planet.assimilate()
-                return True
+                if planet.has_defences:
+                    self.hack_defence(planet)
+                else:
+                    planet.assimilate()
+                    return True
             else:
                 print(planet.name, "is already assimilated!")
         else:
             print("Invalid selection")
         return False
+    
+    def hack_defence(self, planet): # Hack defences
+        # print("\nHacking the cloaking device of", planet.name)
+        print(f"{planet.name} is cloaked and our systems are no longer able to find our target! How does the Collective wish to proceed?")
+        
+        return True
 
     def attack(self, attack_power):
         success_chance = attack_power / self.enemy_resistance
         return random.random() <= success_chance
-
-    def display_planets(self):
-        for i, planet in enumerate(self.planets):
-            if planet.is_assimilated():
-                print(f"{i+1}. \u0336".join(planet.name) + "\u0336 (Assimilated)")
-            else:
-                print(f"{i+1}. {planet.name}")
-
 
 # Load systems data
 def load_systems_data():
