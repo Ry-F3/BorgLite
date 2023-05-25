@@ -45,8 +45,8 @@ class Planet:
         self.resources = resources
         self.assimilated = False
         self.level = level + 1
-        self.attack_points = random.randint(5, 15) + level
-        self.defence_points = random.randint(5, 15) + level
+        self.attack_points = random.randint(5, 25) + level
+        self.defence_points = random.randint(5, 25) + level
 
     def attack_player(self, player):
         damage_dealt = self.attack_points
@@ -88,7 +88,10 @@ class System:
 
     def display_planets(self):
         for i, planet in enumerate(self.planets):
-            print(f"{i+1}. {planet.name}")
+            if planet.is_assimilated():
+                print(f"{i+1}. \u0336".join(planet.name) + "\u0336 (Assimilated)")
+            else:
+                print(f"{i+1}. {planet.name}")
 
 
 # Load systems data
@@ -96,7 +99,7 @@ def load_systems_data():
     systems_data = [
         {
             "name": "Alpha System",
-            "enemy_resistance": random.randint(1, 20),
+            "enemy_resistance": random.randint(25, 60),
             "planets": [
                 Planet("Earth", {"processing": random.randint(20, 50)}, 1),
                 Planet("Vulcan", {"processing": random.randint(20, 50)}, 1),
@@ -107,7 +110,7 @@ def load_systems_data():
         },
         {
             "name": "Beta System",
-            "enemy_resistance": random.randint(1, 20),
+            "enemy_resistance": random.randint(9, 60),
             "planets": [
                 Planet("Cardassia Prime", {"processing": random.randint(20, 50)}, 1),
                 Planet("Bajor", {"processing": random.randint(20, 50)}, 1),
@@ -118,7 +121,7 @@ def load_systems_data():
         },
         {
             "name": "Gamma System",
-            "enemy_resistance": random.randint(1, 20),
+            "enemy_resistance": random.randint(9, 60),
             "planets": [
                 Planet("Betazed", {"processing": random.randint(20, 50)}, 1),
                 Planet("Risa", {"processing": random.randint(20, 50)}, 1),
@@ -140,7 +143,7 @@ def load_systems_data():
         },
         {
             "name": "Epsilon System",
-            "enemy_resistance": random.randint(1, 20),
+            "enemy_resistance": random.randint(9, 50),
             "planets": [
                 Planet("Nimbus III", {"processing": random.randint(20, 50)}, 1),
                 Planet("Rigel VII", {"processing": random.randint(20, 50)}, 1),
@@ -161,7 +164,10 @@ def attack_system(system, player):
         # Display the available planets for assimilation
         print("\nAvailable planets for assimilation:")
         for i, planet in enumerate(system.planets):
-            print(f"{i + 1}. {planet.name}")
+            if planet.is_assimilated():
+                print(f"{str(i + 1)}. {''.join(chr(822) + c for c in planet.name)} (Assimilated)")
+            else:
+                print(f"{i + 1}. {planet.name}")
 
         choice = int(input("Select a planet to assimilate: ")) - 1
         assimilated = system.assimilate_planet(choice)
