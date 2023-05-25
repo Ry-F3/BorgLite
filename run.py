@@ -8,12 +8,13 @@ class Player:
         self.defence = 10
         self.attack = 10
         self.level = 1
+        self.processing = 0
 
     def increase_attack(self):
-        self.attack += 5
+        self.attack += 2
 
     def increase_defence(self):
-        self.defence += 5
+        self.defence += 2
 
     def take_damage(self, damage):
         if damage > self.defence:
@@ -43,9 +44,9 @@ class Planet:
         self.name = name
         self.resources = resources
         self.assimilated = False
-        self.level = level
-        self.attack_points = random.randint(1, 5) + level
-        self.defence_points = random.randint(1, 5) + level
+        self.level = level + 1
+        self.attack_points = random.randint(5, 15) + level
+        self.defence_points = random.randint(5, 15) + level
 
     def attack_player(self, player):
         damage_dealt = self.attack_points
@@ -61,7 +62,6 @@ class Planet:
 
     def is_assimilated(self):
         return self.assimilated
-
 
 # Define System Class
 class System:
@@ -152,38 +152,28 @@ def load_systems_data():
     ]
     return systems_data
 
-
 # Assimilate a planet within a system
-def assimilate_planet(system, player):
-    print("\nAvailable Systems for attack: ")
-    for i, system in enumerate(systems):
-        print(f"{i + 1}. {system.name}")
-
-    system_index = int(input("Select a system to attack: ")) - 1
-    selected_system = systems[system_index]
-    print(f"\nAvailable planets for attack in {selected_system.name}:")
-    selected_system.display_planets()
-
-    planet_index = int(input("Select a planet to attack: ")) - 1
-    assimilated = selected_system.assimilate_planet(planet_index)
-    if assimilated:
-        player.level += 1
-        player.increase_attack()
-        player.increase_defence()
-        print("\n=================================================================")
-        print("                    You have assimilated", selected_system.planets[planet_index].name)
-        print("=================================================================\n")
-    else:
-        print("Assimilation failed!")
-
-
-# Attack a system
 def attack_system(system, player):
     print("\nAttacking", system.name, "with resistance level:", system.enemy_resistance)
     success = system.attack(player.attack)
     if success:
         print("We are Borg. Existence as you know it is over. We will add your biological and technological distinctiveness to our own. Resistance is futile.\n")
-        assimilate_planet(system, player)
+        # Display the available planets for assimilation
+        print("\nAvailable planets for assimilation:")
+        for i, planet in enumerate(system.planets):
+            print(f"{i + 1}. {planet.name}")
+
+        choice = int(input("Select a planet to assimilate: ")) - 1
+        assimilated = system.assimilate_planet(choice)
+        if assimilated:
+            player.level += 1
+            player.increase_attack()
+            player.increase_defence()
+            print("\n=================================================================")
+            print(f"{f'You have assimilated {system.planets[choice].name}'.center(67)}")
+            print("=================================================================\n")
+        else:
+            print("Assimilation failed!")
     else:
         print("Our attack was unsuccessful. Prepare for counterattack!\n")
         system.planets[random.randint(0, len(system.planets) - 1)].attack_player(player)
