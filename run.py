@@ -1,7 +1,6 @@
 import random
 import sys
 
-
 # Define the Player class
 class Player:
     def __init__(self):
@@ -10,7 +9,8 @@ class Player:
         self.attack = 10
         self.level = 1
         self.processing = 0
-
+        self.assimilate_planets = []
+    
     def increase_attack(self):
         self.attack += 2
 
@@ -32,12 +32,21 @@ class Player:
         return self.health > 0
 
     def display_stats(self):
-        print("Player Stats:")
+        print("\nPlayer Stats:")
         print(f"Player Level: {self.level}")
         print(f"Player Health: {self.health}")
         print(f"Player Attack: {self.attack}")
         print(f"Player Defence: {self.defence}")
         print(f"Processing Power: {self.processing}")
+        
+    def display_game_finished(self): # Display enf=d game score
+        print("\nPlayer Score:")
+         print(f"Player Level: {self.level}")
+         print(f"Processing Power: {self.processing}\n")
+        print("Assimilated Planets: ")
+        if self.assimilate_planets:
+            for planet in self.assimilate_planets:
+                print(f" - {planet.name}")
 
 
 # Define the Planet Class
@@ -60,9 +69,10 @@ class Planet:
             print("Player has been assimilated. Game Over.")
             sys.exit()
             
-    def assimilate(self, p1layer):
+    def assimilate(self, player):
         self.assimilated = True
         player.processing += self.resources.get("processing", 0)
+        player.assimilate_planets.append(self) # Add the assimilated planet to the player's list
 
     def is_assimilated(self):
         return self.assimilated
@@ -78,7 +88,7 @@ class System:
         if planet_index in range(len(self.planets)):
             planet = self.planets[planet_index]
             if not planet.is_assimilated():
-                if planet.has_defences:
+                if planet.has_defences: # Hacking mini game initiated randomly if boolean value is True1
                     print(f"\n{planet.name}'s defences initiated ... \n")
                     print("---------------{ Hacking }---------------\n")
                     # ASCII art for code rain characters
@@ -158,7 +168,9 @@ class System:
                             return True
                         else:
                             attempts_left -= 1
-                            if attempts_left > 0:
+                            if attempts_left < 2 and attempts_left > 0:
+                                print("Access denied. {} attempt left.".format(attempts_left))
+                            elif attempts_left > 1: 
                                 print("Access denied. {} attempts left.".format(attempts_left))
                             else:
                                 print("Access denied. Hacking failed.")
@@ -170,7 +182,7 @@ class System:
         else:
             print("Invalid selection")
         return False
-
+    
     def attack(self, attack_power):
         success_chance = attack_power / self.enemy_resistance
         return random.random() <= success_chance
@@ -258,7 +270,7 @@ def attack_system(system, player):
             player.increase_defence()
             print("\n=================================================================")
             print(f"{f'You have assimilated {system.planets[choice].name}'.center(67)}")
-            print("=================================================================\n")
+            print("=================================================================")
         else:
             print("Assimilation failed!\n")
     else:
@@ -278,6 +290,7 @@ def decrease_player_life(player, damage_dealt):
 
 # Game over
 def game_over():
+    player.display_game_finished()
     print("\nGAME OVER")
     sys.exit()
 
@@ -295,7 +308,7 @@ for system_data in systems_data:
 # Game loop
 print("\n============================================")
 print("            Welcome to BorgLite             ")
-print("============================================\n")
+print("============================================")
 
 while True:
     player.display_stats()
@@ -310,7 +323,7 @@ while True:
         for i, system in enumerate(systems):
             print(f"{i + 1}. {system.name}")
 
-        system_index = int(input("Select a system to attack: ")) - 1
+        system_index = int(input("\nSelect a system to attack: ")) - 1
         selected_system = systems[system_index]
         attack_system(selected_system, player)
 
