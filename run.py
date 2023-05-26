@@ -18,9 +18,13 @@ class Player:
         self.defence += 2
 
     def take_damage(self, damage):
+        damage_taken = min(damage, self.health)  # Calculate the actual damage taken
+        self.health -= damage_taken
+        return damage_taken
         if damage > self.defence:
             damage -= self.defence
             self.health -= damage
+            return damage
         else:
             self.defence -= damage
             if self.defence < 0:
@@ -178,7 +182,7 @@ class System:
                     
                         # Check if the input code is correct
                         if check_code(input_code, access_code):
-                            print("Access granted...\n")
+                            print("Access granted...")
                             planet.assimilate(player)
                             return True
                         else:
@@ -189,6 +193,8 @@ class System:
                                 print("Access denied. {} attempts left.".format(attempts_left))
                             else:
                                 print("Access denied. Hacking failed.")
+                                player_damage = player.take_damage(random.randint(1, 50))
+                                print(f"\nYou took damage {player_damage}. Health remaining {player.health}.")
                 else:
                     planet.assimilate(player)
                     return True
@@ -299,7 +305,9 @@ def decrease_player_life(player, damage_dealt):
     player.take_damage(damage_dealt)
     print(f"Your collective has been damaged! Player health remaining: {player.health}\n")
     if not player.is_alive():
-        print("Your collective has been destroyed. Game over.")
+        print("Your collective has been destroyed.")
+        player.display_game_finished()
+        print("GAME OVER")
         sys.exit()
 
 
