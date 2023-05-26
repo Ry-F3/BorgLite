@@ -162,9 +162,6 @@ class System:
                                 print("Access denied. {} attempts left.".format(attempts_left))
                             else:
                                 print("Access denied. Hacking failed.")
-
-                   
-                    # planet.assimilate(player)
                 else:
                     planet.assimilate(player)
                     return True
