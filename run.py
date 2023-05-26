@@ -20,17 +20,19 @@ class Player:
     def take_damage(self, damage):
         damage_taken = min(damage, self.health)  # Calculate the actual damage taken
         self.health -= damage_taken
-        return damage_taken
+
         if damage > self.defence:
             damage -= self.defence
             self.health -= damage
-            return damage
         else:
             self.defence -= damage
             if self.defence < 0:
                 self.defence = 0
+
         if self.health < 0:
             self.health = 0
+
+        return damage_taken
             
     def reduce_processing(self, processing, input_code):
         if input_code.lower() == "b" and self.processing >= 100:
@@ -204,9 +206,15 @@ class System:
             print("Invalid selection")
         return False
     
-    def attack(self, attack_power):
-        success_chance = attack_power / self.enemy_resistance
-        return random.random() <= success_chance
+    def attack(system, attack_power):
+        if player.level < 5:
+            system.enemy_resistance = random.randint(1, 25)  # Update the resistance level within the desired range
+        success_chance = attack_power / system.enemy_resistance
+        print("\nAttacking", system.name, "with resistance level:", system.enemy_resistance)
+        print(attack_power)
+        print(success_chance)
+        return success_chance >= 1
+
 
 # Load systems data
 def load_systems_data():
@@ -268,10 +276,12 @@ def load_systems_data():
         }
     ]
     return systems_data
+    
+systems_data = load_systems_data()
 
 # Assimilate a planet within a system
 def attack_system(system, player):
-    print("\nAttacking", system.name, "with resistance level:", system.enemy_resistance)
+    
     success = system.attack(player.attack)
     if success:
         print("We are Borg. Existence as you know it is over. Resistance is futile.\n")
@@ -296,8 +306,18 @@ def attack_system(system, player):
             print("Assimilation failed!\n")
     else:
         print("Our attack was unsuccessful. Prepare for a counterattack!\n")
-        system.planets[random.randint(0, len(system.planets) - 1)].attack_player(player)
-        decrease_player_life(player, system.planets[random.randint(0, len(system.planets) - 1)].attack_points)
+        # Randomly select a planet from the system to attack the player
+        enemy_planet = random.choice(system.planets)
+        enemy_planet.attack_player(player)
+        if not player.is_alive():
+            game_over()
+
+        # Determine the outcome based on player's attack power and enemy resistance
+        if player.attack > system.enemy_resistance:
+            print("We have successfully counterattacked the enemy planet!")
+            system.planets.remove(enemy_planet)
+        else:
+            print("Our counterattack was unsuccessful.\n")
 
 
 # Decrease player life
