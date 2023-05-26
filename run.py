@@ -1,6 +1,7 @@
 import random
 import sys
 
+
 # Define the Player class
 class Player:
     def __init__(self):
@@ -78,8 +79,92 @@ class System:
             planet = self.planets[planet_index]
             if not planet.is_assimilated():
                 if planet.has_defences:
-                    # self.hack_defence(planet)
-                    planet.assimilate(player)
+                    print(f"\n{planet.name}'s defences initiated ... \n")
+                    print("---------------{ Hacking }---------------\n")
+                    # ASCII art for code rain characters
+                    code_rain_chars = ['|', '/', '-', '\\']
+
+                    # Function to generate random code rain line with numbers
+                    def generate_code_rain_line(width, access_code):
+                        line = ""
+                        for i in range(width):
+                            if len(access_code) > 0 and random.random() < 0.2:  # 20% chance of adding a number clue
+                                digit = access_code.pop(0)
+                                if i < 2:  # Check for the first two characters
+                                    line += "00"  # Set the first two characters as "00"
+                                else:
+                                    line += str(digit)
+                            else:
+                                line += random.choice(code_rain_chars)
+                        return line
+
+                    # Function to generate random access code
+                    def generate_access_code():
+                        code = []
+                        code.append(0)
+                        code.append(0)
+                        for _ in range(4):
+                            digit = random.randint(1, 9)  # Random number from 1 to 9 (excluding 0)
+                            code.append(digit)
+                        return code
+
+                    # Function to check if the input code is correct
+                    def check_code(input_code, access_code):
+                        if input_code.lower() == "b" and player.processing >= 100:
+                            print("Automated cracking in progress...")
+                            automated_code = automate_crack(access_code)
+                            print("Access code: {}".format(automated_code))
+                            return True
+                        else:
+                            print("Processing power insufficient.")    
+                        for i in range(len(input_code)):
+                            if input_code[i] != str(access_code[i]):
+                                return False
+                        return len(input_code) == len(access_code)
+
+                    # Function to automate the cracking of the access code
+                    def automate_crack(access_code):
+                        return "".join(str(digit) for digit in access_code)
+
+                    # Generate access code
+                    access_code = generate_access_code()
+
+                    # Print the code rain animation
+                    def print_code_rain(access_code):
+                        for _ in range(10):
+                            code_rain_line = generate_code_rain_line(40, access_code.copy())
+                            print(code_rain_line)
+
+                    # Start the code rain static animation
+                    print_code_rain(access_code)
+
+                    # Game loop
+                    attempts_left = 3
+                    while attempts_left > 0:
+                        # Read user input
+                        if player.processing >= 100:
+                            print("\nBypass enemy systems. Costs 100 processing power.\n")
+                            print(f"You have {player.processing} processing power in storage. Please type 'b'\n")
+                        else:
+                            print(f"\nInsufficient processing power. You have {player.processing} in storage.")
+                            print("The collective cannot bypass enemy systems right now.")
+                            
+                        input_code = input("\nEnter the access code (6 digits): ")
+                    
+                        # Check if the input code is correct
+                        if check_code(input_code, access_code):
+                            print("Access granted...\n")
+                            planet.assimilate(player)
+                            return True
+                        else:
+                            attempts_left -= 1
+                            if attempts_left > 0:
+                                print("Access denied. {} attempts left.".format(attempts_left))
+                            else:
+                                print("Access denied. Hacking failed.")
+
+                   
+                    # planet.assimilate(player)
                 else:
                     planet.assimilate(player)
                     return True
@@ -88,12 +173,6 @@ class System:
         else:
             print("Invalid selection")
         return False
-    
-    def hack_defence(self, planet): # Hack defences
-        # print("\nHacking the cloaking device of", planet.name)
-        print(f"{planet.name} is cloaked and our systems are no longer able to find our target! How does the Collective wish to proceed?")
-        
-        return True
 
     def attack(self, attack_power):
         success_chance = attack_power / self.enemy_resistance
@@ -137,7 +216,7 @@ def load_systems_data():
         },
         {
             "name": "Delta System",
-            "enemy_resistance": random.randint(1, 100),
+            "enemy_resistance": random.randint(1, 30),
             "planets": [
                 Planet("Vorta", {"processing": random.randint(20, 50)}, 1),
                 Planet("Founders' Homeworld", {"processing": random.randint(20, 50)}, 1),
@@ -165,7 +244,7 @@ def attack_system(system, player):
     print("\nAttacking", system.name, "with resistance level:", system.enemy_resistance)
     success = system.attack(player.attack)
     if success:
-        print("We are Borg. Existence as you know it is over. We will add your biological and technological distinctiveness to our own. Resistance is futile.\n")
+        print("We are Borg. Existence as you know it is over. Resistance is futile.\n")
         # Display the available planets for assimilation
         print("\nAvailable planets for assimilation:")
         for i, planet in enumerate(system.planets):
@@ -184,9 +263,9 @@ def attack_system(system, player):
             print(f"{f'You have assimilated {system.planets[choice].name}'.center(67)}")
             print("=================================================================\n")
         else:
-            print("Assimilation failed!")
+            print("Assimilation failed!\n")
     else:
-        print("Our attack was unsuccessful. Prepare for counterattack!\n")
+        print("Our attack was unsuccessful. Prepare for a counterattack!\n")
         system.planets[random.randint(0, len(system.planets) - 1)].attack_player(player)
         decrease_player_life(player, system.planets[random.randint(0, len(system.planets) - 1)].attack_points)
 
@@ -194,7 +273,7 @@ def attack_system(system, player):
 # Decrease player life
 def decrease_player_life(player, damage_dealt):
     player.take_damage(damage_dealt)
-    print("Your collective has been damaged! Player health remaining:", player.health)
+    print(f"Your collective has been damaged! Player health remaining: {player.health}\n")
     if not player.is_alive():
         print("Your collective has been destroyed. Game over.")
         sys.exit()
@@ -217,9 +296,9 @@ for system_data in systems_data:
     systems.append(system)
 
 # Game loop
-print("============================================")
+print("\n============================================")
 print("            Welcome to BorgLite             ")
-print("============================================")
+print("============================================\n")
 
 while True:
     player.display_stats()
