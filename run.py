@@ -113,29 +113,40 @@ class System:
                     print("---------------{ Hacking }---------------\n")
                     # ASCII art for code rain characters
                     code_rain_chars = ['|', '/', '-', '\\']
-
+                    
                     # Function to generate random code rain line with numbers
-                    def generate_code_rain_line(width, access_code):
+                    def generate_code_rain_line(width, access_code, fake_code):
                         line = ""
                         for i in range(width):
-                            if len(access_code) > 0 and random.random() < 0.2:  # 20% chance of adding a number clue
+                            if len(access_code) > 0 and random.random() < 0.1:  # 10% chance of adding a number clue
                                 digit = access_code.pop(0)
                                 if i < 2:  # Check for the first two characters
                                     line += "00"  # Set the first two characters as "00"
                                 else:
                                     line += str(digit)
+                            elif len(fake_code) > 0 and random.random() < 0.1:
+                                fake_digit = fake_code.pop(0)
+                                line += str(fake_digit)
                             else:
                                 line += random.choice(code_rain_chars)
                         return line
-
+                    
                     # Function to generate random access code
                     def generate_access_code():
                         code = []
                         code.append(0)
                         code.append(0)
                         for _ in range(4):
-                            digit = random.randint(1, 9)  # Random number from 1 to 9 (excluding 0)
+                            digit = random.randint(3, 9)  # Random number from 1 to 9 (excluding 0)
                             code.append(digit)
+                        return code
+                    
+                    # Function to generate random fake code
+                    def generate_fake_code():
+                        code = []
+                        for _ in range(1):
+                            fake_digit = random.randint(1, 2) # Random number
+                            code.append(fake_digit)
                         return code
 
                     # Function to check if the input code is correct
@@ -159,15 +170,16 @@ class System:
 
                     # Generate access code
                     access_code = generate_access_code()
+                    fake_code = generate_fake_code()
 
                     # Print the code rain animation
-                    def print_code_rain(access_code):
+                    def print_code_rain(access_code, fake_code):
                         for _ in range(10):
-                            code_rain_line = generate_code_rain_line(40, access_code.copy())
+                            code_rain_line = generate_code_rain_line(40, access_code.copy(), fake_code.copy())
                             print(code_rain_line)
 
                     # Start the code rain static animation
-                    print_code_rain(access_code)
+                    print_code_rain(access_code, fake_code)
 
                     # Game loop
                     attempts_left = 3
@@ -179,6 +191,7 @@ class System:
                         else:
                             print(f"\nInsufficient processing power. You have {player.processing} in storage.")
                             print("The collective cannot bypass enemy systems right now.")
+                            # print(access_code)
                             
                         input_code = input("\nEnter the access code (6 digits): ")
                     
@@ -209,10 +222,14 @@ class System:
     def attack(system, attack_power):
         if player.level < 5:
             system.enemy_resistance = random.randint(1, 25)  # Update the resistance level within the desired range
-        success_chance = attack_power / system.enemy_resistance
+        elif player.level >= 5 and player.level <= 10:
+            system.enemy_resistance = random.randint(10, 35)  # Update the resistance level within the desired range
+        else:
+            system.enemy_resistance = random.randint(10, 65)  # Update the resistance level within the desired range
+            
+        success_chance = attack_power / system.enemy_resistance    
         print("\nAttacking", system.name, "with resistance level:", system.enemy_resistance)
-        print(attack_power)
-        print(success_chance)
+        print(f"Engagement Probability: {round(success_chance, 2)}\n")
         return success_chance >= 1
 
 
