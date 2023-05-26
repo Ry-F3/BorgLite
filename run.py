@@ -27,6 +27,16 @@ class Player:
                 self.defence = 0
         if self.health < 0:
             self.health = 0
+            
+    def reduce_processing(self, processing, input_code):
+        if input_code.lower() == "b" and self.processing >= 100:
+            self.processing -= 100
+            if self.processing < 0:
+                self.processing = 0
+        else: 
+            self.processing -= processing  # Reduce processing even if input code is incorrect
+            if self.processing < 0:
+                self.processing = 0
 
     def is_alive(self):
         return self.health > 0
@@ -39,15 +49,17 @@ class Player:
         print(f"Player Defence: {self.defence}")
         print(f"Processing Power: {self.processing}")
         
-    def display_game_finished(self): # Display enf=d game score
-        print("\nPlayer Score:")
-         print(f"Player Level: {self.level}")
-         print(f"Processing Power: {self.processing}\n")
-        print("Assimilated Planets: ")
+    def display_game_finished(self): # Display end game score
+        # print("\nPlayer Score:")
+        # print(f"Player Level: {self.level}")
+        # print(f"Processing Power: {self.processing}\n")
+        num_planets = len(self.assimilate_planets)
+        print(f"\nAssimilated Planets: {num_planets}")
         if self.assimilate_planets:
             for planet in self.assimilate_planets:
                 print(f" - {planet.name}")
-
+        else:
+            print("No planets assimilated.")
 
 # Define the Planet Class
 class Planet:
@@ -66,7 +78,9 @@ class Planet:
         print(self.name, "attacks! Player takes", damage_dealt, "damage.")
         print("Player health remaining:", player.health)
         if not player.is_alive():
-            print("Player has been assimilated. Game Over.")
+            print("\nPlayer has lost control of the collective.\n")
+            player.display_game_finished()
+            print("\nGAME OVER")
             sys.exit()
             
     def assimilate(self, player):
@@ -124,6 +138,7 @@ class System:
                             print("Automated cracking in progress...")
                             automated_code = automate_crack(access_code)
                             print("Access code: {}".format(automated_code))
+                            player.reduce_processing(100, input_code)
                             return True
                         else:
                             print("Processing power insufficient.")    
@@ -291,7 +306,7 @@ def decrease_player_life(player, damage_dealt):
 # Game over
 def game_over():
     player.display_game_finished()
-    print("\nGAME OVER")
+    print("\nGAME OVER\n")
     sys.exit()
 
 
