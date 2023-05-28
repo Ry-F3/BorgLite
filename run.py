@@ -9,29 +9,56 @@ class Player:
         self.attack = 10
         self.level = 1
         self.processing = 0
-        self.assimilate_planets = []
-    
-    def increase_attack(self):
+        self.assimilate_planets = [] # Listt to store assimilated planets
+        self.upgrades = [] # List to store upgrades
+        
+    def apply_upgrade(self, index, processing):
+        if index >= 0 and index < len(self.upgrades):
+            upgrade = self.upgrades[index]
+            if self.processing >= 100:
+                self.health += upgrade.add_health
+                self.defence += upgrade.add_defence
+                self.attack += upgrade.add_attack
+                self.processing -= 100
+                print("\nUpgrade applied successfully!")
+            else:
+                 print(f"\nInsufficient processing power. You have {player.processing} in storage.")
+
+        else:
+            print("Invalid")
+        
+    def increase_attack(self): # Increase attack each level
         self.attack += 2
 
-    def increase_defence(self):
+    def increase_defence(self): # Increase defence each level
         self.defence += 2
 
-    def take_damage(self, damage):
-        damage_taken = min(damage, self.health)  # Calculate the actual damage taken
-        self.health -= damage_taken
-
-        if damage > self.defence:
-            damage -= self.defence
-            self.health -= damage
-        else:
-            self.defence -= damage
-            if self.defence < 0:
+    def take_damage(self, damage): # Take damage from system by individual planets
+        if self.defence > 0:
+            if damage <= self.defence:
+                self.defence -= damage
+            else:
+                remainder = damage - self.defence
                 self.defence = 0
-
-        if self.health < 0:
-            self.health = 0
-
+                self.health -= remainder
+        else: 
+            self.health -= damage
+        self.health = max(self.health, 0)  # Ensure health doesn't go below 0
+        return self.defence and self.health
+    
+    def hacking_damage(self, damage, has_defences): # Take damage from failure to hack defences
+        damage_taken = 0
+        if self.defence > 0:
+            damage_taken = min(damage, self.health)  # Calculate the actual damage taken
+            if damage_taken <= self.defence:
+                self.defence -= damage_taken
+            else:
+                remainder = damage_taken - self.defence
+                self.defence = 0
+                self.health -= remainder
+        else:
+            self.health -= damage_taken
+        self.health = max(self.health, 0)  # Ensure health doesn't go below 0   
         return damage_taken
             
     def reduce_processing(self, processing, input_code):
@@ -49,23 +76,61 @@ class Player:
 
     def display_stats(self):
         print("\nPlayer Stats:")
-        print(f"Player Level: {self.level}")
-        print(f"Player Health: {self.health}")
-        print(f"Player Attack: {self.attack}")
-        print(f"Player Defence: {self.defence}")
-        print(f"Processing Power: {self.processing}")
+        print(f"Level: {self.level}\n")
+        print(f"Health {heart_icon}  : {self.health}")
+        print(f"Attack {sword_icon}  : {self.attack}")
+        print(f"Defence{shield_icon}  : {self.defence}")
+        print(f"Power  {power_icon} : {self.processing}")
         
     def display_game_finished(self): # Display end game score
         # print("\nPlayer Score:")
         # print(f"Player Level: {self.level}")
         # print(f"Processing Power: {self.processing}\n")
         num_planets = len(self.assimilate_planets)
-        print(f"\nAssimilated Planets: {num_planets}")
+        print(f"\nAssimilated Planets {planet_icon} : {num_planets}")
         if self.assimilate_planets:
             for planet in self.assimilate_planets:
                 print(f" - {planet.name}")
         else:
             print("No planets assimilated.")
+                    
+# Define the upgrades class
+class Upgrades:
+    def __init__(self, name, add_health=0, add_defence=0, add_attack=0):
+        self.name = name
+        self.add_health = add_health
+        self.add_defence = add_defence
+        self.add_attack = add_attack
+
+    @staticmethod
+    def load_upgrades_data(heart_icon, sword_icon, shield_icon):
+        upgrades_data = [
+            {
+                "name": f"Health Regeneration {heart_icon}  +50  {shield_icon}  -2 {sword_icon}  -2",
+                "add_health": 50,
+                "add_defence": -2,
+                "add_attack": -2,
+            },
+            {
+                "name": f"Adaptive Shielding {shield_icon}  +50 {sword_icon}  -2",
+                "add_defence": 50,
+                "add_attack": -2
+            },
+            {
+                "name": f"Cybernetic Implant {sword_icon}  +5",
+                "add_attack": 5
+            }
+        ]
+        
+        upgrades = []
+        for upgrade_info in upgrades_data:
+            upgrade = Upgrades(**upgrade_info)
+            upgrades.append(upgrade)
+        
+        return upgrades
+
+# Load upgrades data
+upgrades = Upgrades.load_upgrades_data("❤️", "⚔️", "🛡️")
 
 # Define the Planet Class
 class Planet:
@@ -208,7 +273,7 @@ class System:
                                 print("Access denied. {} attempts left.".format(attempts_left))
                             else:
                                 print("Access denied. Hacking failed.")
-                                player_damage = player.take_damage(random.randint(1, 50))
+                                player_damage = player.hacking_damage(random.randint(1, 50), planet.has_defences)
                                 print(f"\nYou took damage {player_damage}. Health remaining {player.health}.")
                 else:
                     planet.assimilate(player)
@@ -306,11 +371,11 @@ def attack_system(system, player):
         print("\nAvailable planets for assimilation:")
         for i, planet in enumerate(system.planets):
             if planet.is_assimilated():
-                print(f"{str(i + 1)}. {''.join(chr(822) + c for c in planet.name)} (Assimilated)")
+                print(f"{str(i + 1)}. {''.join(chr(822) + c for c in planet.name)} (Assimilated)") # Put a line through planet names that have been assimilated
             else:
                 print(f"{i + 1}. {planet.name}")
 
-        choice = int(input("Select a planet to assimilate: ")) - 1
+        choice = int(input("\nSelect a planet to assimilate: ")) - 1
         assimilated = system.assimilate_planet(choice, player)
         if assimilated:
             player.level += 1
@@ -370,11 +435,20 @@ print("\n============================================")
 print("            Welcome to BorgLite             ")
 print("============================================")
 
+heart_icon = "❤️"
+sword_icon = "⚔️"
+shield_icon = "🛡️"
+power_icon = "⚡️"
+planet_icon = "🌍"
+# cube = "▣"
+
 while True:
     player.display_stats()
     print("\nWhat would you like to do?")
     print("1. Attack a system")
-    print("2. Quit")
+    print("2. Upgrades")
+    print("3. Leaderboards")
+    print("4. Quit")
 
     choice = input("Enter your choice: ")
 
@@ -389,8 +463,20 @@ while True:
 
         if not player.is_alive():
             game_over()
-
     elif choice == "2":
+        print("\nAvailable Upgrades:") # Display available upgrades
+        print(f"Costs power {power_icon} : - 100\n")
+        player.upgrades = upgrades  
+
+        for i, upgrade in enumerate(player.upgrades):
+            print(f"{i + 1}. {upgrade.name}")
+
+        choice = int(input("Select an upgrade to apply: ")) - 1
+        player.apply_upgrade(choice, player.processing)
+
+    elif choice == "3":
+        print("Leaderboards")
+    elif choice == "4":
         game_over()
 
     else:
