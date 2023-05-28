@@ -47,7 +47,7 @@ class Player:
         return self.defence and self.health
     
     def hacking_damage(self, damage, has_defences): # Take damage from failure to hack defences
-        damage_taken = 0
+        damage_taken = damage
         if self.defence > 0:
             damage_taken = min(damage, self.health)  # Calculate the actual damage taken
             if damage_taken <= self.defence:
@@ -82,11 +82,10 @@ class Player:
         print(f"Defence{shield_icon}  : {self.defence}")
         print(f"Power  {power_icon} : {self.processing}")
         
-    def display_game_finished(self): # Display end game score
-        # print("\nPlayer Score:")
-        # print(f"Player Level: {self.level}")
-        # print(f"Processing Power: {self.processing}\n")
+    def display_game_finished(self): # Display end game score 
         num_planets = len(self.assimilate_planets)
+        score = self.processing * num_planets * self.level * self.attack
+        print(f"Final Score: {score}")
         print(f"\nAssimilated Planets {planet_icon} : {num_planets}")
         if self.assimilate_planets:
             for planet in self.assimilate_planets:
@@ -290,7 +289,7 @@ class System:
         elif player.level >= 5 and player.level <= 10:
             system.enemy_resistance = random.randint(10, 35)  # Update the resistance level within the desired range
         else:
-            system.enemy_resistance = random.randint(10, 65)  # Update the resistance level within the desired range
+            system.enemy_resistance = random.randint(20, 65)  # Update the resistance level within the desired range
             
         success_chance = attack_power / system.enemy_resistance    
         print("\nAttacking", system.name, "with resistance level:", system.enemy_resistance)
@@ -435,6 +434,7 @@ print("\n============================================")
 print("            Welcome to BorgLite             ")
 print("============================================")
 
+# Game Icons
 heart_icon = "❤️"
 sword_icon = "⚔️"
 shield_icon = "🛡️"
