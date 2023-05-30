@@ -7,9 +7,9 @@ class Player:
     def __init__(self):
         self.health = 100
         self.defence = 10
-        self.attack = 100
+        self.attack = 10
         self.level = 1
-        self.processing = 500
+        self.processing = 0
         self.assimilate_planets = [] # Listt to store assimilated planets
         self.upgrades = [] # List to store upgrades
         
@@ -179,7 +179,7 @@ class Planet:
         self.level = level + 1
         self.attack_points = random.randint(5, 25) + level
         self.defence_points = random.randint(5, 25) + level
-        self.has_defences = random.choice([True]) # Randomise defences for planets
+        self.has_defences = random.choice([True, False]) # Randomise defences for planets
 
     def attack_player(self, player):
         damage_dealt = self.attack_points
@@ -561,4 +561,4 @@ while True:
         game_over()
 
     else:
-        print("Invalid choice. Please try again.")
+        type_text("   >> Invalid key. Please try 'a', 'u', 'l' and 'q'.")
