@@ -90,7 +90,7 @@ class Player:
         er = "\033[0m"
         
         
-        art = f""" {s}                          
+        art = f"""  {s}                          
  ________.--------------._______________________________________________________________
  |  ||__| [_]|                    |                                                     |
  |  |     [_]|    {sw}Player Stats:  {ew}{s} | {e}    {sw} Power  {power_icon} : {self.processing} {ew}   {s}    |  {e}   {sw}    score: {score}  {ew} {s}       
