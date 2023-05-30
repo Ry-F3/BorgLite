@@ -1,14 +1,15 @@
 import random
 import sys
+import time
 
 # Define the Player class
 class Player:
     def __init__(self):
         self.health = 100
         self.defence = 10
-        self.attack = 10
+        self.attack = 100
         self.level = 1
-        self.processing = 0
+        self.processing = 500
         self.assimilate_planets = [] # Listt to store assimilated planets
         self.upgrades = [] # List to store upgrades
         
@@ -74,18 +75,56 @@ class Player:
     def is_alive(self):
         return self.health > 0
 
-    def display_stats(self):
-        print("\nPlayer Stats:")
-        print(f"Level: {self.level}\n")
-        print(f"Health {heart_icon}  : {self.health}")
-        print(f"Attack {sword_icon}  : {self.attack}")
-        print(f"Defence{shield_icon}  : {self.defence}")
-        print(f"Power  {power_icon} : {self.processing}")
+    def display_stats_frame_1(self, score=0):
+        
+        num_planets = len(self.assimilate_planets)
+        score = self.processing * num_planets * self.level * self.attack
+        
+        sw = "\033[37m" # white
+        ew = "\033[0m"
+        
+        s = "\033[32m" # green
+        e = "\033[0m"
+        
+        sr = "\033[31m" # red
+        er = "\033[0m"
+        
+        
+        art = f""" {s}                          
+ ________.--------------._______________________________________________________________
+ |  ||__| [_]|                    |                                                     |
+ |  |     [_]|    {sw}Player Stats:  {ew}{s} | {e}    {sw} Power  {power_icon} : {self.processing} {ew}   {s}    |  {e}   {sw}    score: {score}  {ew} {s}       
+ |__|_____[_]|____________________|_____________________________________________________|                                                     
+ | | {sw}PWR{ew}{s} |  |{sw} ::{ew}{s} |{sw}-++++-{ew}{s} |   ||   |                                                     |
+ | | {sw}OFF{ew}{s} |  |_{sw}::{ew}{s}_|{sw} /-/-/-{ew}{s}|___||___|  {sw} Health {heart_icon}  : { self.health }   Attack {sword_icon}  : { self.attack }   Defence{shield_icon}  : { self.defence}    {ew} {s}                                            
+ |_|{sw}['q']{s}|________________________|_____________________________________________________|                                                      
+ |                 _______________|            ________           ________              |                             
+ |  {sw}  1. [ALPHA] {ew}{s} |                                                                     |       
+ |   {sw} 2. [BETA ] {ew}{s} |   __.------------.                                                  |
+ | __   ____,-----------------,  -| |\`-.                                               |
+ | __|  ____|] =========--  [<    |_|____`-.                                            |
+ | `-._______`-----------------`____________-`                                          |    
+ |      `-`-----'---'---------`------------'                                            |        
+ |   {sw} 3. [GAMMA] {ew}{s} |                                                                     |
+ |  {sw}  4. [DELTA] {ew}{s} |                                                                     |
+ |  {sw}  5. [EPSIL] {ew}{s} |                                                                     |
+ |  _____   |   _ |                                                                     |
+ | |{sw}+ B +{ew}{s}|  |__|_________________ ______________________________________________________|
+ | ||{sw} O {ew}{s}||  .   {sw} -Lvl: {self.level} {ew}{s} --.  _                                                       
+ | ||{sw} R {ew}{s}||  |               | [_] |   {sw} Attack a system  'a'   {ew}{s}                          |
+ | ||{sw} G {ew}{s}||                    [_] |  {sw}  Upgrades         'u'       <<   choices     {ew}{s}     |
+ | |{sw}L{ew}{s}_{sw}T{ew}{s}_{sw}E{ew}{s}|  [___] [___] [___] [_] |  {sw}  Leaderboards     'l'     {ew}{s}        ______          |
+ |________________________________|  {sw}  Help             'h'      {ew}{s}                       |
+ |__[][][][]____________[][][][]__|____________________________________________________ |
+ {e} """
+ 
+        print(art)
+        
         
     def display_game_finished(self): # Display end game score 
         num_planets = len(self.assimilate_planets)
         score = self.processing * num_planets * self.level * self.attack
-        print(f"Final Score: {score}")
+        print(f"   >> Final Score: {score}")
         print(f"\nAssimilated Planets {planet_icon} : {num_planets}")
         if self.assimilate_planets:
             for planet in self.assimilate_planets:
@@ -140,17 +179,17 @@ class Planet:
         self.level = level + 1
         self.attack_points = random.randint(5, 25) + level
         self.defence_points = random.randint(5, 25) + level
-        self.has_defences = random.choice([True, False]) # Randomise defences for planets
+        self.has_defences = random.choice([True]) # Randomise defences for planets
 
     def attack_player(self, player):
         damage_dealt = self.attack_points
         player.take_damage(damage_dealt)
-        print(self.name, "attacks! Player takes", damage_dealt, "damage.")
-        print("Player health remaining:", player.health)
+        print( f"\n   -+++- {self.name} attacks! Player takes {damage_dealt} damage")
+        print("   -+++- Player health remaining:", player.health)
         if not player.is_alive():
-            print("\nPlayer has lost control of the collective.\n")
+            print("\n  >> Player has lost control of the collective.\n")
             player.display_game_finished()
-            print("\nGAME OVER")
+            print("\n  >> GAME OVER")
             sys.exit()
             
     def assimilate(self, player):
@@ -173,9 +212,13 @@ class System:
             planet = self.planets[planet_index]
             if not planet.is_assimilated():
                 if planet.has_defences: # Hacking mini game initiated randomly if boolean value is True1
-                    print(f"\n{planet.name}'s defences initiated ... \n")
-                    print("---------------{ Hacking }---------------\n")
+                    type_text(f"\n   >> {planet.name}'s defences initiated ...\n")
+                    type_text("   >> Hacking sequence ... \n")
+                    type_text("   >> START \n")
+                    print("\n")
                     # ASCII art for code rain characters
+                    s = "\033[32m" # green
+                    e = "\033[0m"
                     code_rain_chars = ['|', '/', '-', '\\']
                     
                     # Function to generate random code rain line with numbers
@@ -216,13 +259,13 @@ class System:
                     # Function to check if the input code is correct
                     def check_code(input_code, access_code):
                         if input_code.lower() == "b" and player.processing >= 100:
-                            print("Automated cracking in progress...")
+                            print("   >> Automated cracking in progress...")
                             automated_code = automate_crack(access_code)
-                            print("Access code: {}".format(automated_code))
+                            print("   >> Access code: {}".format(automated_code))
                             player.reduce_processing(100, input_code)
                             return True
                         else:
-                            print("Processing power insufficient.")    
+                            print("")    
                         for i in range(len(input_code)):
                             if input_code[i] != str(access_code[i]):
                                 return False
@@ -239,8 +282,8 @@ class System:
                     # Print the code rain animation
                     def print_code_rain(access_code, fake_code):
                         for _ in range(10):
-                            code_rain_line = generate_code_rain_line(40, access_code.copy(), fake_code.copy())
-                            print(code_rain_line)
+                            code_rain_line = generate_code_rain_line(85, access_code.copy(), fake_code.copy())
+                            print(f"{s}   {code_rain_line}{e}")
 
                     # Start the code rain static animation
                     print_code_rain(access_code, fake_code)
@@ -250,30 +293,30 @@ class System:
                     while attempts_left > 0:
                         # Read user input
                         if player.processing >= 100:
-                            print("\nBypass enemy systems. Costs 100 processing power.\n")
-                            print(f"You have {player.processing} processing power in storage. Please type 'b'\n")
+                            print("\n   >> Bypass enemy systems. Costs 100 processing power.\n")
+                            print(f"   >> You have [{player.processing} processing power] in storage. Please type 'b'\n")
                         else:
-                            print(f"\nInsufficient processing power. You have {player.processing} in storage.")
-                            print("The collective cannot bypass enemy systems right now.")
+                            type_text(f"\n   >> Insufficient processing power. You have {player.processing} in storage.")
+                            type_text("\n   >> The collective cannot bypass enemy systems right now.")
                             # print(access_code)
                             
-                        input_code = input("\nEnter the access code (6 digits): ")
-                    
+                        type_text("\n   >> Enter the access code (6 digits): ")
+                        input_code = input()
                         # Check if the input code is correct
                         if check_code(input_code, access_code):
-                            print("Access granted...")
+                            print("   >> Access granted...")
                             planet.assimilate(player)
                             return True
                         else:
                             attempts_left -= 1
                             if attempts_left < 2 and attempts_left > 0:
-                                print("Access denied. {} attempt left.".format(attempts_left))
+                                print("   >> Access denied. {} attempt left.".format(attempts_left))
                             elif attempts_left > 1: 
-                                print("Access denied. {} attempts left.".format(attempts_left))
+                                print("   >> Access denied. {} attempts left.".format(attempts_left))
                             else:
-                                print("Access denied. Hacking failed.")
+                                print("   >> Access denied. Hacking failed.")
                                 player_damage = player.hacking_damage(random.randint(1, 50), planet.has_defences)
-                                print(f"\nYou took damage {player_damage}. Health remaining {player.health}.")
+                                print(f"\n   >> You took damage {player_damage}. Health remaining {player.health}.")
                 else:
                     planet.assimilate(player)
                     return True
@@ -292,8 +335,8 @@ class System:
             system.enemy_resistance = random.randint(20, 65)  # Update the resistance level within the desired range
             
         success_chance = attack_power / system.enemy_resistance    
-        print("\nAttacking", system.name, "with resistance level:", system.enemy_resistance)
-        print(f"Engagement Probability: {round(success_chance, 2)}\n")
+        print("\n   -+++- Attacking", system.name, "with resistance level:", system.enemy_resistance)
+        print(f"   -+++- Engagement Probability: {round(success_chance, 2)}\n")
         return success_chance >= 1
 
 
@@ -365,28 +408,28 @@ def attack_system(system, player):
     
     success = system.attack(player.attack)
     if success:
-        print("We are Borg. Existence as you know it is over. Resistance is futile.\n")
+        type_text("   >> We are Borg. Existence as you know it is over. Resistance is futile.\n")
         # Display the available planets for assimilation
-        print("\nAvailable planets for assimilation:")
+        print("\n   >> Available planets for assimilation:")
         for i, planet in enumerate(system.planets):
             if planet.is_assimilated():
                 print(f"{str(i + 1)}. {''.join(chr(822) + c for c in planet.name)} (Assimilated)") # Put a line through planet names that have been assimilated
             else:
-                print(f"{i + 1}. {planet.name}")
-
-        choice = int(input("\nSelect a planet to assimilate: ")) - 1
+                print(f"   {i + 1}. {planet.name}")
+        # choice = ""
+        type_text("\n   >> Select a planet to assimilate: ")
+        choice = int(input()) - 1
         assimilated = system.assimilate_planet(choice, player)
         if assimilated:
             player.level += 1
             player.increase_attack()
             player.increase_defence()
-            print("\n=================================================================")
-            print(f"{f'You have assimilated {system.planets[choice].name}'.center(67)}")
-            print("=================================================================")
+            type_text(f'\n   >> You have assimilated {system.planets[choice].name.upper()}\n')
+            
         else:
-            print("Assimilation failed!\n")
+            print("   >> Assimilation failed!\n")
     else:
-        print("Our attack was unsuccessful. Prepare for a counterattack!\n")
+        type_text("   >> Our attack was unsuccessful. Prepare for a counterattack!\n")
         # Randomly select a planet from the system to attack the player
         enemy_planet = random.choice(system.planets)
         enemy_planet.attack_player(player)
@@ -398,7 +441,7 @@ def attack_system(system, player):
             print("We have successfully counterattacked the enemy planet!")
             system.planets.remove(enemy_planet)
         else:
-            print("Our counterattack was unsuccessful.\n")
+            type_text("\n   >> State your directives for our next course of action.\n")
 
 
 # Decrease player life
@@ -430,9 +473,34 @@ for system_data in systems_data:
     systems.append(system)
 
 # Game loop
-print("\n============================================")
-print("            Welcome to BorgLite             ")
-print("============================================")
+s = "\033[32m" # green
+e = "\033[0m"
+game_name = f""" {s}
+
+
+                ██████╗░░█████╗░██████╗░░██████╗░██╗░░░░░██╗████████╗███████╗
+                ██╔══██╗██╔══██╗██╔══██╗██╔════╝░██║░░░░░██║╚══██╔══╝██╔════╝
+                ██████╦╝██║░░██║██████╔╝██║░░██╗░██║░░░░░██║░░░██║░░░█████╗░░
+                ██╔══██╗██║░░██║██╔══██╗██║░░╚██╗██║░░░░░██║░░░██║░░░██╔══╝░░
+                ██████╦╝╚█████╔╝██║░░██║╚██████╔╝███████╗██║░░░██║░░░███████╗
+                ╚═════╝░░╚════╝░╚═╝░░╚═╝░╚═════╝░╚══════╝╚═╝░░░╚═╝░░░╚══════╝
+
+{e}"""
+print(game_name)
+
+def type_text(text, delay=0.02):
+    for char in text:
+        print(char, end='', flush=True)
+        time.sleep(delay)
+
+# Game Icons
+heart_icon = "❤️"
+sword_icon = "⚔️"
+shield_icon = "🛡️"
+power_icon = "⚡️"
+planet_icon = "🌍"
+# cube = "▣"
+
 
 # Game Icons
 heart_icon = "❤️"
@@ -443,27 +511,40 @@ planet_icon = "🌍"
 # cube = "▣"
 
 while True:
-    player.display_stats()
-    print("\nWhat would you like to do?")
-    print("1. Attack a system")
-    print("2. Upgrades")
-    print("3. Leaderboards")
-    print("4. Quit")
+    player.display_stats_frame_1()
+    # print("\nWhat would you like to do?")
+    # print("1. Attack a system")
+    # print("2. Upgrades")
+    # print("3. Leaderboards")
+    # print("4. Quit")
 
-    choice = input("Enter your choice: ")
-
-    if choice == "1":
-        print("\nAvailable Systems for attack: ")
+    choice = ""
+    type_text("   >> Enter your choice: ")
+    while not choice:
+        choice = input()
+    if choice == "a":
         for i, system in enumerate(systems):
-            print(f"{i + 1}. {system.name}")
+            i + 1 == system.name
+    
+        while True:
+            try:
+                type_text("\n   >> Select a system to attack: ")
+                system_index = int(input()) - 1
+                if system_index in range(len(systems)):
+                    selected_system = systems[system_index]
+                    attack_system(selected_system, player)
+                    break
+                else:
+                    type_text("  >> Invalid system index. Please try again.")
+            except ValueError:
+                type_text("   >> Invalid input. Please enter a valid system index 1, 2, 3, 4, 5.")
 
-        system_index = int(input("\nSelect a system to attack: ")) - 1
-        selected_system = systems[system_index]
-        attack_system(selected_system, player)
+        
+    
 
         if not player.is_alive():
             game_over()
-    elif choice == "2":
+    elif choice == "u":
         print("\nAvailable Upgrades:") # Display available upgrades
         print(f"Costs power {power_icon} : - 100\n")
         player.upgrades = upgrades  
@@ -474,9 +555,9 @@ while True:
         choice = int(input("Select an upgrade to apply: ")) - 1
         player.apply_upgrade(choice, player.processing)
 
-    elif choice == "3":
+    elif choice == "l":
         print("Leaderboards")
-    elif choice == "4":
+    elif choice == "q":
         game_over()
 
     else:
