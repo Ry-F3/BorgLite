@@ -283,7 +283,7 @@ class System:
                     def print_code_rain(access_code, fake_code):
                         for _ in range(10):
                             code_rain_line = generate_code_rain_line(85, access_code.copy(), fake_code.copy())
-                            print(f"{s}   {code_rain_line}{e}")
+                            print(f"{s}  {code_rain_line}{e}")
 
                     # Start the code rain static animation
                     print_code_rain(access_code, fake_code)
