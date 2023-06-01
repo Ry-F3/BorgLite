@@ -10,7 +10,7 @@ class Player:
         self.attack = 10
         self.level = 1
         self.processing = 0
-        self.assimilate_planets = [] # Listt to store assimilated planets
+        self.assimilate_planets = [] # List to store assimilated planets
         self.upgrades = [] # List to store upgrades
         
     def apply_upgrade(self, index, processing):
@@ -75,7 +75,7 @@ class Player:
     def is_alive(self):
         return self.health > 0
 
-    def display_stats_frame_1(self, score=0):
+    def display_stats(self, score=0):
         
         num_planets = len(self.assimilate_planets)
         score = self.processing * num_planets * self.level * self.attack
@@ -124,13 +124,13 @@ class Player:
     def display_game_finished(self): # Display end game score 
         num_planets = len(self.assimilate_planets)
         score = self.processing * num_planets * self.level * self.attack
-        print(f"   >> Final Score: {score}")
-        print(f"\nAssimilated Planets {planet_icon} : {num_planets}")
+        type_text(f"   >> Final Score: {score}\n")
+        print(f"\n   >> Assimilated Planets {planet_icon} : {num_planets}")
         if self.assimilate_planets:
             for planet in self.assimilate_planets:
-                print(f" - {planet.name}")
+                print(f"   - {planet.name}")
         else:
-            print("No planets assimilated.")
+            type_text("   >> No planets assimilated.\n")
                     
 # Define the upgrades class
 class Upgrades:
@@ -167,8 +167,6 @@ class Upgrades:
         
         return upgrades
 
-# Load upgrades data
-upgrades = Upgrades.load_upgrades_data("❤️", "⚔️", "🛡️")
 
 # Define the Planet Class
 class Planet:
@@ -187,7 +185,7 @@ class Planet:
         print( f"\n   -+++- {self.name} attacks! Player takes {damage_dealt} damage")
         print("   -+++- Player health remaining:", player.health)
         if not player.is_alive():
-            print("\n  >> Player has lost control of the collective.\n")
+            print("\n   >> Player has lost control of the collective.\n")
             player.display_game_finished()
             print("\n  >> GAME OVER")
             sys.exit()
@@ -401,33 +399,46 @@ def load_systems_data():
     ]
     return systems_data
     
-systems_data = load_systems_data()
 
 # Assimilate a planet within a system
 def attack_system(system, player):
     
     success = system.attack(player.attack)
     if success:
-        type_text("   >> We are Borg. Existence as you know it is over. Resistance is futile.\n")
-        # Display the available planets for assimilation
-        print("\n   >> Available planets for assimilation:")
-        for i, planet in enumerate(system.planets):
-            if planet.is_assimilated():
-                print(f"{str(i + 1)}. {''.join(chr(822) + c for c in planet.name)} (Assimilated)") # Put a line through planet names that have been assimilated
-            else:
-                print(f"   {i + 1}. {planet.name}")
-        # choice = ""
-        type_text("\n   >> Select a planet to assimilate: ")
-        choice = int(input()) - 1
-        assimilated = system.assimilate_planet(choice, player)
-        if assimilated:
-            player.level += 1
-            player.increase_attack()
-            player.increase_defence()
-            type_text(f'\n   >> You have assimilated {system.planets[choice].name.upper()}\n')
-            
-        else:
-            print("   >> Assimilation failed!\n")
+        while True:
+            main_loop= False # Stop main loop
+             
+            type_text("   >> We are Borg. Existence as you know it is over. Resistance is futile.\n")
+            # Display the available planets for assimilation
+            print("\n   >> Available planets for assimilation:")
+            for i, planet in enumerate(system.planets):
+                if planet.is_assimilated():
+                    print(f"   {str(i + 1)}. {''.join(chr(822) + c for c in planet.name)} (Assimilated)") # Put a line through planet names that have been assimilated
+                else:
+                    print(f"   {i + 1}. {planet.name}")
+                        
+            type_text("\n   >> Select a planet to assimilate: ")
+            try:
+                choice = int(input())  # Convert choice to an integer
+
+                if choice not in range(1, 6):
+                    print("   >> Invalid system index. Please try again.")
+                else:
+                    choice -= 1  # Adjust the choice to match the index
+                    assimilated = system.assimilate_planet(choice, player)
+                    if assimilated:
+                        player.level += 1
+                        player.increase_attack()
+                        player.increase_defence()
+                        type_text(f'\n   >> You have assimilated {system.planets[choice].name.upper()}\n')
+                        break # Break back to main loop
+                    else:
+                        print("   >> Assimilation failed!\n")
+                        return player.health # Return player's health before loop broken
+                        break # Break the loop
+            except ValueError:
+                print("invalid")
+
     else:
         type_text("   >> Our attack was unsuccessful. Prepare for a counterattack!\n")
         # Randomly select a planet from the system to attack the player
@@ -451,115 +462,106 @@ def decrease_player_life(player, damage_dealt):
     if not player.is_alive():
         print("Your collective has been destroyed.")
         player.display_game_finished()
-        print("GAME OVER")
-        sys.exit()
+        game_over(delay=0.08)
 
 
 # Game over
 def game_over():
     player.display_game_finished()
-    print("\nGAME OVER\n")
+    type_text("\n   >> GAME OVER\n")
     sys.exit()
 
+# When run.py is loaded programme runs
+if __name__ == "__main__":
+    # Load upgrades data
+    upgrades = Upgrades.load_upgrades_data("❤️", "⚔️", "🛡️")
+    systems_data = load_systems_data()
+    # Game initialization
+    player = Player()
+    systems_data = load_systems_data()
+    systems = []
 
-# Game initialization
-player = Player()
-systems_data = load_systems_data()
-systems = []
+    # Create system objects
+    for system_data in systems_data:
+        system = System(system_data["name"], system_data["enemy_resistance"], system_data["planets"])
+        systems.append(system)
 
-# Create system objects
-for system_data in systems_data:
-    system = System(system_data["name"], system_data["enemy_resistance"], system_data["planets"])
-    systems.append(system)
-
-# Game loop
-s = "\033[32m" # green
-e = "\033[0m"
-game_name = f""" {s}
-
-
-
-                ██████╗░░█████╗░██████╗░░██████╗░██╗░░░░░██╗████████╗███████╗
-                ██╔══██╗██╔══██╗██╔══██╗██╔════╝░██║░░░░░██║╚══██╔══╝██╔════╝
-                ██████╦╝██║░░██║██████╔╝██║░░██╗░██║░░░░░██║░░░██║░░░█████╗░░
-                ██╔══██╗██║░░██║██╔══██╗██║░░╚██╗██║░░░░░██║░░░██║░░░██╔══╝░░
-                ██████╦╝╚█████╔╝██║░░██║╚██████╔╝███████╗██║░░░██║░░░███████╗
-                ╚═════╝░░╚════╝░╚═╝░░╚═╝░╚═════╝░╚══════╝╚═╝░░░╚═╝░░░╚══════╝
-
-{e}"""
-print(game_name)
-
-def type_text(text, delay=0.02):
-    for char in text:
-        print(char, end='', flush=True)
-        time.sleep(delay)
-
-# Game Icons
-heart_icon = "❤️"
-sword_icon = "⚔️"
-shield_icon = "🛡️"
-power_icon = "⚡️"
-planet_icon = "🌍"
-# cube = "▣"
+    # Game loop
+    s = "\033[32m" # green
+    e = "\033[0m"
+    game_name = f""" {s}
 
 
-# Game Icons
-heart_icon = "❤️"
-sword_icon = "⚔️"
-shield_icon = "🛡️"
-power_icon = "⚡️"
-planet_icon = "🌍"
-# cube = "▣"
 
-while True:
-    player.display_stats_frame_1()
-    # print("\nWhat would you like to do?")
-    # print("1. Attack a system")
-    # print("2. Upgrades")
-    # print("3. Leaderboards")
-    # print("4. Quit")
+                    ██████╗░░█████╗░██████╗░░██████╗░██╗░░░░░██╗████████╗███████╗
+                    ██╔══██╗██╔══██╗██╔══██╗██╔════╝░██║░░░░░██║╚══██╔══╝██╔════╝
+                    ██████╦╝██║░░██║██████╔╝██║░░██╗░██║░░░░░██║░░░██║░░░█████╗░░
+                    ██╔══██╗██║░░██║██╔══██╗██║░░╚██╗██║░░░░░██║░░░██║░░░██╔══╝░░
+                    ██████╦╝╚█████╔╝██║░░██║╚██████╔╝███████╗██║░░░██║░░░███████╗
+                    ╚═════╝░░╚════╝░╚═╝░░╚═╝░╚═════╝░╚══════╝╚═╝░░░╚═╝░░░╚══════╝
 
-    choice = ""
-    type_text("   >> Enter your choice: ")
-    while not choice:
-        choice = input()
-    if choice == "a":
-        for i, system in enumerate(systems):
-            i + 1 == system.name
+    {e}"""
+    print(game_name)
     
-        while True:
-            try:
-                type_text("\n   >> Select a system to attack: ")
-                system_index = int(input()) - 1
-                if system_index in range(len(systems)):
-                    selected_system = systems[system_index]
-                    attack_system(selected_system, player)
-                    break
-                else:
-                    type_text("  >> Invalid system index. Please try again.")
-            except ValueError:
-                type_text("   >> Invalid input. Please enter a valid system index 1, 2, 3, 4, 5.")
+    # Time delay function
+    def type_text(text, delay=0.02):
+        for char in text:
+            print(char, end='', flush=True)
+            time.sleep(delay)
 
+    # Game Icons
+    heart_icon = "❤️"
+    sword_icon = "⚔️"
+    shield_icon = "🛡️"
+    power_icon = "⚡️"
+    planet_icon = "🌍"
+    # cube = "▣"
+
+    
+    main_loop = True
+    while main_loop == True:
+        player.display_stats()
+        choice = ""
+        type_text("   >> Enter your choice: ")
+        while not choice:
+            choice = input().lower()
+        if choice == "a":
+            for i, system in enumerate(systems):
+                i + 1 == system.name
         
-    
+            while True: 
+                try:
+                    type_text("\n   >> Select a system to attack: ")
+                    system_index = input().lower()
+                    if system_index == "q": # Breaking the game loop and exiting the system, for expanded player choice
+                        game_over()
+                    else:
+                        system_index = int(system_index) - 1 # Indexing the stystems for player input
+                        if system_index in range(len(systems)):
+                            selected_system = systems[system_index]
+                            attack_system(selected_system, player)
+                            break
+                        else:
+                            type_text("   >> Invalid system index. Please try again.")
+                except ValueError:
+                    type_text("   >> Invalid input. Please enter a valid system index 1, 2, 3, 4, 5.")
+             
+            if not player.is_alive():
+                game_over()
+        elif choice == "u":
+            print("\nAvailable Upgrades:") # Display available upgrades
+            print(f"Costs power {power_icon} : - 100\n")
+            player.upgrades = upgrades  
 
-        if not player.is_alive():
+            for i, upgrade in enumerate(player.upgrades):
+                print(f"{i + 1}. {upgrade.name}")
+
+            choice = int(input("Select an upgrade to apply: ")) - 1
+            player.apply_upgrade(choice, player.processing)
+
+        elif choice == "l":
+            print("Leaderboards")
+        elif choice == "q":
             game_over()
-    elif choice == "u":
-        print("\nAvailable Upgrades:") # Display available upgrades
-        print(f"Costs power {power_icon} : - 100\n")
-        player.upgrades = upgrades  
-
-        for i, upgrade in enumerate(player.upgrades):
-            print(f"{i + 1}. {upgrade.name}")
-
-        choice = int(input("Select an upgrade to apply: ")) - 1
-        player.apply_upgrade(choice, player.processing)
-
-    elif choice == "l":
-        print("Leaderboards")
-    elif choice == "q":
-        game_over()
-
-    else:
-        type_text("   >> Invalid key. Please try 'a', 'u', 'l' and 'q'.")
+        else:
+            type_text("   >> Invalid key. Please try 'a', 'u', 'l' and 'q'.")
