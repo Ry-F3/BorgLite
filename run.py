@@ -26,7 +26,7 @@ class Player:
                  print(f"\nInsufficient processing power. You have {player.processing} in storage.")
 
         else:
-            print("Invalid")
+            print("  >> Invalid.")
         
     def increase_attack(self): # Increase attack each level
         self.attack += 2
@@ -326,7 +326,7 @@ class System:
     
     def attack(system, attack_power):
         if player.level < 5:
-            system.enemy_resistance = random.randint(1, 25)  # Update the resistance level within the desired range
+            system.enemy_resistance = random.randint(6, 25)  # Update the resistance level within the desired range
         elif player.level >= 5 and player.level <= 10:
             system.enemy_resistance = random.randint(10, 35)  # Update the resistance level within the desired range
         else:
@@ -437,7 +437,7 @@ def attack_system(system, player):
                         return player.health # Return player's health before loop broken
                         break # Break the loop
             except ValueError:
-                print("invalid")
+                print("   >> Invalid index. Please choose either 1, 2, 3, 4, 5.\n")
 
     else:
         type_text("   >> Our attack was unsuccessful. Prepare for a counterattack!\n")
