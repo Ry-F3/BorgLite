@@ -1,7 +1,7 @@
 import random
 import sys
 import time
-from leaderboard import update_leaderboard
+from leaderboard import update_leaderboard, display_leaderboard
 
 # Define the Player class
 class Player:
@@ -9,17 +9,17 @@ class Player:
         self.name = "Rhys"
         self.health = 100
         self.defence = 10
-        self.attack = 10
+        self.attack = 100
         self.level = 1
         self.processing = 0
         self.score = 0
-        self.rank = 1
+        self.rank = ""
         self.assimilate_planets = [] # List to store assimilated planets
         self.upgrades = [] # List to store upgrades
         
     def leaderboard_player(self, level, score): # Player's leaderboard function calling the module leaderboard.py
         
-        player_row = {self.rank, self.name, self.level, self.score}
+        player_row = {self.rank, self.name, self.level, self.score} # Create player_row object to pass to the update_leaderboard function
         update_leaderboard(player)
         
     def apply_upgrade(self, index, processing):
@@ -572,7 +572,7 @@ if __name__ == "__main__":
             player.apply_upgrade(choice, player.processing)
 
         elif choice == "l":
-            print("Leaderboards")
+            display_leaderboard(player)
         elif choice == "q":
             level = ""
             score = ""
