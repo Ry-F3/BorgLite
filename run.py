@@ -1,17 +1,26 @@
 import random
 import sys
 import time
+from leaderboard import update_leaderboard
 
 # Define the Player class
 class Player:
     def __init__(self):
+        self.name = "Rhys"
         self.health = 100
         self.defence = 10
         self.attack = 10
         self.level = 1
         self.processing = 0
+        self.score = 0
+        self.rank = 1
         self.assimilate_planets = [] # List to store assimilated planets
         self.upgrades = [] # List to store upgrades
+        
+    def leaderboard_player(self, level, score): # Player's leaderboard function calling the module leaderboard.py
+        
+        player_row = {self.rank, self.name, self.level, self.score}
+        update_leaderboard(player)
         
     def apply_upgrade(self, index, processing):
         if index >= 0 and index < len(self.upgrades):
@@ -75,10 +84,10 @@ class Player:
     def is_alive(self):
         return self.health > 0
 
-    def display_stats(self, score=0):
+    def display_stats(self):
         
         num_planets = len(self.assimilate_planets)
-        score = self.processing * num_planets * self.level * self.attack
+        self.score = self.processing * num_planets * self.level * self.attack
         
         sw = "\033[37m" # white
         ew = "\033[0m"
@@ -93,7 +102,7 @@ class Player:
         art = f"""  {s}                          
  ________.--------------._______________________________________________________________
  |  ||__| [_]|                    |                                                     |
- |  |     [_]|    {sw}Player Stats:  {ew}{s} | {e}    {sw} Power  {power_icon} : {self.processing} {ew}   {s}    |  {e}   {sw}    score: {score}  {ew} {s}       
+ |  |     [_]|    {sw}Player Stats:  {ew}{s} | {e}    {sw} Power  {power_icon} : {self.processing} {ew}   {s}    |  {e}   {sw}score: {self.score}  {ew} {s}       
  |__|_____[_]|____________________|_____________________________________________________|                                                     
  | | {sw}PWR{ew}{s} |  |{sw} ::{ew}{s} |{sw}-++++-{ew}{s} |   ||   |                                                     |
  | | {sw}OFF{ew}{s} |  |_{sw}::{ew}{s}_|{sw} /-/-/-{ew}{s}|___||___|  {sw} Health {heart_icon}  : { self.health }   Attack {sword_icon}  : { self.attack }   Defence{shield_icon}  : { self.defence}    {ew} {s}                                            
@@ -187,6 +196,9 @@ class Planet:
         if not player.is_alive():
             print("\n   >> Player has lost control of the collective.\n")
             player.display_game_finished()
+            level = ""
+            score = ""
+            player.leaderboard_player(level, score)
             print("\n  >> GAME OVER")
             sys.exit()
             
@@ -562,6 +574,9 @@ if __name__ == "__main__":
         elif choice == "l":
             print("Leaderboards")
         elif choice == "q":
+            level = ""
+            score = ""
+            player.leaderboard_player(level, score)
             game_over()
         else:
             type_text("   >> Invalid key. Please try 'a', 'u', 'l' and 'q'.")
