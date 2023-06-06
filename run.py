@@ -11,7 +11,7 @@ class Player:
         self.defence = 10
         self.attack = 10
         self.level = 1
-        self.processing = 100
+        self.processing = 0
         self.score = 0
         self.rank = ""
         self.assimilate_planets = [] # List to store assimilated planets
