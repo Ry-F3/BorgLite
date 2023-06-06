@@ -516,8 +516,10 @@ if __name__ == "__main__":
     print(game_name)
     
     # Game initialization
-    type_text("   >> Drone, you are now part of the Collective. State your unique identifier:")
-    player_name = input("\n   >> ")
+    type_text("                     Drone, you are now part of the Collective.")
+    print("")
+    type_text("\n                     >> Enter your name:")
+    player_name = input(" ")
     player = Player()
     player.name = player_name
     systems_data = load_systems_data()
