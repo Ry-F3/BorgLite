@@ -6,12 +6,12 @@ from leaderboard import update_leaderboard, display_leaderboard
 # Define the Player class
 class Player:
     def __init__(self):
-        self.name = "Rhys"
+        self.name = ""
         self.health = 100
         self.defence = 10
-        self.attack = 100
+        self.attack = 10
         self.level = 1
-        self.processing = 1000
+        self.processing = 100
         self.score = 0
         self.rank = ""
         self.assimilate_planets = [] # List to store assimilated planets
@@ -478,7 +478,13 @@ def decrease_player_life(player, damage_dealt):
         print("Your collective has been destroyed.")
         player.display_game_finished()
         game_over(delay=0.08)
+        
 
+# Time delay function
+def type_text(text, delay=0.02):
+    for char in text:
+        print(char, end='', flush=True)
+        time.sleep(delay)
 
 # Game over
 def game_over():
@@ -488,20 +494,11 @@ def game_over():
 
 # When run.py is loaded programme runs
 if __name__ == "__main__":
+    
     # Load upgrades data
     upgrades = Upgrades.load_upgrades_data("❤️", "⚔️", "🛡️")
     systems_data = load_systems_data()
-    # Game initialization
-    player = Player()
-    systems_data = load_systems_data()
-    systems = []
-
-    # Create system objects
-    for system_data in systems_data:
-        system = System(system_data["name"], system_data["enemy_resistance"], system_data["planets"])
-        systems.append(system)
-
-    # Game loop
+    
     s = "\033[32m" # green
     e = "\033[0m"
     game_name = f""" {s}
@@ -518,12 +515,19 @@ if __name__ == "__main__":
     {e}"""
     print(game_name)
     
-    # Time delay function
-    def type_text(text, delay=0.02):
-        for char in text:
-            print(char, end='', flush=True)
-            time.sleep(delay)
+    # Game initialization
+    type_text("   >> Drone, you are now part of the Collective. State your unique identifier:")
+    player_name = input("\n   >> ")
+    player = Player()
+    player.name = player_name
+    systems_data = load_systems_data()
+    systems = []
 
+    # Create system objects
+    for system_data in systems_data:
+        system = System(system_data["name"], system_data["enemy_resistance"], system_data["planets"])
+        systems.append(system)
+        
     # Game Icons
     heart_icon = "❤️"
     sword_icon = "⚔️"
@@ -532,7 +536,8 @@ if __name__ == "__main__":
     planet_icon = "🌍"
     # cube = "▣"
 
-    
+    # Game loop
+
     main_loop = True
     while main_loop == True:
         player.display_stats()
@@ -548,8 +553,7 @@ if __name__ == "__main__":
                 try:
                     type_text("\n   >> Select a system to attack: ")
                     system_index = input().lower()
-                 
-               
+            
                     if system_index == "q": # Breaking the game loop and exiting the system, for expanded player choice
                         game_over()
                     else:
