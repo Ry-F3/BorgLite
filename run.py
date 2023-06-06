@@ -9,7 +9,7 @@ class Player:
         self.name = "Rhys"
         self.health = 100
         self.defence = 10
-        self.attack = 100
+        self.attack = 10
         self.level = 1
         self.processing = 0
         self.score = 0
@@ -338,7 +338,7 @@ class System:
     
     def attack(system, attack_power):
         if player.level < 5:
-            system.enemy_resistance = random.randint(6, 25)  # Update the resistance level within the desired range
+            system.enemy_resistance = random.randint(3, 17)  # Update the resistance level within the desired range
         elif player.level >= 5 and player.level <= 10:
             system.enemy_resistance = random.randint(10, 35)  # Update the resistance level within the desired range
         else:
