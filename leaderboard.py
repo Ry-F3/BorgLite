@@ -72,7 +72,7 @@ def display_leaderboard(player):
     leaderboard_data = worksheet.get_all_values()
     # Display the leaderboard data in a table
     headers = leaderboard_data[0]
-    table_data = leaderboard_data[1:]  # Exclude the headers from the table data
+    table_data = leaderboard_data[1:11]  # Exclude the headers from the table data
 
     print(f"\n{tabulate(table_data, headers=headers)}")
 
