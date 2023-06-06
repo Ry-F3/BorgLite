@@ -9,9 +9,9 @@ class Player:
         self.name = "Rhys"
         self.health = 100
         self.defence = 10
-        self.attack = 10
+        self.attack = 100
         self.level = 1
-        self.processing = 0
+        self.processing = 1000
         self.score = 0
         self.rank = ""
         self.assimilate_planets = [] # List to store assimilated planets
@@ -30,9 +30,9 @@ class Player:
                 self.defence += upgrade.add_defence
                 self.attack += upgrade.add_attack
                 self.processing -= 100
-                print("\nUpgrade applied successfully!")
+                print("\n   >> Upgrade applied successfully!")
             else:
-                 print(f"\nInsufficient processing power. You have {player.processing} in storage.")
+                 print(f"\n   >> Insufficient processing power. You have {player.processing} in storage.")
 
         else:
             print("  >> Invalid.")
@@ -443,6 +443,9 @@ def attack_system(system, player):
                         player.increase_attack()
                         player.increase_defence()
                         type_text(f'\n   >> You have assimilated {system.planets[choice].name.upper()}\n')
+                        
+                        # if planets all assimilated what happens??? add here
+                        
                         break # Break back to main loop
                     else:
                         print("   >> Assimilation failed!\n")
@@ -545,12 +548,18 @@ if __name__ == "__main__":
                 try:
                     type_text("\n   >> Select a system to attack: ")
                     system_index = input().lower()
+                 
+               
                     if system_index == "q": # Breaking the game loop and exiting the system, for expanded player choice
                         game_over()
                     else:
                         system_index = int(system_index) - 1 # Indexing the stystems for player input
                         if system_index in range(len(systems)):
                             selected_system = systems[system_index]
+                            if all(planet.is_assimilated() for planet in selected_system.planets):
+                                type_text(f"   >> {selected_system.name} is under our control. Please select another destination.\n")
+                                continue # Go back to the beginning of the loop.
+                                
                             attack_system(selected_system, player)
                             break
                         else:
@@ -561,18 +570,26 @@ if __name__ == "__main__":
             if not player.is_alive():
                 game_over()
         elif choice == "u":
-            print("\nAvailable Upgrades:") # Display available upgrades
-            print(f"Costs power {power_icon} : - 100\n")
+            type_text("\n   >> Available Upgrades:\n") # Display available upgrades
+            print(f"   >> Costs power {power_icon} : - 100\n")
             player.upgrades = upgrades  
 
             for i, upgrade in enumerate(player.upgrades):
-                print(f"{i + 1}. {upgrade.name}")
+                print(f"   {i + 1}. {upgrade.name}")
 
-            choice = int(input("Select an upgrade to apply: ")) - 1
+            choice = int(input("\n   >> Select an upgrade to apply: ")) - 1
             player.apply_upgrade(choice, player.processing)
 
         elif choice == "l":
             display_leaderboard(player)
+            type_text("\n  >> would you like to contine? (y/n) \n")
+            type_text("  >> ")
+            choice = input().lower()
+            if choice == "y":
+                continue
+            else:
+                type_text("\n  >> System exiting ...")
+                sys.exit()
         elif choice == "q":
             level = ""
             score = ""
