@@ -225,7 +225,8 @@ The Python game code represents a text-based strategy game where the player cont
 
 * Game Over Handling:
     * If the player's health reaches zero during an attack or if the player chooses to exit the game, the <code>game_over()</code> function is called to end the game.
-    * <code>if not player.is_alive(): <br>  game_over() </code>
+    * <code>if not player.is_alive(): <br>  
+    game_over() </code>
     * The <code>is_alive()</code> method checks if the player's health is zero or below, indicating that the player has been defeated.
 
 <br>
@@ -312,8 +313,6 @@ The game utilizes user input prompts and displayed messages to interact with the
 
 ### **Game Over**
 When the game ends, if the player's health reaches zero, their final statistics are displayed, indicating the end of the game.
-
-<br>
 
 ### **Logic Overview: leaderboard.py Module**
 
