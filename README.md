@@ -86,7 +86,7 @@ To deploy the Borglite game on Heroku, follow these steps:
 
 5. To install the required dependencies, run the following command:  <code> pip install -r requirements.txt </code>
 
-6. This will install all the necessary packages, including the additional libraries:  <code>google-auth==2.19.1, google-auth-oauthlib==1.0.0, gspread==5.9.0, tabulate==0.9.0</code>
+6. This will install all the necessary packages, however you may need install additional libraries that were used for the development of Borglite:  <code> pip install google-auth google-auth-oauthlib gspread tabulate </code>
 
 <br>
 
