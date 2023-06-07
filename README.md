@@ -9,7 +9,7 @@
 ![Index page screenshot](/assets/images/amiresponsive.png)
 
 
-### **Borglite background:** 
+### **Borglite Background:** 
 A contemporary CLI (Command-Line Interface) game inspired by Star Trek and Retro Text-Based Games.
 As a player, you have the unique opportunity to step into the shoes of one of the fiercest enemies in the universe: the Borg.
 
@@ -99,14 +99,11 @@ Here's an expanded explanation of the gameplay:
     * Using backend technologies brings certain challenges in terms of delivering a unique and engaging experience. The visual representations used in Borglite, specifically ASCII art, aims to create a visually distinctive atmosphere while maintaining the retro and text-based aesthetic.
     * By defining these aspects within the scope, the development of Borglite can be structured and executed effectively, ensuring a cohesive and engaging gaming experience for players.
 
-
-
+ <br>   
 
 ## **Audience**
 
-
-
-
+Borglite is designed for fans of the Star Trek universe, retro gaming enthusiasts, and players who enjoy strategic gameplay. The game appeals to those seeking a unique experience that combines elements from the iconic Star Trek franchise, nostalgic retro text-based games, and strategic challenges. Whether you are a Star Trek enthusiast looking to step into playing as the Borg, or a fan of retro gaming seeking a captivating adventure, or a player who enjoys strategic decision-making and competing for high scores, Borglite offers an accessible and visually distinctive journey. The game's intuitive command-line interface (CLI) and simplistic ASCII art provide a creative and engaging experience for a wide range of players.
 
 ## **User Stories**
 
@@ -193,7 +190,181 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive" <br>
     ]</code>
 
- * You are now ready to run the game locally. Execute the following command:  <code> python3 game.py </code>
+e.  You are now ready to run the game locally. Execute the following command:  <code> python3 game.py </code>
+
+
+# **Python Game Logic Overview**
+The Python game code represents a text-based strategy game where the player controls a collective of drones tasked with assimilating planets in different systems. The game follows a turn-based approach and involves attacking enemy systems, upgrading the player's abilities, and managing resources.
+
+### **Main While loop**
+<br>
+
+* Loop Initialization:
+    *   <code>main_loop = True <br>
+            while main_loop == True:
+        </code>
+    *  The main_loop variable is set to True, indicating that the loop should continue running until explicitly terminated. The loop condition checks whether main_loop is still True, and if so, the loop body is executed.
+
+<br>
+
+* Choice Input and Processing:
+    * The player is prompted to make a choice by entering a character. The input is processed and compared using an if-elif-else statement to determine the appropriate action based on the chosen option.
+    * The player's choice is stored in the choice variable, which is initially an empty string. The <code>type_text()</code> function is used to display the prompt message to the player. The loop continues to prompt for input until a valid choice is entered (i.e., choice is not an empty string).
+
+<br>
+
+* Choice Handling:
+    * Once the player's choice is obtained, it is processed to perform the corresponding action. The if-elif-else statement handles the different possible choices:
+    * If the choice is <code>"a"</code>, the player is presented with a list of available systems to attack. They can select a system by entering the corresponding index.
+    * If the choice is <code>"u"</code>, the available upgrades are displayed, and the player can choose an upgrade to apply by entering the corresponding index.
+    * If the choice is <code>"l"</code>, the leaderboard is displayed, and the player is prompted to continue or exit the game.
+    * If the choice is <code>"q"</code>, the player's score and level are saved to the leaderboard, and the game is terminated.
+    * If none of the above options are chosen, an error message is displayed.
+
+<br>
+
+* Game Over Handling:
+    * If the player's health reaches zero during an attack or if the player chooses to exit the game, the <code>game_over()</code> function is called to end the game.
+    * <code>if not player.is_alive(): <br>  game_over() </code>
+    * The <code>is_alive()</code> method checks if the player's health is zero or below, indicating that the player has been defeated.
+
+<br>
+
+* Continuation of Loop:
+    * After completing an action, the loop continues from the beginning, displaying the player's stats and prompting for a new choice. This ensures that the game progresses in a continuous cycle until it is terminated.
+
+### **Secondary While Loop: Attack System()**
+The <code>attack_system(system, player)</code> function represents a secondary loop that is executed when the player successfully attacks a system. This loop allows the player to choose a planet from the attacked system to assimilate.
+
+* Assimilation of a Planet:
+    * Once the player successfully attacks a system, the <code>attack()</code> method from the AttackManager class is called to determine the success of the attack. If the attack is successful, the assimilation process begins.
+    * A while loop is used to handle the planet assimilation process: <code>while True:</code>
+
+<br>
+
+* Stopping the Main While Loop:
+    * At the start of the assimilation loop, the main_loop variable is set to False to stop the main game loop. This ensures that the player can only select a planet for assimilation and cannot perform any other actions until the process is complete: <code>main_loop = False</code>
+
+<br>
+
+* Displaying Available Planets:
+    * The available planets for assimilation are displayed to the player. Each planet is listed with its corresponding index.
+    * Once assimilated planets have a line passing through them as a visual to the player to remind them that they have assimilated that specific planet.
+    * <code>if planet.is_assimilated(): <br>
+        print(f"   {str(i + 1)}. {''.join(chr(822) + c for c in planet.name)} (Assimilated)") </code>
+
+<br>
+
+* Selecting a Planet for Assimilation:
+    * The player's choice is obtained and validated. If the choice is valid, the <code>assimilate_planet()</code> method of the system object is called to assimilate the selected planet. If assimilation is successful, the player's level, attack power, and defense power are increased accordingly. A success message is displayed to the player.
+
+<br>
+
+* Counterattack if Assimilation Fails:
+    * If the assimilation fails, indicating that the player's attack power was insufficient, a counterattack is initiated by randomly selecting a planet from the system to attack the player:
+    * <code>enemy_planet = random.choice(system.planets) <br>
+      enemy_planet.attack_player(player)</code>
+    * The <code>attack_player()</code> method of the enemy_planet is called to damage the player. If the player's health reaches zero, the game over condition is triggered.
+
+<br>
+
+* Outcome Based on Attack Power:
+    * After the counterattack, the outcome is determined based on the player's attack power and the enemy system's resistance. If the player's attack power is greater than the system's resistance, the enemy planet is ready to be assimilated and removed from the system as a player choice.
+    * <code>system.planets.remove(enemy_planet)</code>
+
+<br>
+
+* Directive for Next Course of Action:
+    * Once the assimilation or counterattack process is complete, the loop prompts the player to state their directives for the next course of action.
+    * The player can then choose their next action by entering the corresponding choice in the main game loop.
+
+<br>
+
+### **Player and Upgrades**
+
+The Player class represents the player's collective and tracks their attributes. It has properties like name, health, attack_power, defense_power, and level. The player can apply upgrades to enhance their abilities.
+
+The upgrades are defined in the Upgrades class, which uses a dictionary to store the upgrade details. Each upgrade is associated with a key, such as 'processing_power', and the corresponding value represents the enhancement it provides.
+
+### **Systems and Planets**
+
+The game consists of different systems, each represented by the System class. The System class has properties like name, enemy_resistance, and planets (a list of Planet objects).
+
+The system and planet data is loaded from the <code>load_systems_data()</code> function. It uses a dictionary to store the system details, with each key representing the system name and its corresponding value containing the system's attributes. Similarly, each planet within a system is represented as a dictionary.
+
+To access the planets within a system, the code iterates over the planets list using a for loop. This allows the game to retrieve and manipulate individual planets within a system.
+
+### **Attack and Assimilation**
+
+The AttackManager class plays a central role in managing the attack mechanism in the game. It calculates the success chance of an attack by considering both the player's attack power and the resistance level of the enemy system. By utilizing formulas and probability calculations, the game determines the outcome of the attack.
+
+If the attack is successful, meaning the player's attack power exceeds the enemy system's resistance level, the <code>attack_system()</code> function is invoked. This function presents the player with a list of available planets within the system for assimilation and allows them to choose a target. The code employs iteration to display the available planets and handles the planet selection process.
+
+On the other hand, if the attack fails due to the resistance level being too high, the enemy system retaliates with a counterattack. A specific planet from the system is selected to launch the counterattack on the player. This adds an element of challenge and unpredictability to the game, as the player must be prepared to defend against such counterattacks.
+
+To ensure greater variation in the game and make it progressively challenging, the resistance levels of the systems are stored in a variable called <code>used_resistance_levels</code>. This variable keeps track of the resistance levels that have been used before, ensuring that each turn in the game has a unique resistance level. This prevents the repetition of resistance levels and adds diversity to the gameplay experience.By incorporating counterattacks and unique resistance levels, the game becomes more dynamic and strategic.
+
+### **Game Flow and User Interaction**
+
+The game follows a loop structure to provide a continuous gameplay experience. The main game loop allows the player to choose actions and interact with the game world until specific conditions are met (e.g., the player's health reaches zero or the player chooses to quit).
+
+The game utilizes user input prompts and displayed messages to interact with the player. This is achieved using the <code>input()</code> and <code>print()</code> functions. The <code>type_text()</code> function is introduced to add a typewriter effect to the displayed messages for a better user experience. Not only that but it adds to the retro experience of the game.
+
+### **Game Over**
+When the game ends, if the player's health reaches zero, their final statistics are displayed, indicating the end of the game.
+
+<br>
+
+### **Logic Overview: leaderboard.py Module**
+
+* Import Required Modules:
+    * gspread: A library for accessing Google Sheets.
+    * Credentials from google.oauth2.service_account: A module for handling Google API credentials.
+    * tabulate module: A library for creating tables from data.
+
+<br>
+
+* Define Scope and Credentials:
+    * Define the required scopes for accessing Google Sheets.
+    * Load the credentials from the creds.json file.
+    * Authorize the credentials with the specified scopes.
+    * Authorize the Google Sheets API using the authorized credentials.
+
+<br>
+
+* Open Google Sheet:
+    * Open the specified Google Sheet (e.g., "borglite_rank").
+    * Access the "leaderboard" worksheet within the Google Sheet.
+
+<br>
+
+* Update Leaderboard:
+    * Define the <code>update_leaderboard(player)</code> function.
+    * Retrieve the existing leaderboard data from the worksheet.
+    * Extract the headers and scores from the retrieved data.
+    * Calculate the player's rank based on their score.
+    * Update the ranks of other players based on the player's rank.
+    * Check if the player's score already exists in the leaderboard.
+        * If it exists, update the existing entry with the player's rank, name, level, and score.
+        * If it doesn't exist and the player's score is not zero, add the player's data as a new entry.
+    * Sort the leaderboard data based on scores in descending order.
+    * Update the ranks based on the sorted order.
+    * Insert the headers back into the sorted data.
+    * Write the updated leaderboard data to the worksheet.
+
+<br>
+
+* Display Leaderboard:
+    * Define the <code>display_leaderboard(player)</code>function.
+    * Retrieve the leaderboard data from the worksheet.
+    * Extract the headers and table data (top 10 scores) from the retrieved data.
+    * Display the leaderboard data in a table using the tabulate module.
+
+<br>
+
+Note: The <code>update_leaderboard(player)</code> function is responsible for updating the leaderboard with the player's data, while the <code>display_leaderboard(player)</code> function displays the leaderboard to the player in a table format.
+
+The leaderboard.py module is imported and used in the run.py main file, where the game interface interacts with the leaderboard functionality. The <code>update_leaderboard()</code> and <code>display_leaderboard()</code> functions are called as needed within the game's logic flow to update and display the leaderboard data.
 
 ## **Bugs**
 
