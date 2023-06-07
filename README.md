@@ -43,12 +43,61 @@ Here's an expanded explanation of the gameplay:
 * By assimilating all planets, utilising upgrades wisely, engaging in hacking mini-games, and collecting power, you can strive for the highest score and dominate the leaderboard in Borglite.
 
 
-
-
-
-
 ## **Scope**
 
+<br>
+
+1. Gameplay Mechanics:
+
+    * Interact with the game through a Command-Line Interface (CLI).
+    * Engage in strategic battles and conquer enemy systems.
+    * Assimilate planets to expand the Borg's control and gain power.
+    * Utilize upgradeable abilities to enhance your drone's capabilities.
+    * Encounter a hacking mini-game when breaching systems without counter-offensive.
+    * Aim to achieve the highest score on the competitive leaderboard.
+
+<br>    
+
+2. Setting and Theme:
+
+    * Draw inspiration from the Star Trek universe, particularly the formidable Borg species.
+    * Combine elements of the Star Trek lore with a retro text-based gaming experience.
+    * Create a contemporary twist by infusing strategic gameplay and leaderboard competition.
+
+<br>    
+
+
+3. User Interface and Experience:
+
+    * Develop a user-friendly CLI interface for smooth interaction.
+    * Provide clear instructions and prompts to guide the player through the game.
+    * Implement intuitive controls and responsive gameplay mechanics.
+
+<br>    
+
+3. Game Progression and Difficulty:
+
+    * Design a progression system that challenges players to strategize and adapt.
+    * Increase the difficulty gradually as the player advances through the game.
+    * Provide opportunities for players to unlock new abilities or upgrades.
+
+<br>    
+
+4. Leaderboard and Competition:
+
+    * Implement a competitive leaderboard to showcase players' levels and scores.
+    * Enable players to compare their progress and compete for the top positions.
+    * Ensure fairness and accuracy in leaderboard calculations and updates.
+
+<br>    
+
+5. Limitations and Constraints:
+
+    * Focus the gameplay on the Borg perspective and their conquest for assimilation.
+    * Balance the game mechanics to provide an enjoyable and challenging experience.
+    * Limit the scope to the CLI interface, emphasizing text-based interactions.
+    * Using backend technologies brings certain challenges in terms of delivering a unique and engaging experience. The visual representations used in Borglite, specifically ASCII art, aims to create a visually distinctive atmosphere while maintaining the retro and text-based aesthetic.
+    * By defining these aspects within the scope, the development of Borglite can be structured and executed effectively, ensuring a cohesive and engaging gaming experience for players.
 
 
 
