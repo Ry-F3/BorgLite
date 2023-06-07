@@ -6,12 +6,11 @@
 ### To view the project please [click here](https://borglite.herokuapp.com/).
 <br>
 
-![Index page screenshot]()
+![Index page screenshot](/assets/images/amiresponsive.png)
 
 
-## **Background**
-
-### **Borglite:** <br> A contemporary CLI (Command-Line Interface) game inspired by Star Trek and Retro Text-Based Games.
+### **Borglite background:** 
+A contemporary CLI (Command-Line Interface) game inspired by Star Trek and Retro Text-Based Games.
 As a player, you have the unique opportunity to step into the shoes of one of the fiercest enemies in the universe: the Borg.
 
 ### **Inspired by Star Trek:**
