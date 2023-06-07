@@ -100,7 +100,9 @@ b. Rename the JSON file to "credentials.json" and place it in the root directory
 
 c. Copy the name of JSON file to .gitignore because it contains sensitive information about your google account.
 
-d. Add boilerplate code for your API: <br>  <code> import gspread <br>
+d. Add boilerplate code for your API:
+ <br>  
+ <code>import gspread <br>
 from google.oauth2.service_account import Credentials <br>
 
 
@@ -108,9 +110,7 @@ SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets", <br>
     "https://www.googleapis.com/auth/drive.file", <br>
     "https://www.googleapis.com/auth/drive" <br>
-    ]
-
- </code>
+    ]</code>
 
  * You are now ready to run the game locally. Execute the following command:  <code> python3 game.py </code>
 
