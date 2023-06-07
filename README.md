@@ -2,7 +2,7 @@
 
 # BorgLite 
 
-# Code Institute Portfolio Project 3: Python Essentials - Back end game deployed via Heroku.
+# Code Institute Portfolio Project 3: Python Essentials - Back End CLI Game Deployed Via Heroku.
 ### To view the project please [click here](https://borglite.herokuapp.com/).
 <br>
 
@@ -10,6 +10,39 @@
 
 
 ## **Background**
+
+### **Borglite:** <br> A contemporary CLI (Command-Line Interface) game inspired by Star Trek and Retro Text-Based Games.
+As a player, you have the unique opportunity to step into the shoes of one of the fiercest enemies in the universe: the Borg.
+
+### **Inspired by Star Trek:**
+Borglite takes inspiration from the vast and captivating Star Trek universe, renowned for its compelling narratives and memorable characters. In Borglite, you assume the role of a Borg, a cybernetic species driven by a relentless pursuit of perfection. Immerse yourself in the depths of space as you navigate through captivating storylines and encounter familiar Star Trek elements, all while striving to fulfill the Borg's insatiable thirst for power and assimilation.
+
+### **Retro Text-Based Games:**
+Borglite pays homage to the nostalgia of retro text-based games, where the power of imagination and storytelling thrived. With text-based interactions, Borglite encourages you to unleash your creativity and strategic thinking as you make decisions, engage in battles, and assimilate planets. The simple yet immersive text-based interface harks back to a bygone era of gaming while infusing it with contemporary twists.
+
+### **Contemporary Strategic Gameplay:**
+Borglite brings a contemporary edge to its strategic gameplay, allowing you to devise intricate plans and execute them to conquer systems and expand the Borg's influence. Engage in intense battles, utilize upgradeable abilities, and strategically assimilate planets to amass power and further your dominance. Each decision you make has consequences, requiring careful thought and consideration to outwit your opponents and climb the leaderboard.
+
+### **Competitive Leaderboard:**
+Borglite introduces a competitive element through its leaderboard system, pitting you against other players vying for supremacy. As you progress through the game, your actions and achievements contribute to your rank on the leaderboard. Can you rise above other players, asserting your dominance as the ultimate Borg commander? Climb the ranks, showcase your strategic prowess, and cement your place as a force to be reckoned with in the Borglite universe.
+
+### **Gameplay:**
+
+The objective of Borglite is to conquer various systems by attacking enemy planets and assimilating them under your control. <br>
+Here's an expanded explanation of the gameplay:
+<br>
+
+* The game displays a list of available systems to attack. Each system is represented by an index number. Choose a system by entering the corresponding index.
+* Once a system is selected, your drone will engage in battle with the enemy planets within that system. The battle outcome is determined by your drone's attack power and the enemy planet's resistance level.
+* If your drone successfully defeats all the enemy planets in a system, you can assimilate the system and gain control over it. Assimilating a system brings it under your influence and contributes to your overall progress.
+* As you progress in the game, you can earn power by assimilating planets. Power is a valuable resource that can be used to apply upgrades and enhance your drone's abilities. It can also be used to bypass the hacking mini game.
+* The game provides a range of available upgrades that you can apply to your drone. These upgrades can increase your drone's attack power, defence, or health. Use your earned power strategically to choose the most beneficial upgrades.
+* Along the way, you may encounter a hacking mini-game. This mini-game is randomly initiated when you breach a system without facing a counter-offensive from the enemy. If the hacking mini-game is activated, you will have the opportunity to play it, which acts as planetary defences.
+* The aim of the game is to assimilate all the planets in that system while collecting as much power as possible. The game entails strategic decisions to progress and achieve a high score.
+* The leaderboard keeps track of the top players based on their level and score. Aim to achieve the highest level and score possible to secure your position on the leaderboard and compete with other players.
+* After viewing the leaderboard, you can choose to continue playing and conquer more systems, assimilate planets, and increase your score. Alternatively, you can choose to exit the game and have your level and score saved on the leaderboard, but only the top 10 are visible.
+* By assimilating all planets, utilising upgrades wisely, engaging in hacking mini-games, and collecting power, you can strive for the highest score and dominate the leaderboard in Borglite.
+
 
 
 
@@ -80,7 +113,7 @@ To deploy the Borglite game on Heroku, follow these steps:
 
 1. Ensure you have Python 3 installed on your machine.
 
-2. Download the Borglite game source code from the GitHub repository. You can do this by clicking on the "Download ZIP" button on the repository page and extracting the contents to a folder of your choice. Alternatively, you can use the following command to clone the repository:  <code> git clone https://github.com/your-username/your-repo.git </code>
+2. Download the Borglite game source code from the GitHub repository. You can do this by clicking on the "Download ZIP" button on the repository page and extracting the contents to a folder of your choice. Alternatively, you can use the following command to clone the repository: <br>  <code> git clone https://github.com/your-username/your-repo.git </code>
 
 4. Open a terminal or command prompt and navigate to the folder where you placed the game's source code.
 
