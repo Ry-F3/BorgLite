@@ -18,11 +18,17 @@ class Player:
         self.upgrades = [] # List to store upgrades
         
     def leaderboard_player(self, level, score): # Player's leaderboard function calling the module leaderboard.py
-        
+        """
+        This function connects player objects to the leaderboard.py module. 
+        It extracts player information and passes it to the update_leaderboard() function, ensuring proper leaderboard updates.
+        """    
         player_row = {self.rank, self.name, self.level, self.score} # Create player_row object to pass to the update_leaderboard function
         update_leaderboard(player)
         
     def apply_upgrade(self, index, processing):
+        """
+        Apply upgrades to the player's class.
+        """
         if index >= 0 and index < len(self.upgrades):
             upgrade = self.upgrades[index]
             if self.processing >= 100:
@@ -57,6 +63,9 @@ class Player:
         return self.defence and self.health
     
     def hacking_damage(self, damage, has_defences): # Take damage from failure to hack defences
+        """
+        Player takes damage from the hacking mini game, if the player fails three times to figure out the code.
+        """
         damage_taken = damage
         if self.defence > 0:
             damage_taken = min(damage, self.health)  # Calculate the actual damage taken
@@ -72,6 +81,9 @@ class Player:
         return damage_taken
             
     def reduce_processing(self, processing, input_code):
+        """
+        Reduce power when player chooses to bypass hacking mini game.
+        """
         if input_code.lower() == "b" and self.processing >= 100:
             self.processing -= 100
             if self.processing < 0:
@@ -85,17 +97,20 @@ class Player:
         return self.health > 0
 
     def display_stats(self):
+        """
+        Display game interface featuring ASCII art.
+        """
         
         num_planets = len(self.assimilate_planets)
         self.score = self.processing * num_planets * self.level * self.attack
         
-        sw = "\033[37m" # white
+        sw = "\033[37m" # White
         ew = "\033[0m"
         
-        s = "\033[32m" # green
+        s = "\033[32m" # Green
         e = "\033[0m"
         
-        sr = "\033[31m" # red
+        sr = "\033[31m" # Red
         er = "\033[0m"
         
         
@@ -151,6 +166,10 @@ class Upgrades:
 
     @staticmethod
     def load_upgrades_data(heart_icon, sword_icon, shield_icon):
+        """
+        By using @staticmethod, we indicate that the method is independent of the instance and doesn't require access to instance-specific data. 
+        It allows the method to be called directly on the class itself, without the need to create an instance of the class.
+        """
         upgrades_data = [
             {
                 "name": f"Health Regeneration {heart_icon}  +50  {shield_icon}  -2 {sword_icon}  -2",
@@ -218,16 +237,20 @@ class System:
         self.planets = planets
 
     def assimilate_planet(self, planet_index, player):
+        """
+        The function responsible for assimilating planets and incorporates an embedded hacking mini-game,
+        that becomes active, when the planet's defenses are activated.
+        """
         if planet_index in range(len(self.planets)):
             planet = self.planets[planet_index]
             if not planet.is_assimilated():
-                if planet.has_defences: # Hacking mini game initiated randomly if boolean value is True1
+                if planet.has_defences: # Hacking mini game initiated randomly if boolean value is True
                     type_text(f"\n   >> {planet.name}'s defences initiated ...\n")
                     type_text("   >> Hacking sequence ... \n")
                     type_text("   >> START \n")
                     print("\n")
                     # ASCII art for code rain characters
-                    s = "\033[32m" # green
+                    s = "\033[32m" # Green
                     e = "\033[0m"
                     code_rain_chars = ['|', '/', '-', '\\']
                     
@@ -258,7 +281,7 @@ class System:
                             code.append(digit)
                         return code
                     
-                    # Function to generate random fake code
+                    # Function to generate random fake code to throw the player off the right answer
                     def generate_fake_code():
                         code = []
                         for _ in range(1):
@@ -308,7 +331,6 @@ class System:
                         else:
                             type_text(f"\n   >> Insufficient processing power. You have {player.processing} in storage.")
                             type_text("\n   >> The collective cannot bypass enemy systems right now.")
-                            # print(access_code)
                             
                         type_text("\n   >> Enter the access code (6 digits): ")
                         input_code = input()
@@ -336,18 +358,52 @@ class System:
             print("Invalid selection")
         return False
     
-    def attack(system, attack_power):
+class AttackManager:
+    used_resistance_levels = []  # Class variable to store used resistance levels
+
+    @staticmethod
+    def attack(system, attack_power, player):    # Update the resistance level within a randomised range
+        """
+        The attack method is a static method because it doesn't need access to any specific instance or class variables.
+        It takes the system, attack_power, and player as parameters and performs the attack calculations accordingly.
+        """
         if player.level < 5:
-            system.enemy_resistance = random.randint(3, 17)  # Update the resistance level within the desired range
+            lower_bound = 4 + random.randint(-3, 3)
+            upper_bound = 20 + random.randint(-3, 3)
+            resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
+            system.enemy_resistance = resistance_level
         elif player.level >= 5 and player.level <= 10:
-            system.enemy_resistance = random.randint(10, 35)  # Update the resistance level within the desired range
+            lower_bound = 10 + random.randint(-3, 3)
+            upper_bound = 35 + random.randint(-3, 3)
+            resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
+            system.enemy_resistance = resistance_level
         else:
-            system.enemy_resistance = random.randint(20, 65)  # Update the resistance level within the desired range
-            
-        success_chance = attack_power / system.enemy_resistance    
+            lower_bound = 20 + random.randint(-3, 3)
+            upper_bound = 65 + random.randint(-3, 3)
+            resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
+            system.enemy_resistance = resistance_level
+
+        success_chance = attack_power / system.enemy_resistance
         print("\n   -+++- Attacking", system.name, "with resistance level:", system.enemy_resistance)
         print(f"   -+++- Engagement Probability: {round(success_chance, 2)}\n")
         return success_chance >= 1
+
+    @classmethod
+    def get_unique_resistance_level(cls, lower_bound, upper_bound): # Generate a unique resistance level that hasn't been used before
+        """
+        The get_unique_resistance_level method is a class method because it needs access to the 
+        used_resistance_levels class variable to check for unique resistance levels. 
+        The method generates a random resistance level within the given range and ensures
+        it hasn't been used before by checking against the used_resistance_levels list. 
+        If the generated resistance level is not unique, it generates another one until a unique level is found.
+        Once a unique level is obtained, it is added to the used_resistance_levels list to prevent reuse.
+        """
+        resistance_level = random.randint(lower_bound, upper_bound)
+        while resistance_level in cls.used_resistance_levels:
+            resistance_level = random.randint(lower_bound, upper_bound)
+        cls.used_resistance_levels.append(resistance_level)
+        return resistance_level
+
 
 
 # Load systems data
@@ -415,10 +471,10 @@ def load_systems_data():
 # Assimilate a planet within a system
 def attack_system(system, player):
     
-    success = system.attack(player.attack)
+    success = AttackManager.attack(system, player.attack, player)
     if success:
         while True:
-            main_loop= False # Stop main loop
+            main_loop= False # Stop the main loop
              
             type_text("   >> We are Borg. Existence as you know it is over. Resistance is futile.\n")
             # Display the available planets for assimilation
@@ -499,7 +555,7 @@ if __name__ == "__main__":
     upgrades = Upgrades.load_upgrades_data("❤️", "⚔️", "🛡️")
     systems_data = load_systems_data()
     
-    s = "\033[32m" # green
+    s = "\033[32m" # Green
     e = "\033[0m"
     game_name = f""" {s}
 
@@ -539,10 +595,10 @@ if __name__ == "__main__":
     # cube = "▣"
 
     # Game loop
-
     main_loop = True
     while main_loop == True:
         player.display_stats()
+        # print(AttackManager.used_resistance_levels) uncomment to check the stored resistance values
         choice = ""
         type_text("   >> Enter your choice: ")
         while not choice:

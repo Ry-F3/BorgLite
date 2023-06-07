@@ -1,6 +1,6 @@
 import gspread
-from google.oauth2.service_account import Credentials
-from tabulate import tabulate
+from google.oauth2.service_account import Credentials # Google Api
+from tabulate import tabulate # Table module
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -8,20 +8,23 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive"
     ]
 
-CREDS = Credentials.from_service_account_file("creds.json")
+CREDS = Credentials.from_service_account_file("creds.json") 
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("borglite_rank")
 
-worksheet = SHEET.worksheet("leaderboard")
+worksheet = SHEET.worksheet("leaderboard") # Code above has been taken from the demo project
 
 def update_leaderboard(player):
+    """
+    Update the leaderboard with the player's rank, name, level and score.
+    """
     leaderboard_data = worksheet.get_all_values()
     headers = leaderboard_data[0]  # Extract headers
 
     # Extract the scores from the leaderboard data
-    scores = [int(row[3]) for row in leaderboard_data[1:]]  # Assuming scores are in the 4th column
-    ranks = [int(row[0]) for row in leaderboard_data[1:]]  # Assuming ranks are in the 1st column
+    scores = [int(row[3]) for row in leaderboard_data[1:]]  # Assuming scores are in the 4th column of the spreadsheet
+    ranks = [int(row[0]) for row in leaderboard_data[1:]]  # Assuming ranks are in the 1st column of the spreadsheet
 
     # Calculate the rank based on the scores
     rank = sum(score > player.score for score in scores) + 1
@@ -54,7 +57,7 @@ def update_leaderboard(player):
             row[0] = str(int(row[0]) + 1)
 
     # Sort the leaderboard data based on the scores in descending order
-    leaderboard_data[1:] = sorted(leaderboard_data[1:], key=lambda row: int(row[3]), reverse=True)  # Assuming scores are in the 4th column
+    leaderboard_data[1:] = sorted(leaderboard_data[1:], key=lambda row: int(row[3]), reverse=True)  # Assuming scores are in the 4th column of the spreadsheet
 
     # Update the ranks based on the sorted order
     for i, row in enumerate(leaderboard_data[1:], start=1):
@@ -69,10 +72,13 @@ def update_leaderboard(player):
     
 
 def display_leaderboard(player):
+    """
+    Display the leaderboard if te player selects to see it using the game interface.
+    """
     leaderboard_data = worksheet.get_all_values()
     # Display the leaderboard data in a table
-    headers = leaderboard_data[0]
-    table_data = leaderboard_data[1:11]  # Exclude the headers from the table data
+    headers = leaderboard_data[0] # Show the headers
+    table_data = leaderboard_data[1:11]  # Exclude the headers from the table data and show the top 10 scores, but the api will store all of the data
 
     print(f"\n{tabulate(table_data, headers=headers)}")
 
