@@ -281,7 +281,7 @@ class System:
                             code.append(digit)
                         return code
                     
-                    # Function to generate random fake code to throw the player off the right answer
+                    # Function to generate random fake code to throw the player off
                     def generate_fake_code():
                         code = []
                         for _ in range(1):

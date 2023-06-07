@@ -1,32 +1,109 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
-Welcome,
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **March 14, 2023**
+# BorgLite 
 
-## Reminders
+# Code Institute Portfolio Project 3: Python Essentials - Back end game deployed via Heroku.
+### To view the project please [click here](https://borglite.herokuapp.com/).
+<br>
 
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
+![Index page screenshot]()
 
-## Creating the Heroku app
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+## **Background**
 
-1. `heroku/python`
-2. `heroku/nodejs`
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
 
-Connect your GitHub repository and deploy as normal.
 
-## Constraints
+## **Scope**
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
 
----
 
-Happy coding!
+
+
+## **Audience**
+
+
+
+
+
+## **User Stories**
+
+
+
+
+## **Bugs**
+
+**List of known bugs:**
+
+
+
+
+**List of fixed bugs**
+
+
+
+
+## **Technologies**
+
+* [Github](https://github.com/) 
+    * Hosted the project's repository. 
+
+* [Gitpod](https://gitpod.io/) 
+    * Utilised an IDE with version control capabilities to edit and create files.
+
+* [Github Pages](https://pages.github.com/) 
+    * Used to deploy the website.
+
+* [Slack](https://slack.com/intl/en-gb/) 
+    * Used a platform to connect with my mentor and fellow course alumni.
+
+
+## **Testing**
+
+### **Testing User Stories**
+
+| User Story   | Fulfilment | 
+| ------------------------------------------------------------------ |:---------------------------------------------|
+
+
+### **Testing functionality**
+
+| Input     | Result   | Intention   |
+| ------------------------------------------------------------------ |:---------------------------------------------| :---------------------------------------------------------|
+
+
+### **Testing on different devices**
+
+
+
+## **Credits**
+
+Developed by **Rhys.Alexander.Few**
+
+### **Code**
+
+**Peer Review**
+
+* **Adam Boley** 
+    *  - [Github](https://github.com/AdamBoley).
+
+<br>
+
+* **Antonio Rodriguez** 
+  
+
+
+**Other Resources**
+
+
+**Bibliography:**
+
+
+
+
+
+
+
+
+
