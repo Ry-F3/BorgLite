@@ -180,7 +180,7 @@ class Upgrades:
                 "add_attack": 1,
             },
             {
-                "name": f"Cybernetic Implant  {sword_icon}  +2  {heart_icon}  -10" ,
+                "name": f"Cybernetic Implant  {sword_icon}  +2   {heart_icon}  -10" ,
                 "add_attack": 2,
                 "add_health": -10,
             }
@@ -424,6 +424,7 @@ class HelpSection:
         ye = "\033[0m"
         print(f"\n   >>{ys} Level Up:{ye}")
         type_text("   >> As you level up, your baseline values increase.\n")
+        type_text("      - Each planet assimilated increases the drone's level.\n")
         type_text("      - Each level up adds +2 to your attack and +2 to your defense.\n")
         type_text("      - Baseline values represent your base attack and defense without upgrades.\n")
 
