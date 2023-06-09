@@ -422,7 +422,7 @@ class HelpSection:
     def show_level_up(self):
         ys = "\033[33m"
         ye = "\033[0m"
-        print(f"\n   >>{ys}Level Up:{ye}")
+        print(f"\n   >>{ys} Level Up:{ye}")
         type_text("   >> As you level up, your baseline values increase.\n")
         type_text("      - Each level up adds +2 to your attack and +2 to your defense.\n")
         type_text("      - Baseline values represent your base attack and defense without upgrades.\n")
@@ -442,7 +442,9 @@ class HelpSection:
         ye = "\033[0m"
         print(f"\n   >> {ys}Borg Directive:{ye}")
         type_text("   >> The main objective of the game is to assimilate planets and collect power.\n")
-        type_text("   >> Power collected will translate into your player score but is also used to upgrade your drone.\n")
+        type_text("   >> Assimilation of each planet grants you power as a valuable resource.\n")
+        type_text("   >> Power assimilated contributes to your collective score.\n")
+        type_text("   >> Assimilated power fuels the enhancement of your drone.\n")
         type_text("   >> Your ultimate goal is to achieve a high score and secure a place on the leaderboard.\n")
 
     def show_system_names(self):
