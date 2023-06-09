@@ -741,12 +741,10 @@ if __name__ == "__main__":
                         else:
                             type_text("\n   >> Insufficient processing power. Upgrade not applied.\n")
                             if upgrade_applied:
-                                print("already applied")
                                 selected_upgrade = previous_upgrade  # Revert back to the previously selected upgrade
                                 break
                             elif not upgrade_applied:
                                 selected_upgrade = None
-                                print("not applied")
                                 break
                         break
                             
