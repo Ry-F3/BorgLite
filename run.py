@@ -203,7 +203,7 @@ class Planet:
         self.level = level + 1
         self.attack_points = random.randint(5, 25) + level
         self.defence_points = random.randint(5, 25) + level
-        self.has_defences = random.choice([False]) # Randomise defences for planets
+        self.has_defences = random.choice([True, False]) # Randomise defences for planets
 
     def attack_player(self, player):
         damage_dealt = self.attack_points
@@ -601,7 +601,10 @@ def type_text(text, delay=0.02):
 
 # Game over
 def game_over():
+    level = ""
+    score = ""
     player.display_game_finished()
+    player.leaderboard_player(level, score)
     type_text("\n   >> GAME OVER\n")
     sys.exit()
 
@@ -693,9 +696,6 @@ if __name__ == "__main__":
                             
                             if all(all(planet.is_assimilated() for planet in system.planets) for system in systems):
                                 type_text("\n   >> Congratulations! You have assimilated all systems. You win!\n")
-                                level = ""
-                                score = ""
-                                player.leaderboard_player(level, score)
                                 game_over()    
                             break
                         else:
@@ -751,7 +751,7 @@ if __name__ == "__main__":
             else:
                 type_text("\n  >> System exiting ...")
                 sys.exit()
-        elif choice == "h":
+        elif choice == "h": # Help section 
             help_section = HelpSection()
             while True:
                 help_section.display()
@@ -767,19 +767,17 @@ if __name__ == "__main__":
                 elif section_choice == "4":
                     help_section.show_system_names()
                 elif section_choice == "5":
-                    print("\n   >> Exiting Help Section...")
+                    type_text("\n   >> Exiting Help Section...\n")
+                    print("")
                     break
                 else:
-                    print("\n   >> Invalid section choice. Please enter a number between 1 and 5.")
+                    type_text("\n   >> Invalid section choice. Please enter a number between 1 and 5.")
 
                 print("\n   >> Press any key to continue", end=" ")
                 input()
                 
 
         elif choice == "q":
-            level = ""
-            score = ""
-            player.leaderboard_player(level, score)
             game_over()
         else:
             type_text("   >> Invalid key. Please try 'a', 'u', 'l' and 'q'.")
