@@ -25,23 +25,20 @@ class Player:
         player_row = {self.rank, self.name, self.level, self.score} # Create player_row object to pass to the update_leaderboard function
         update_leaderboard(player)
         
-    def apply_upgrade(self, index, processing):
+    def apply_upgrade(self, upgrade, processing):
         """
         Apply upgrades to the player's class.
         """
-        if index >= 0 and index < len(self.upgrades):
-            upgrade = self.upgrades[index]
-            if self.processing >= 100:
-                self.health += upgrade.add_health
-                self.defence += upgrade.add_defence
-                self.attack += upgrade.add_attack
-                self.processing -= 100
-                print("\n   >> Upgrade applied successfully!")
-            else:
-                 print(f"\n   >> Insufficient processing power. You have {player.processing} in storage.")
-
+        self.health += upgrade.add_health
+        self.defence += upgrade.add_defence
+        self.attack += upgrade.add_attack
+        
+        # Check if it's the initial upgrade application
+        if processing >= 100:
+            self.processing -= 100
+            print("\n   >> Upgrade applied successfully!")
         else:
-            print("  >> Invalid.")
+            print(f"\n   >> Upgrade applied successfully! No processing power consumed.")
         
     def increase_attack(self): # Increase attack each level
         self.attack += 2
@@ -172,19 +169,20 @@ class Upgrades:
         """
         upgrades_data = [
             {
-                "name": f"Health Regeneration {heart_icon}  +50  {shield_icon}  -2 {sword_icon}  -2",
-                "add_health": 50,
-                "add_defence": -2,
-                "add_attack": -2,
+                "name": f"Health Regeneration {heart_icon}  +10  {shield_icon}  +2",
+                "add_health": 5,
+                "add_defence": 2,
             },
             {
-                "name": f"Adaptive Shielding {shield_icon}  +50 {sword_icon}  -2",
-                "add_defence": 50,
-                "add_attack": -2
+                "name": f"Adaptive Shielding {shield_icon}  +15  {heart_icon}  -5 {sword_icon}   +1",
+                "add_defence": 15,
+                "add_health": -5,
+                "add_attack": 1,
             },
             {
-                "name": f"Cybernetic Implant {sword_icon}  +5",
-                "add_attack": 5
+                "name": f"Cybernetic Implant {sword_icon}  +2  {heart_icon}  -10" ,
+                "add_attack": 2,
+                "add_health": -10,
             }
         ]
         
@@ -205,7 +203,7 @@ class Planet:
         self.level = level + 1
         self.attack_points = random.randint(5, 25) + level
         self.defence_points = random.randint(5, 25) + level
-        self.has_defences = random.choice([True, False]) # Randomise defences for planets
+        self.has_defences = random.choice([False]) # Randomise defences for planets
 
     def attack_player(self, player):
         damage_dealt = self.attack_points
@@ -357,7 +355,8 @@ class System:
         else:
             print("Invalid selection")
         return False
-    
+
+# Define AttackManager Class   
 class AttackManager:
     used_resistance_levels = []  # Class variable to store used resistance levels
 
@@ -367,12 +366,12 @@ class AttackManager:
         The attack method is a static method because it doesn't need access to any specific instance or class variables.
         It takes the system, attack_power, and player as parameters and performs the attack calculations accordingly.
         """
-        if player.level < 5:
+        if player.level < 6:
             lower_bound = 4 + random.randint(-3, 3)
             upper_bound = 20 + random.randint(-3, 3)
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
             system.enemy_resistance = resistance_level
-        elif player.level >= 5 and player.level <= 10:
+        elif player.level >= 6 and player.level <= 10:
             lower_bound = 10 + random.randint(-3, 3)
             upper_bound = 35 + random.randint(-3, 3)
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
@@ -470,7 +469,7 @@ def load_systems_data():
 
 # Assimilate a planet within a system
 def attack_system(system, player):
-    
+    initial_upgrade_applied = True
     success = AttackManager.attack(system, player.attack, player)
     if success:
         while True:
@@ -499,7 +498,13 @@ def attack_system(system, player):
                         player.increase_attack()
                         player.increase_defence()
                         type_text(f'\n   >> You have assimilated {system.planets[choice].name.upper()}\n')
-                        
+                        if selected_upgrade is not None:
+                            if initial_upgrade_applied:
+                                player.apply_upgrade(selected_upgrade, 0)  # Apply the upgrade without deducting processing power
+                            else:
+                                player.apply_upgrade(selected_upgrade, player.processing)
+                                initial_upgrade_applied = True
+                        break
                         # if planets all assimilated what happens??? add here
                         
                         break # Break back to main loop
@@ -596,8 +601,16 @@ if __name__ == "__main__":
 
     # Game loop
     main_loop = True
+    selected_upgrade = None
+    initial_upgrade_applied = False
+
+    upgrade_applied = False
     while main_loop == True:
         player.display_stats()
+        
+        # print(player.upgrades)
+        # print(selected_upgrade)
+        
         # print(AttackManager.used_resistance_levels) uncomment to check the stored resistance values
         choice = ""
         type_text("   >> Enter your choice: ")
@@ -613,6 +626,9 @@ if __name__ == "__main__":
                     system_index = input().lower()
             
                     if system_index == "q": # Breaking the game loop and exiting the system, for expanded player choice
+                        level = ""
+                        score = ""
+                        player.leaderboard_player(level, score)
                         game_over()
                     else:
                         system_index = int(system_index) - 1 # Indexing the stystems for player input
@@ -621,8 +637,14 @@ if __name__ == "__main__":
                             if all(planet.is_assimilated() for planet in selected_system.planets):
                                 type_text(f"   >> {selected_system.name} is under our control. Please select another destination.\n")
                                 continue # Go back to the beginning of the loop.
-                                
                             attack_system(selected_system, player)
+                            
+                            if all(all(planet.is_assimilated() for planet in system.planets) for system in systems):
+                                type_text("\n   >> Congratulations! You have assimilated all systems. You win!\n")
+                                level = ""
+                                score = ""
+                                player.leaderboard_player(level, score)
+                                game_over()    
                             break
                         else:
                             type_text("   >> Invalid system index. Please try again.")
@@ -634,17 +656,42 @@ if __name__ == "__main__":
         elif choice == "u":
             type_text("\n   >> Available Upgrades:\n") # Display available upgrades
             print(f"   >> Costs power {power_icon} : - 100\n")
-            player.upgrades = upgrades  
+            upgrades_available = [upgrade for upgrade in upgrades if upgrade not in player.upgrades] 
+            
+            while True:
+                for i, upgrade in enumerate(upgrades_available):
+                    print(f"   {i + 1}. {upgrade.name}")
+                    
+                choice = input("\n   >> Select an upgrade to apply (or 'b' to go back): ")
 
-            for i, upgrade in enumerate(player.upgrades):
-                print(f"   {i + 1}. {upgrade.name}")
-
-            choice = int(input("\n   >> Select an upgrade to apply: ")) - 1
-            player.apply_upgrade(choice, player.processing)
+                if choice == "b": # Give the player the option to go back to the beginning of the outer loop
+                    break
+                
+                try:
+                    """
+                    The player has the option to apply an upgrade costing 100 power, 
+                    these values will be applied immediately and each subsequent level.
+                    Until the upgrade is replaced.
+                    """
+                    choice = int(choice) - 1 
+                    if choice in range(len(upgrades_available)):
+                        selected_upgrade = None
+                        selected_upgrade = upgrades_available[choice]
+                      
+                        if player.processing >= 100:
+                            player.apply_upgrade(selected_upgrade, player.processing)
+                            initial_upgrade_applied = True
+                            upgrade_applied = True
+                        else:
+                            type_text("\n   >> Insufficient processing power. Upgrade not applied.\n")
+                        break
+                            
+                except ValueError:
+                    type_text("   >> Invalid input. Please enter a valid upgrade index or 'b' to go back.\n")       
 
         elif choice == "l":
             display_leaderboard(player)
-            type_text("\n  >> would you like to contine? (y/n) \n")
+            type_text("\n  >> would you like to continue? (y/n) \n")
             type_text("  >> ")
             choice = input().lower()
             if choice == "y":
@@ -659,3 +706,4 @@ if __name__ == "__main__":
             game_over()
         else:
             type_text("   >> Invalid key. Please try 'a', 'u', 'l' and 'q'.")
+           
