@@ -174,13 +174,13 @@ class Upgrades:
                 "add_defence": 2,
             },
             {
-                "name": f"Adaptive Shielding {shield_icon}  +15  {heart_icon}  -5 {sword_icon}   +1",
+                "name": f"Adaptive Shielding  {shield_icon}  +15  {heart_icon}  -5 {sword_icon}   +1",
                 "add_defence": 15,
                 "add_health": -5,
                 "add_attack": 1,
             },
             {
-                "name": f"Cybernetic Implant {sword_icon}  +2  {heart_icon}  -10" ,
+                "name": f"Cybernetic Implant  {sword_icon}  +2  {heart_icon}  -10" ,
                 "add_attack": 2,
                 "add_health": -10,
             }
