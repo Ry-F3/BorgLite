@@ -402,6 +402,58 @@ class AttackManager:
             resistance_level = random.randint(lower_bound, upper_bound)
         cls.used_resistance_levels.append(resistance_level)
         return resistance_level
+    
+# Define the help class  
+class HelpSection:
+    # Color Yellow
+    ys = "\033[33m"
+    ye = "\033[0m"
+    
+    def display(self):
+        ys = "\033[33m"
+        ye = "\033[0m"
+        type_text(f"\n   >> {ys}Need Help?:{ye}\n")
+        print("   1. Level Up")
+        print("   2. Upgrades")
+        print("   3. Objective")
+        print("   4. System Names")
+        print("   5. Exit")
+
+    def show_level_up(self):
+        ys = "\033[33m"
+        ye = "\033[0m"
+        print(f"\n   >>{ys}Level Up:{ye}")
+        type_text("   >> As you level up, your baseline values increase.\n")
+        type_text("      - Each level up adds +2 to your attack and +2 to your defense.\n")
+        type_text("      - Baseline values represent your base attack and defense without upgrades.\n")
+
+    def show_upgrades(self):
+        ys = "\033[33m"
+        ye = "\033[0m"
+        print(f"\n   >>{ys} Upgrades:{ye}")
+        type_text("   >> Upgrades cost power and are applied immediately and affect your stats.\n")
+        type_text("      - Each upgrade's values are subsequently applied per level.\n")
+        type_text("      - When a new upgrade is selected, the previous upgrade is replaced.\n")
+        type_text("      - Upgrades can enhance your attack, defense, or other abilities.\n")
+        type_text("      - Be wary of the upgrade deficiencies that may adversely impact your stats.\n")
+
+    def show_objective(self):
+        ys = "\033[33m"
+        ye = "\033[0m"
+        print(f"\n   >> {ys}Borg Directive:{ye}")
+        type_text("   >> The main objective of the game is to assimilate planets and collect power.\n")
+        type_text("   >> Power collected will translate into your player score but is also used to upgrade your drone.\n")
+        type_text("   >> Your ultimate goal is to achieve a high score and secure a place on the leaderboard.\n")
+
+    def show_system_names(self):
+        ys = "\033[33m"
+        ye = "\033[0m"
+        print(f"\n   >> {ys}System Names:{ye}")
+        type_text("   1. ALPHA\n")
+        type_text("   2. BETA\n")
+        type_text("   3. GAMMA\n")
+        type_text("   4. DELTA\n")
+        type_text("   5. EPSILON\n")
 
 
 
@@ -699,6 +751,31 @@ if __name__ == "__main__":
             else:
                 type_text("\n  >> System exiting ...")
                 sys.exit()
+        elif choice == "h":
+            help_section = HelpSection()
+            while True:
+                help_section.display()
+                type_text("\n   >> Enter the number of the section you want to view: ")
+                section_choice = input()
+
+                if section_choice == "1":
+                    help_section.show_level_up()
+                elif section_choice == "2":
+                    help_section.show_upgrades()
+                elif section_choice == "3":
+                    help_section.show_objective()
+                elif section_choice == "4":
+                    help_section.show_system_names()
+                elif section_choice == "5":
+                    print("\n   >> Exiting Help Section...")
+                    break
+                else:
+                    print("\n   >> Invalid section choice. Please enter a number between 1 and 5.")
+
+                print("\n   >> Press any key to continue", end=" ")
+                input()
+                
+
         elif choice == "q":
             level = ""
             score = ""
