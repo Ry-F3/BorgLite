@@ -11,7 +11,7 @@ class Player:
         self.defence = 10
         self.attack = 10
         self.level = 1
-        self.processing = 0
+        self.processing = 100
         self.score = 0
         self.rank = ""
         self.assimilate_planets = [] # List to store assimilated planets
@@ -737,8 +737,17 @@ if __name__ == "__main__":
                             player.apply_upgrade(selected_upgrade, player.processing)
                             initial_upgrade_applied = True
                             upgrade_applied = True
+                            previous_upgrade = selected_upgrade  # Keep track of the previously selected upgrade
                         else:
                             type_text("\n   >> Insufficient processing power. Upgrade not applied.\n")
+                            if upgrade_applied:
+                                print("already applied")
+                                selected_upgrade = previous_upgrade  # Revert back to the previously selected upgrade
+                                break
+                            elif not upgrade_applied:
+                                selected_upgrade = None
+                                print("not applied")
+                                break
                         break
                             
                 except ValueError:
