@@ -460,13 +460,13 @@ class AttackManager:
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
             system.enemy_resistance = resistance_level
         elif player.level >= 6 and player.level <= 10:
-            lower_bound = 10 + random.randint(-3, 3)
-            upper_bound = 35 + random.randint(-3, 3)
+            lower_bound = 15 + random.randint(-3, 5)
+            upper_bound = 35 + random.randint(-3, 5)
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
             system.enemy_resistance = resistance_level
         else:
-            lower_bound = 20 + random.randint(-3, 3)
-            upper_bound = 65 + random.randint(-3, 3)
+            lower_bound = 30 + random.randint(-3, 10)
+            upper_bound = 70 + random.randint(-3, 10)
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
             system.enemy_resistance = resistance_level
 
