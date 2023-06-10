@@ -9,7 +9,7 @@ class Player:
         self.name = ""
         self.health = 100
         self.defence = 10
-        self.attack = 10
+        self.attack = 100
         self.level = 1
         self.processing = 0
         self.score = 0
@@ -45,6 +45,16 @@ class Player:
 
     def increase_defence(self): # Increase defence each level
         self.defence += 2
+        
+    def increase_processing(self):
+        power = random.randint(25,50)
+        self.processing += power
+        print(f"   >> You recieved a power{power_icon} bonus: {power}")
+        
+    def decrease_processing(self):
+        power = random.randint(25,50)
+        self.processing -= power
+        print(f"   >> You loose power{power_icon}: {power}")
 
     def take_damage(self, damage): # Take damage from system by individual planets
         if self.defence > 0:
@@ -114,7 +124,7 @@ class Player:
         art = f"""  {s}                          
  ________.--------------._______________________________________________________________
  |  ||__| [_]|                    |                                                     |
- |  |     [_]|    {sw}Player Stats:  {ew}{s} | {e}    {sw} Power  {power_icon} : {self.processing} {ew}   {s}    |  {e}   {sw}score: {self.score}  {ew} {s}       
+ |  |     [_]|    {sw}Player Stats:  {ew}{s} | {e}    {sw} Power {power_icon} : {self.processing} {ew}   {s}    |  {e}   {sw}score: {self.score}  {ew} {s}       
  |__|_____[_]|____________________|_____________________________________________________|                                                     
  | | {sw}PWR{ew}{s} |  |{sw} ::{ew}{s} |{sw}-++++-{ew}{s} |   ||   |                                                     |
  | | {sw}OFF{ew}{s} |  |_{sw}::{ew}{s}_|{sw} /-/-/-{ew}{s}|___||___|  {sw} Health {heart_icon}  : { self.health }   Attack {sword_icon}  : { self.attack }   Defence{shield_icon}  : { self.defence}    {ew} {s}                                            
@@ -203,7 +213,7 @@ class Planet:
         self.level = level + 1
         self.attack_points = random.randint(5, 25) + level
         self.defence_points = random.randint(5, 25) + level
-        self.has_defences = random.choice([True, False]) # Randomise defences for planets
+        self.has_defences = random.choice([False]) # Randomise defences for planets
 
     def attack_player(self, player):
         damage_dealt = self.attack_points
@@ -336,6 +346,7 @@ class System:
                         if check_code(input_code, access_code):
                             print("   >> Access granted...")
                             planet.assimilate(player)
+                            self.check_assimilation_events(system, player, self.backstories)
                             return True
                         else:
                             attempts_left -= 1
@@ -349,12 +360,89 @@ class System:
                                 print(f"\n   >> You took damage {player_damage}. Health remaining {player.health}.")
                 else:
                     planet.assimilate(player)
+                    self.check_assimilation_events(system, player, self.backstories)
                     return True
             else:
                 print(planet.name, "is already assimilated!")
         else:
             print("Invalid selection")
         return False
+    
+    # Define a list of backstories
+    backstories = [
+        {
+            "backstory": "   >> While exploring the sector... \n    - Just before completing the assimilation process on the final planet in the system. \n    - Your Borg probes come across an abandoned mining vessel drifting in space.\n    - The vessel appears to have been derelict for some time, It's systems inactive and\n    - its cargo hold potentially containing valuable resources.\n",
+            "choice_prompt": "\n   >> What do you wish to do?\n  \n   [1] Board the mining vessel and scavenge its resources.\n   [2] Put our new weaponry to the test, take no chances.\n   [3] Ignore the vessel and continue with the primary mission\n",
+            "choice_1_text": "You decide to board the mining vessel and scavenge its resources.",
+            "choice_2_text": "You unleash the destructive power of your new weapons, obliterating the vessel.",
+            "choice_3_text": "You ignore the vessel and focus on the primary mission."
+        },
+        {
+            "backstory": "   >> While exploring the sector... \n    - Just before completing the assimilation process on the final planet in the system. \n    - Your Borg probes come across an abandoned mining vessel drifting in space.\n    - The vessel appears to have been derelict for some time, It's systems inactive and\n    - its cargo hold potentially containing valuable resources.\n",
+            "choice_prompt": "\n   >> What do you wish to do?\n  \n   [1] Board the mining vessel and scavenge its resources.\n   [2] Put our new weaponry to the test, take no chances.\n   [3] Ignore the vessel and continue with the primary mission\n",
+            "choice_1_text": "You decide to board the mining vessel and scavenge its resources.",
+            "choice_2_text": "You unleash the destructive power of your new weapons, obliterating the vessel.",
+            "choice_3_text": "You ignore the vessel and focus on the primary mission."
+        }, 
+        {
+            "backstory": "   >> While exploring the sector... \n    - Just before completing the assimilation process on the final planet in the system. \n    - Your Borg probes come across an abandoned mining vessel drifting in space.\n    - The vessel appears to have been derelict for some time, It's systems inactive and\n    - its cargo hold potentially containing valuable resources.\n",
+            "choice_prompt": "\n   >> What do you wish to do?\n  \n   [1] Board the mining vessel and scavenge its resources.\n   [2] Put our new weaponry to the test, take no chances.\n   [3] Ignore the vessel and continue with the primary mission\n",
+            "choice_1_text": "You decide to board the mining vessel and scavenge its resources.",
+            "choice_2_text": "You unleash the destructive power of your new weapons, obliterating the vessel.",
+            "choice_3_text": "You ignore the vessel and focus on the primary mission."
+        },   
+    ]
+    
+    def check_assimilation_events(self, system, player, backstories):
+        if all(planet.is_assimilated() for planet in selected_system.planets):
+            # Randomly select a backstory
+            chosen_backstory = random.choice(backstories)
+            backstory_text = chosen_backstory["backstory"]
+            choice_prompt_text = chosen_backstory["choice_prompt"]
+            choice_1_text = chosen_backstory["choice_1_text"]
+            choice_2_text = chosen_backstory["choice_2_text"]
+            choice_3_text = chosen_backstory["choice_3_text"]
+            
+            type_text(f"\n   >> Drone, you have consolidated power within the {selected_system.name}.\n")
+            type_text("   >> We are Borg.\n")
+            type_text("   \n")
+            type_text(backstory_text)  # Print the randomly chosen backstory
+            
+            type_text(choice_prompt_text)  # Print the choice prompt
+            choice = input("\n   >> Enter your choice 1, 2 or 3 : ")  # Get the player's choice
+            
+            if choice == "1":
+                type_text(f"\n   >> {choice_1_text}\n")
+                # Perform actions for choice 1
+                final_result = random.choice([True, False])
+                
+                if final_result == True:
+                    # Perform actions for result_one
+                    print("Result One")
+                    player.increase_processing()
+                elif final_result == False:
+                    type_text("   >> SIGNAL LOST ... \n")
+                    player.decrease_processing()
+                    
+                else:
+                    # Perform actions for result_two
+                    # print("Result Two")
+                    player.decrease_processing()
+             
+            elif choice == "2":
+                type_text(f"\n   >> {choice_2_text}\n")
+                player.increase_attack()
+                print(f"   >> You get an attack {sword_icon}   bonus: +2")
+            
+            elif choice == "3":
+                type_text(f"\n   >> {choice_3_text}\n")
+                # Perform actions for choice 2
+                
+            else:
+                type_text("   >> Invalid input. Please enter 1 or 2.")
+                # Handle invalid choice
+
+         
 
 # Define AttackManager Class   
 class AttackManager:
@@ -402,6 +490,7 @@ class AttackManager:
             resistance_level = random.randint(lower_bound, upper_bound)
         cls.used_resistance_levels.append(resistance_level)
         return resistance_level
+    
     
 # Define the help class  
 class HelpSection:
