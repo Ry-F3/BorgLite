@@ -180,7 +180,7 @@ class Upgrades:
         upgrades_data = [
             {
                 "name": f"Health Regeneration {heart_icon}  +10  {shield_icon}  +2",
-                "add_health": 5,
+                "add_health": 10,
                 "add_defence": 2,
             },
             {
