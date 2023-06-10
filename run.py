@@ -9,7 +9,7 @@ class Player:
         self.name = ""
         self.health = 100
         self.defence = 10
-        self.attack = 100
+        self.attack = 10
         self.level = 1
         self.processing = 0
         self.score = 0
@@ -213,7 +213,7 @@ class Planet:
         self.level = level + 1
         self.attack_points = random.randint(5, 25) + level
         self.defence_points = random.randint(5, 25) + level
-        self.has_defences = random.choice([False]) # Randomise defences for planets
+        self.has_defences = random.choice([True, False]) # Randomise defences for planets
 
     def attack_player(self, player):
         damage_dealt = self.attack_points
