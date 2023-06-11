@@ -424,8 +424,13 @@ The leaderboard.py module is imported and used in the run.py main file, where th
 ### **Testing User Stories**
 
 | User Story   | Fulfilment | 
-| ------------------------------------------------------------------ |:---------------------------------------------|
-
+| ------------------------------------------------------------------ |:---------------------------------------------| 
+As a Star Trek enthusiast, I wish to immerse myself in the captivating Star Trek universe by playing as the Borg, one of the iconic species from the franchise. | The player starts the game as the Borg and becomes part of the collective. 
+| As a player, I want to strategise and plan my actions carefully to ensure the success of the Borg collective in conquering new territories and assimilating other civilisations. | The game provides strategic choices and decision-making opportunities for the player to assess their stats, manage resources, and upgrade their character. The player needs to balance their upgrades carefully, considering the bonuses and debuffs associated with each upgrade, to ensure survival and progress onto the leaderboard. 
+| As a player, I want to customise and upgrade my Drone as part of the Borg collective. | The game includes options for the player to customise their Borg collective through text-based choices. By collecting power and making strategic decisions, the player can unlock new abilities, technologies, or drones. These choices directly impact their overall strategy, adaptability, and progression within the game. 
+| As a player, I want to experience short events after assimilating a system, where I have multiple choices with different outcomes, to further expand upon my journey and the consequences of my actions. | After assimilating a system, the player will encounter short events that present them with three choices. Each choice leads to a different outcome, adding depth to the player's journey and reflecting the consequences of their actions. These events provide narrative variety and contribute to the overall gameplay experience. 
+| As a player, I want to engage in the hacking mini-game when encountering defended planets, where I can showcase my skills and intelligence by overcoming security measures to successfully assimilate the planet. | When the player encounters a defended planet, they will be presented with a hacking mini-game. The mini-game will challenge the player to solve puzzles, bypass security systems. Successfully completing the mini-game will allow the player to assimilate the planet and continue their conquest. 
+| As a player, I want a comprehensive help section within the game that provides clear instructions and guidance on how to play the overall game, including the mechanics, controls, and strategies involved. | The game includes a dedicated help section accessible from the main menu. The help section provides detailed instructions, explanations of game mechanics, controls, and strategies. It covers various aspects of gameplay, including attacking systems and upgrading the character. However, not all will be revealed as that would remove the challenge.
 
 ### **Testing functionality**
 
