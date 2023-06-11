@@ -196,6 +196,12 @@ e.  You are now ready to run the game locally. Execute the following command:  <
 # **Python Game Logic Overview**
 The Python game code represents a text-based strategy game where the player controls a collective of drones tasked with assimilating planets in different systems. The game follows a turn-based approach and involves attacking enemy systems, upgrading the player's abilities, and managing resources.
 
+<br>
+
+![flowchart](/assets/images/flowchart.png)
+
+<br>
+
 ### **Main While loop**
 <br>
 
