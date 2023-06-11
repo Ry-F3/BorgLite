@@ -213,6 +213,22 @@ SCOPE = [
 
 e.  You are now ready to run the game locally. Execute the following command:  <code> python3 game.py </code>
 
+# Interface
+
+![Interface](/assets/images/borglite.png)
+
+<br>
+
+During the development process, I faced the challenge of creating a clear and visually appealing interface for a terminal-based game. To overcome this challenge, I decided to utilise ASCII art as a means to convey information to the player effectively.
+
+Given the limitations of a terminal environment, I carefully selected and combined various ASCII designs sourced from reputable ASCII art repositories. My intention was to create a visually captivating experience by customising and incorporating these designs into the game's interface.
+
+By leveraging ASCII art, I aimed to enhance the overall visual appeal of the game and provide players with a unique and engaging visual experience. Despite the challenges involved in working with ASCII art, my determination to fully realise its potential drove me to overcome any obstacles that arose during the implementation process.
+
+To ensure an interesting presentation of information, I focused on incorporating the game's statistics and their dynamic updates. For example, I implemented a feature where the power statistic is processed and displayed as <code>f"Power {power_icon}"</code> using formatted strings. This approach allowed the interface to be updated as the game progressed by feeding the updated data to the player’s display.
+
+By prioritising an intuitive and visually engaging interface and leveraging ASCII art and dynamic statistical display, I aimed to enhance the player's experience and provide them with an immersive text-based gameplay environment.
+
 
 # **Python Game Logic Overview**
 The Python game code represents a text-based strategy game where the player controls a collective of drones tasked with assimilating planets in different systems. The game follows a turn-based approach and involves attacking enemy systems, upgrading the player's abilities, and managing resources.
@@ -334,7 +350,7 @@ To ensure greater variation in the game and make it progressively challenging, t
 
 ### **Game Flow and User Interaction**
 
-The game follows a loop structure to provide a continuous gameplay experience. The main game loop allows the player to choose actions and interact with the game world until specific conditions are met (e.g., the player's health reaches zero or the player chooses to quit).
+The game follows a loop structure to provide a continuous gameplay experience. The main game loop allows the player to choose actions and interact with the game world until specific conditions are met (e.g. if the player's health reaches zero or the player chooses to quit).
 
 The game utilizes user input prompts and displayed messages to interact with the player. This is achieved using the <code>input()</code> and <code>print()</code> functions. The <code>type_text()</code> function is introduced to add a typewriter effect to the displayed messages for a better user experience. Not only that but it adds to the retro experience of the game.
 
@@ -388,6 +404,10 @@ When the game ends, if the player's health reaches zero, their final statistics 
 
 <br>
 
+![leaderboard](/assets/images/leaderboard.png)
+
+<br>
+
 Note: The <code>update_leaderboard(player)</code> function is responsible for updating the leaderboard with the player's data, while the <code>display_leaderboard(player)</code> function displays the leaderboard to the player in a table format.
 
 The leaderboard.py module is imported and used in the run.py main file, where the game interface interacts with the leaderboard functionality. The <code>update_leaderboard()</code> and <code>display_leaderboard()</code> functions are called as needed within the game's logic flow to update and display the leaderboard data.
@@ -418,6 +438,11 @@ The leaderboard.py module is imported and used in the run.py main file, where th
 * [Slack](https://slack.com/intl/en-gb/) 
     * Used a platform to connect with my mentor and fellow course alumni.
 
+* [Lucidchart](https://www.lucidchart.com/pages/)
+    * Used to create a flow chart.
+
+* [Python-Tutor](https://www.python.org/)
+    * Used to test code and research ideas.
 
 ## **Testing**
 
