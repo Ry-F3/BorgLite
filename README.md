@@ -108,6 +108,27 @@ Borglite is designed for fans of the Star Trek universe, retro gaming enthusiast
 ## **User Stories**
 
 
+* As a Star Trek fan, I want to experience the thrill of playing as the Borg, one of the iconic species from the franchise, to immerse myself in the vast and captivating Star Trek universe.
+
+* As a retro gaming enthusiast, I am excited to engage in a text-based gaming experience reminiscent of classic games, where the power of imagination and storytelling take center stage.
+
+* As a strategic player, I enjoy making thoughtful decisions and planning my moves strategically. I'm looking forward to devising intricate plans and executing them to conquer systems and expand the Borg's influence.
+
+* As a competitive gamer, I thrive on challenges and enjoy comparing my progress with other players. The presence of a competitive leaderboard in Borglite adds an extra layer of motivation, as I can climb the ranks, showcase my strategic prowess, and compete with other players for the top positions.
+
+* As a player seeking an accessible and visually distinctive journey, I appreciate the user-friendly Command-Line Interface (CLI) of Borglite. The simplicity of text-based interactions combined with visually appealing ASCII art creates a unique and engaging experience.
+
+* As a player progressing through the game, I want to face increasing levels of difficulty to keep the gameplay challenging and engaging. I'm excited to unlock new abilities or upgrades as I advance, adding depth to my gameplay and rewarding my progression.
+
+* As a player interested in the Star Trek lore, I look forward to encountering familiar elements from the franchise while playing Borglite. Whether it's encountering well-known characters or experiencing captivating storylines, I expect Borglite to provide a rich and immersive Star Trek experience.
+
+* As a player concerned about fairness and accuracy, I trust that the leaderboard calculations and updates in Borglite are reliable. I want to be confident that my achievements and progress accurately reflect my performance in the game.
+
+* As a player seeking a captivating adventure, I appreciate the well-defined scope of Borglite. By combining elements from the Star Trek universe, retro text-based games, and strategic challenges, Borglite offers a cohesive and engaging gaming experience that keeps me invested and entertained.
+
+* As a player who enjoys exploring different gameplay mechanics, I'm excited to engage in strategic battles, upgrade my abilities, and experience the hacking mini-game in Borglite. These varied gameplay elements add depth and variety to the overall gaming experience.
+
+
 # **Deployment**
 
 To deploy the Borglite game on Heroku, follow these steps:
