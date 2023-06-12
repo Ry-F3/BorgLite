@@ -386,7 +386,7 @@ class System:
             
             "backstory": "   >> As our Borg probes continue their systematic exploration of the sector... \n   - Just before completing the assimilation process on the final planet in the system. \n   - Our advanced scanning technology detects an unusual spatial anomaly nearby.\n   - The anomaly exhibits unique energy patterns, suggesting an undiscovered phenomena.\n",
             "choice_prompt": "\n   >> What do we wish to do?\n \n   [1] Dispatch a fleet of Borg probes to investigate the spatial anomaly and acquire data.\n   [2] Utilize our advanced weaponry to probe and analyze the anomaly.\n   [3] Disregard the anomaly and proceed with the primary mission, as it poses no threat.\n",
-            "choice_1_text": "We deploy a fleet of Borg probes to thoroughly investigate the spatial anomaly and assimilate any valuable data.",
+            "choice_1_text": "We deploy a fleet of Borg probes to thoroughly investigate\n   >> the spatial anomaly and assimilate any valuable data.",
             "choice_2_text": "We activate our advanced weaponry to probe and analyze the spatial anomaly,\n   >> ensuring we harness its potential for our collective's advancement.",
             "choice_3_text": "We prioritize the primary mission objectives and disregard the spatial anomaly,\n   >> as it does not present an immediate obstacle to our assimilation efforts."
         }, 
@@ -487,7 +487,7 @@ class System:
                     
                     
                 if backstory_index == 2:
-                    result = None
+
                     result = random.choice([True, False])
                     if result == True:
                         player.increase_defence(20)
@@ -540,11 +540,11 @@ class AttackManager:
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
             system.enemy_resistance = resistance_level
         elif player.level >= 6 and player.level <= 10:
-            lower_bound = 1 + random.randint(-3, 5)
+            lower_bound = 10 + random.randint(-3, 5)
             upper_bound = 30 + random.randint(-3, 5)
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
             system.enemy_resistance = resistance_level
-        elif player.level >= 11 and player.level <= 20:
+        elif player.level >= 11 and player.level <= 16:
             lower_bound = 20 + random.randint(-6, 5)
             upper_bound = 45 + random.randint(-3, 5)
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
