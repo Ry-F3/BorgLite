@@ -59,7 +59,7 @@ class Player:
     def decrease_processing(self, amount): # Decrease processing power
         power = random.randint(10, amount)
         self.processing -= power
-        print(f"   >> You loose power{power_icon}: {power}")
+        print(f"   >> You loose power {power_icon} : {power}")
 
     def take_damage(self, damage): # Take damage from system by individual planets
         if self.defence > 0:
@@ -391,11 +391,11 @@ class System:
             "choice_3_text": "We prioritize the primary mission objectives and disregard the spatial anomaly,\n   >> as it does not present an immediate obstacle to our assimilation efforts."
         }, 
         {
-            "backstory": "   >> As our Borg cube progresses with the systematic assimilation of the planet's population... \n   - Just as the final stages of assimilation are underway. \n   - Starfleet vessels suddenly emerge from warp, launching an unexpected attack on our cube.\n   - Their motive remains unclear, but their actions indicate an intent to disrupt our assimilation process.\n",
-            "choice_prompt": "\n    >> What do we wish to do?\n \n   [1] Mobilize our Borg drones and counter-attack the Starfleet vessels to ensure our survival and mission completion.\n   [2] Activate defensive protocols and shields to withstand the incoming assault, focusing on protecting our cube's vital systems.\n   [3] Disregard the Starfleet attack and continue with the assimilation process, considering them insignificant interference.\n",
+            "backstory": "   >> As our Borg cube progresses with the systematic\n  >> assimilation of the planet's population... \n   - Just as the final stages of assimilation are underway. \n   - Starfleet vessels suddenly emerge from warp, launching an unexpected attack on our cube.\n   - Their actions indicate an intent to disrupt our assimilation process.\n",
+            "choice_prompt": "\n    >> What do we wish to do?\n \n   [1] Mobilize our Borg drones and counter-attack the Starfleet vessels.\n   [2] Activate defensive protocols and shields to withstand the incoming assault.\n   [3] Disregard the Starfleet attack and continue with the assimilation process.\n",
             "choice_1_text": "We mobilize our Borg drones and launch a counter-attack against the Starfleet vessels,\n   >> eliminating the threat to secure our survival and successful assimilation.",
-            "choice_2_text": "We activate defensive protocols and reinforce our shields to withstand the incoming assault,\n   >> prioritizing the protection of our cube's critical systems and collective resources.",
-            "choice_3_text": "We dismiss the Starfleet attack as insignificant interference and proceed with the assimilation process, focusing on the completion of our primary mission objectives regardless of their actions."
+            "choice_2_text": "We activate defensive protocols and reinforce our shields,\n   >> prioritizing the protection of our cube's critical systems and collective resources.",
+            "choice_3_text": "We dismiss the Starfleet attack as insignificant interference and proceed with the assimilation process,\n   >> focusing on the completion of our primary mission objectives regardless of their actions."
         },   
     ]
     
