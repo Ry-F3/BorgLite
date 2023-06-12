@@ -9,7 +9,7 @@ class Player:
         self.name = ""
         self.health = 100
         self.defence = 10
-        self.attack = 10
+        self.attack = 100
         self.level = 1
         self.processing = 0
         self.score = 0
@@ -42,17 +42,22 @@ class Player:
         
     def increase_attack(self): # Increase attack each level
         self.attack += 2
-
-    def increase_defence(self): # Increase defence each level
-        self.defence += 2
         
-    def increase_processing(self):
+    def decrease_attack(self, val): # Decrease attack each level
+        val = 2
+        self.attack -= val
+
+    def increase_defence(self, increase): # Increase defence each level
+        increase = 2
+        self.defence += increase
+        
+    def increase_processing(self): # Increase processing power
         power = random.randint(25,50)
         self.processing += power
         print(f"   >> You recieved a power{power_icon} bonus: {power}")
         
-    def decrease_processing(self):
-        power = random.randint(25,50)
+    def decrease_processing(self, amount): # Decrease processing power
+        power = random.randint(10, amount)
         self.processing -= power
         print(f"   >> You loose power{power_icon}: {power}")
 
@@ -213,7 +218,7 @@ class Planet:
         self.level = level + 1
         self.attack_points = random.randint(5, 25) + level
         self.defence_points = random.randint(5, 25) + level
-        self.has_defences = random.choice([True, False]) # Randomise defences for planets
+        self.has_defences = random.choice([False]) # Randomise defences for planets
 
     def attack_player(self, player):
         damage_dealt = self.attack_points
@@ -363,7 +368,7 @@ class System:
                     self.check_assimilation_events(system, player, self.backstories)
                     return True
             else:
-                print(planet.name, "is already assimilated!")
+                print("   >>", planet.name, "is already assimilated!")
         else:
             print("Invalid selection")
         return False
@@ -378,30 +383,34 @@ class System:
             "choice_3_text": "You ignore the vessel and focus on the primary mission."
         },
         {
-            "backstory": "   >> While exploring the sector... \n    - Just before completing the assimilation process on the final planet in the system. \n    - Your Borg probes come across an abandoned mining vessel drifting in space.\n    - The vessel appears to have been derelict for some time, It's systems inactive and\n    - its cargo hold potentially containing valuable resources.\n",
-            "choice_prompt": "\n   >> What do you wish to do?\n  \n   [1] Board the mining vessel and scavenge its resources.\n   [2] Put our new weaponry to the test, take no chances.\n   [3] Ignore the vessel and continue with the primary mission\n",
-            "choice_1_text": "You decide to board the mining vessel and scavenge its resources.",
-            "choice_2_text": "You unleash the destructive power of your new weapons, obliterating the vessel.",
-            "choice_3_text": "You ignore the vessel and focus on the primary mission."
+            
+            "backstory": "   >> As our Borg probes continue their systematic exploration of the sector... \n   - Just before completing the assimilation process on the final planet in the system. \n   - Our advanced scanning technology detects an unusual spatial anomaly nearby.\n   - The anomaly exhibits unique energy patterns, suggesting the presence of undiscovered phenomena.\n",
+            "choice_prompt": "\n   >> What do we wish to do?\n \n   [1] Dispatch a fleet of Borg probes to investigate the spatial anomaly and acquire data.\n   [2] Utilize our advanced weaponry to probe and analyze the anomaly, ensuring our technological superiority.\n   [3] Disregard the anomaly and proceed with the primary mission, as it poses no immediate threat.\n",
+            "choice_1_text": "We deploy a fleet of Borg probes to thoroughly investigate the spatial anomaly and assimilate any valuable data.",
+            "choice_2_text": "We activate our advanced weaponry to probe and analyze the spatial anomaly,\n   >> ensuring we harness its potential for our collective's advancement.",
+            "choice_3_text": "We prioritize the primary mission objectives and disregard the spatial anomaly,\n   >> as it does not present an immediate obstacle to our assimilation efforts."
         }, 
         {
-            "backstory": "   >> While exploring the sector... \n    - Just before completing the assimilation process on the final planet in the system. \n    - Your Borg probes come across an abandoned mining vessel drifting in space.\n    - The vessel appears to have been derelict for some time, It's systems inactive and\n    - its cargo hold potentially containing valuable resources.\n",
-            "choice_prompt": "\n   >> What do you wish to do?\n  \n   [1] Board the mining vessel and scavenge its resources.\n   [2] Put our new weaponry to the test, take no chances.\n   [3] Ignore the vessel and continue with the primary mission\n",
-            "choice_1_text": "You decide to board the mining vessel and scavenge its resources.",
-            "choice_2_text": "You unleash the destructive power of your new weapons, obliterating the vessel.",
-            "choice_3_text": "You ignore the vessel and focus on the primary mission."
+            "backstory": "   >> As our Borg cube progresses with the systematic assimilation of the planet's population... \n   - Just as the final stages of assimilation are underway. \n   - Starfleet vessels suddenly emerge from warp, launching an unexpected attack on our cube.\n   - Their motive remains unclear, but their actions indicate an intent to disrupt our assimilation process.\n",
+            "choice_prompt": "\n    >> What do we wish to do?\n \n   [1] Mobilize our Borg drones and counter-attack the Starfleet vessels to ensure our survival and mission completion.\n   [2] Activate defensive protocols and shields to withstand the incoming assault, focusing on protecting our cube's vital systems.\n   [3] Disregard the Starfleet attack and continue with the assimilation process, considering them insignificant interference.\n",
+            "choice_1_text": "We mobilize our Borg drones and launch a counter-attack against the Starfleet vessels,\n   >> eliminating the threat to secure our survival and successful assimilation.",
+            "choice_2_text": "We activate defensive protocols and reinforce our shields to withstand the incoming assault,\n   >> prioritizing the protection of our cube's critical systems and collective resources.",
+            "choice_3_text": "We dismiss the Starfleet attack as insignificant interference and proceed with the assimilation process, focusing on the completion of our primary mission objectives regardless of their actions."
         },   
     ]
     
     def check_assimilation_events(self, system, player, backstories):
         if all(planet.is_assimilated() for planet in selected_system.planets):
+            
             # Randomly select a backstory
-            chosen_backstory = random.choice(backstories)
-            backstory_text = chosen_backstory["backstory"]
-            choice_prompt_text = chosen_backstory["choice_prompt"]
-            choice_1_text = chosen_backstory["choice_1_text"]
-            choice_2_text = chosen_backstory["choice_2_text"]
-            choice_3_text = chosen_backstory["choice_3_text"]
+            backstory_index = random.randint(0, len(backstories) -1) # Subtract 1 to stay within the list indices
+            backstory = backstories[backstory_index]  # Retrieve the actual backstory dictionary
+
+            backstory_text = backstory["backstory"]
+            choice_prompt_text = backstory["choice_prompt"]
+            choice_1_text = backstory["choice_1_text"]
+            choice_2_text = backstory["choice_2_text"]
+            choice_3_text = backstory["choice_3_text"]
             
             type_text(f"\n   >> Drone, you have consolidated power within the {selected_system.name}.\n")
             type_text("   >> We are Borg.\n")
@@ -413,30 +422,101 @@ class System:
             
             if choice == "1":
                 type_text(f"\n   >> {choice_1_text}\n")
-                # Perform actions for choice 1
-                final_result = random.choice([True, False])
-                
-                if final_result == True:
-                    # Perform actions for result_one
-                    print("Result One")
-                    player.increase_processing()
-                elif final_result == False:
-                    type_text("   >> SIGNAL LOST ... \n")
-                    player.decrease_processing()
+                if backstory_index == 0:
+                    result = None
+                    result = random.choice([True, False])
+                    if result == True:
+                        player.increase_processing()
+                    elif result == False:
+                        player.decrease_processing(50)
+                        type_text("   >> SIGNAL LOST ... \n")
+                    else:
+                        pass
                     
-                else:
-                    # Perform actions for result_two
-                    # print("Result Two")
-                    player.decrease_processing()
-             
+                elif backstory_index == 1:
+                    result = None
+                    result = random.choice([True, False])
+                    if result == True:
+                        player.increase_processing()
+                    elif result == False:
+                        player.decrease_processing(50)
+                        type_text("   >> SIGNAL LOST ... \n")
+                    else:
+                        pass
+                    
+                elif backstory_index == 2:
+                    result = None
+                    result = random.choice([True, False])
+                    if result == True:
+                        player.increase_processing()
+                    elif result == False:
+                        player.decrease_processing(50)
+                        type_text("   >> SIGNAL LOST ... \n")
+                    else:
+                        pass
+                
             elif choice == "2":
                 type_text(f"\n   >> {choice_2_text}\n")
-                player.increase_attack()
-                print(f"   >> You get an attack {sword_icon}   bonus: +2")
+                if backstory_index == 0:
+                    result = None
+                    result = random.choice([True, False])
+                    if result == True:
+                        player.increase_attack()
+                        print(f"   >> You get an attack {sword_icon}   bonus: +2")
+
+                    elif result == False:
+                        player.decrease_attack(4)
+                        type_text("   >> Systems malfuntioning ... \n")
+                        print(f"   >> You loose attack {sword_icon}   points: -2")
+                    else:
+                        pass
+                    
+                if backstory_index == 1:
+                    result = None
+                    result = random.choice([True, False])
+                    if result == True:
+                        player.increase_attack()
+                        print(f"   >> You get an attack {sword_icon}   bonus: +2")
+
+                    elif result == False:
+                        player.decrease_attack(4)
+                        type_text("   >> Systems malfuntioning ... \n")
+                        print(f"   >> You loose attack {sword_icon}   points: -2")
+                    else:
+                        pass
+                    
+                    
+                if backstory_index == 2:
+                    result = None
+                    result = random.choice([True, False])
+                    if result == True:
+                        player.increase_defence(20)
+                        print(f"   >> You get a defence {shield_icon} bonus: +20")
+
+                    elif result == False:
+                        if player.defence > 0:
+                            player.defence = 0 - 2
+                            print(f"   >> Our defences have STOPPED regenerating and will need time to repair.")
+                        else:
+                            player.decrease_attack(7)
+                            type_text("   >> Systems malfuntioning ... \n")
+                            print(f"   >> You loose some attack points {sword_icon}: -5")
+                    else:
+                        pass
             
             elif choice == "3":
                 type_text(f"\n   >> {choice_3_text}\n")
-                # Perform actions for choice 2
+                if backstory_index == 0:
+                    player.decrease_processing(10)
+                    type_text("   >> A small amount of power was expended for this mission ... \n")
+                if backstory_index == 1:
+                    player.decrease_processing(10)
+                    type_text("   >> A small amount of power was expended for this mission ... \n")
+                    
+                if backstory_index == 2:
+                    player.decrease_processing(10)
+                    type_text("   >> A small amount of power was expended for this mission ... \n")
+                
                 
             else:
                 type_text("   >> Invalid input. Please enter 1 or 2.")
@@ -640,7 +720,7 @@ def attack_system(system, player):
                     if assimilated:
                         player.level += 1
                         player.increase_attack()
-                        player.increase_defence()
+                        player.increase_defence(increase = 2)
                         type_text(f'\n   >> You have assimilated {system.planets[choice].name.upper()}\n')
                         if selected_upgrade is not None:
                             if initial_upgrade_applied:
