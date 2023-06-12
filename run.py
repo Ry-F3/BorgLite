@@ -535,12 +535,12 @@ class AttackManager:
         It takes the system, attack_power, and player as parameters and performs the attack calculations accordingly.
         """
         if player.level < 6:
-            lower_bound = 2 + random.randint(-3, 3)
+            lower_bound = 1 + random.randint(-3, 3)
             upper_bound = 15 + random.randint(-3, 3)
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
             system.enemy_resistance = resistance_level
         elif player.level >= 6 and player.level <= 10:
-            lower_bound = 15 + random.randint(-3, 5)
+            lower_bound = 1 + random.randint(-3, 5)
             upper_bound = 30 + random.randint(-3, 5)
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
             system.enemy_resistance = resistance_level
