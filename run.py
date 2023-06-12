@@ -44,7 +44,6 @@ class Player:
         self.attack += 2
         
     def decrease_attack(self, val): # Decrease attack each level
-        val = 2
         self.attack -= val
 
     def increase_defence(self, increase): # Increase defence each level
@@ -467,7 +466,7 @@ class System:
                     elif result == False:
                         player.decrease_attack(4)
                         type_text("   >> Systems malfuntioning ... \n")
-                        print(f"   >> You loose attack {sword_icon}   points: -2")
+                        print(f"   >> You loose attack {sword_icon}   points: - 2")
                     else:
                         pass
                     
@@ -481,7 +480,7 @@ class System:
                     elif result == False:
                         player.decrease_attack(4)
                         type_text("   >> Systems malfuntioning ... \n")
-                        print(f"   >> You loose attack {sword_icon}   points: -2")
+                        print(f"   >> You loose attack {sword_icon}   points: - 2")
                     else:
                         pass
                     
