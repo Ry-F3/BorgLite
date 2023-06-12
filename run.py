@@ -9,7 +9,7 @@ class Player:
         self.name = ""
         self.health = 100
         self.defence = 10
-        self.attack = 100
+        self.attack = 10
         self.level = 1
         self.processing = 0
         self.score = 0
@@ -47,7 +47,7 @@ class Player:
         self.attack -= val
 
     def increase_defence(self, increase): # Increase defence each level
-        increase = 2
+        increase = increase
         self.defence += increase
         
     def increase_processing(self): # Increase processing power
@@ -183,9 +183,10 @@ class Upgrades:
         """
         upgrades_data = [
             {
-                "name": f"Health Regeneration {heart_icon}  +10  {shield_icon}  +2",
+                "name": f"Health Regeneration {heart_icon}  +10  {shield_icon}  +2  {sword_icon}  -2",
                 "add_health": 10,
                 "add_defence": 2,
+                "add_attack": -2,
             },
             {
                 "name": f"Adaptive Shielding  {shield_icon}  +15  {heart_icon}  -5 {sword_icon}   +1",
@@ -217,7 +218,7 @@ class Planet:
         self.level = level + 1
         self.attack_points = random.randint(5, 25) + level
         self.defence_points = random.randint(5, 25) + level
-        self.has_defences = random.choice([False]) # Randomise defences for planets
+        self.has_defences = random.choice([True, False]) # Randomise defences for planets
 
     def attack_player(self, player):
         damage_dealt = self.attack_points
@@ -390,7 +391,7 @@ class System:
             "choice_3_text": "We prioritize the primary mission objectives and disregard the spatial anomaly,\n   >> as it does not present an immediate obstacle to our assimilation efforts."
         }, 
         {
-            "backstory": "   >> As our Borg cube progresses with the systematic\n  >> assimilation of the planet's population... \n   - Just as the final stages of assimilation are underway. \n   - Starfleet vessels suddenly emerge from warp, launching an unexpected attack on our cube.\n   - Their actions indicate an intent to disrupt our assimilation process.\n",
+            "backstory": "   >> As our Borg cube progresses with the systematic\n   >> assimilation of the planet's population... \n   - Just as the final stages of assimilation are underway. \n   - Starfleet vessels suddenly emerge from warp, launching an unexpected attack on our cube.\n   - Their actions indicate an intent to disrupt our assimilation process.\n",
             "choice_prompt": "\n    >> What do we wish to do?\n \n   [1] Mobilize our Borg drones and counter-attack the Starfleet vessels.\n   [2] Activate defensive protocols and shields to withstand the incoming assault.\n   [3] Disregard the Starfleet attack and continue with the assimilation process.\n",
             "choice_1_text": "We mobilize our Borg drones and launch a counter-attack against the Starfleet vessels,\n   >> eliminating the threat to secure our survival and successful assimilation.",
             "choice_2_text": "We activate defensive protocols and reinforce our shields,\n   >> prioritizing the protection of our cube's critical systems and collective resources.",
@@ -490,7 +491,7 @@ class System:
                     result = random.choice([True, False])
                     if result == True:
                         player.increase_defence(20)
-                        print(f"   >> You get a defence {shield_icon} bonus: +20")
+                        print(f"   >> You get a defence {shield_icon}  bonus: +20")
 
                     elif result == False:
                         if player.defence > 0:
@@ -543,9 +544,14 @@ class AttackManager:
             upper_bound = 35 + random.randint(-3, 5)
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
             system.enemy_resistance = resistance_level
+        elif player.level >= 11 and player.level <= 20:
+            lower_bound = 20 + random.randint(-6, 5)
+            upper_bound = 45 + random.randint(-3, 5)
+            resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
+            system.enemy_resistance = resistance_level
         else:
-            lower_bound = 30 + random.randint(-3, 10)
-            upper_bound = 70 + random.randint(-3, 10)
+            lower_bound = 50 + random.randint(-3, 10)
+            upper_bound = 75 + random.randint(-3, 10)
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
             system.enemy_resistance = resistance_level
 
