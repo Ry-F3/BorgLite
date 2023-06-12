@@ -558,8 +558,11 @@ class AttackManager:
             upper_bound = 75 + random.randint(-3, 10)
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
             system.enemy_resistance = resistance_level
-
-        success_chance = attack_power / system.enemy_resistance
+        
+        success_chance = 0  # Initialize success_chance to zero
+        
+        if system.enemy_resistance !=0:
+            success_chance = attack_power / system.enemy_resistance
         print(f"\n  {ys} -+++- {ye}Attacking", system.name, "with resistance level:", system.enemy_resistance)
         print(f" {ys}  -+++-{ye} Engagement Probability: {round(success_chance, 2)}\n")
         return success_chance >= 1
