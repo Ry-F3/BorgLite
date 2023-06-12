@@ -384,8 +384,8 @@ class System:
         },
         {
             
-            "backstory": "   >> As our Borg probes continue their systematic exploration of the sector... \n   - Just before completing the assimilation process on the final planet in the system. \n   - Our advanced scanning technology detects an unusual spatial anomaly nearby.\n   - The anomaly exhibits unique energy patterns, suggesting the presence of undiscovered phenomena.\n",
-            "choice_prompt": "\n   >> What do we wish to do?\n \n   [1] Dispatch a fleet of Borg probes to investigate the spatial anomaly and acquire data.\n   [2] Utilize our advanced weaponry to probe and analyze the anomaly, ensuring our technological superiority.\n   [3] Disregard the anomaly and proceed with the primary mission, as it poses no immediate threat.\n",
+            "backstory": "   >> As our Borg probes continue their systematic exploration of the sector... \n   - Just before completing the assimilation process on the final planet in the system. \n   - Our advanced scanning technology detects an unusual spatial anomaly nearby.\n   - The anomaly exhibits unique energy patterns, suggesting an undiscovered phenomena.\n",
+            "choice_prompt": "\n   >> What do we wish to do?\n \n   [1] Dispatch a fleet of Borg probes to investigate the spatial anomaly and acquire data.\n   [2] Utilize our advanced weaponry to probe and analyze the anomaly.\n   [3] Disregard the anomaly and proceed with the primary mission, as it poses no threat.\n",
             "choice_1_text": "We deploy a fleet of Borg probes to thoroughly investigate the spatial anomaly and assimilate any valuable data.",
             "choice_2_text": "We activate our advanced weaponry to probe and analyze the spatial anomaly,\n   >> ensuring we harness its potential for our collective's advancement.",
             "choice_3_text": "We prioritize the primary mission objectives and disregard the spatial anomaly,\n   >> as it does not present an immediate obstacle to our assimilation efforts."
