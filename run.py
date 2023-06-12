@@ -221,10 +221,13 @@ class Planet:
         self.has_defences = random.choice([True, False]) # Randomise defences for planets
 
     def attack_player(self, player):
+        # Color Yellow
+        ys = "\033[33m"
+        ye = "\033[0m"
         damage_dealt = self.attack_points
         player.take_damage(damage_dealt)
-        print( f"\n   -+++- {self.name} attacks! Player takes {damage_dealt} damage")
-        print("   -+++- Player health remaining:", player.health)
+        print( f"\n  {ys} -+++-{ye} {self.name} attacks! Player takes {damage_dealt} damage")
+        print(f" {ys}  -+++-{ye} Player health remaining:", player.health)
         if not player.is_alive():
             print("\n   >> Player has lost control of the collective.\n")
             player.display_game_finished()
@@ -374,10 +377,13 @@ class System:
         return False
     
     # Define a list of backstories
+    # Color Green
+    s = "\033[32m" 
+    e = "\033[0m"
     backstories = [
         {
             "backstory": "   >> While exploring the sector... \n    - Just before completing the assimilation process on the final planet in the system. \n    - Your Borg probes come across an abandoned mining vessel drifting in space.\n    - The vessel appears to have been derelict for some time, It's systems inactive and\n    - its cargo hold potentially containing valuable resources.\n",
-            "choice_prompt": "\n   >> What do you wish to do?\n  \n   [1] Board the mining vessel and scavenge its resources.\n   [2] Put our new weaponry to the test, take no chances.\n   [3] Ignore the vessel and continue with the primary mission\n",
+            "choice_prompt": f"\n   >> What do you wish to do?\n  \n  {s} [1] {e}Board the mining vessel and scavenge its resources.\n  {s} [2]{e} Put our new weaponry to the test, take no chances.\n {s}  [3]{e} Ignore the vessel and continue with the primary mission\n",
             "choice_1_text": "You decide to board the mining vessel and scavenge its resources.",
             "choice_2_text": "You unleash the destructive power of your new weapons, obliterating the vessel.",
             "choice_3_text": "You ignore the vessel and focus on the primary mission."
@@ -385,14 +391,14 @@ class System:
         {
             
             "backstory": "   >> As our Borg probes continue their systematic exploration of the sector... \n   - Just before completing the assimilation process on the final planet in the system. \n   - Our advanced scanning technology detects an unusual spatial anomaly nearby.\n   - The anomaly exhibits unique energy patterns, suggesting an undiscovered phenomena.\n",
-            "choice_prompt": "\n   >> What do we wish to do?\n \n   [1] Dispatch a fleet of Borg probes to investigate the spatial anomaly and acquire data.\n   [2] Utilize our advanced weaponry to probe and analyze the anomaly.\n   [3] Disregard the anomaly and proceed with the primary mission, as it poses no threat.\n",
+            "choice_prompt": f"\n   >> What do we wish to do?\n \n   {s}[1]{e} Dispatch a fleet of Borg probes to investigate the spatial anomaly and acquire data.\n  {s} [2]{e} Utilize our advanced weaponry to probe and analyze the anomaly.\n  {s} [3]{e} Disregard the anomaly and proceed with the primary mission, as it poses no threat.\n",
             "choice_1_text": "We deploy a fleet of Borg probes to thoroughly investigate\n   >> the spatial anomaly and assimilate any valuable data.",
             "choice_2_text": "We activate our advanced weaponry to probe and analyze the spatial anomaly,\n   >> ensuring we harness its potential for our collective's advancement.",
             "choice_3_text": "We prioritize the primary mission objectives and disregard the spatial anomaly,\n   >> as it does not present an immediate obstacle to our assimilation efforts."
         }, 
         {
             "backstory": "   >> As our Borg cube progresses with the systematic\n   >> assimilation of the planet's population... \n   - Just as the final stages of assimilation are underway. \n   - Starfleet vessels suddenly emerge from warp, launching an unexpected attack on our cube.\n   - Their actions indicate an intent to disrupt our assimilation process.\n",
-            "choice_prompt": "\n    >> What do we wish to do?\n \n   [1] Mobilize our Borg drones and counter-attack the Starfleet vessels.\n   [2] Activate defensive protocols and shields to withstand the incoming assault.\n   [3] Disregard the Starfleet attack and continue with the assimilation process.\n",
+            "choice_prompt": f"\n    >> What do we wish to do?\n \n  {s} [1]{e} Mobilize our Borg drones and counter-attack the Starfleet vessels.\n  {s} [2]{e} Activate defensive protocols and shields to withstand the incoming assault.\n  {s} [3]{e} Disregard the Starfleet attack and continue with the assimilation process.\n",
             "choice_1_text": "We mobilize our Borg drones and launch a counter-attack against the Starfleet vessels,\n   >> eliminating the threat to secure our survival and successful assimilation.",
             "choice_2_text": "We activate defensive protocols and reinforce our shields,\n   >> prioritizing the protection of our cube's critical systems and collective resources.",
             "choice_3_text": "We dismiss the Starfleet attack as insignificant interference and proceed with the assimilation process,\n   >> focusing on the completion of our primary mission objectives regardless of their actions."
@@ -423,7 +429,6 @@ class System:
             if choice == "1":
                 type_text(f"\n   >> {choice_1_text}\n")
                 if backstory_index == 0:
-                    result = None
                     result = random.choice([True, False])
                     if result == True:
                         player.increase_processing()
@@ -434,7 +439,6 @@ class System:
                         pass
                     
                 elif backstory_index == 1:
-                    result = None
                     result = random.choice([True, False])
                     if result == True:
                         player.increase_processing()
@@ -445,7 +449,6 @@ class System:
                         pass
                     
                 elif backstory_index == 2:
-                    result = None
                     result = random.choice([True, False])
                     if result == True:
                         player.increase_processing()
@@ -458,7 +461,6 @@ class System:
             elif choice == "2":
                 type_text(f"\n   >> {choice_2_text}\n")
                 if backstory_index == 0:
-                    result = None
                     result = random.choice([True, False])
                     if result == True:
                         player.increase_attack()
@@ -472,7 +474,6 @@ class System:
                         pass
                     
                 if backstory_index == 1:
-                    result = None
                     result = random.choice([True, False])
                     if result == True:
                         player.increase_attack()
@@ -534,6 +535,9 @@ class AttackManager:
         The attack method is a static method because it doesn't need access to any specific instance or class variables.
         It takes the system, attack_power, and player as parameters and performs the attack calculations accordingly.
         """
+        # Color Yellow
+        ys = "\033[33m"
+        ye = "\033[0m"
         if player.level < 6:
             lower_bound = 1 + random.randint(-3, 3)
             upper_bound = 15 + random.randint(-3, 3)
@@ -556,8 +560,8 @@ class AttackManager:
             system.enemy_resistance = resistance_level
 
         success_chance = attack_power / system.enemy_resistance
-        print("\n   -+++- Attacking", system.name, "with resistance level:", system.enemy_resistance)
-        print(f"   -+++- Engagement Probability: {round(success_chance, 2)}\n")
+        print(f"\n  {ys} -+++- {ye}Attacking", system.name, "with resistance level:", system.enemy_resistance)
+        print(f" {ys}  -+++-{ye} Engagement Probability: {round(success_chance, 2)}\n")
         return success_chance >= 1
 
     @classmethod
@@ -708,8 +712,10 @@ def attack_system(system, player):
             # Display the available planets for assimilation
             print("\n   >> Available planets for assimilation:")
             for i, planet in enumerate(system.planets):
+                s = "\033[32m" # Green
+                e = "\033[0m"
                 if planet.is_assimilated():
-                    print(f"   {str(i + 1)}. {''.join(chr(822) + c for c in planet.name)} (Assimilated)") # Put a line through planet names that have been assimilated
+                    print(f"   {str(i + 1)}.{s} {''.join(chr(822) + c for c in planet.name)} {e}") # Put a line through planet names that have been assimilated
                 else:
                     print(f"   {i + 1}. {planet.name}")
                         
@@ -754,7 +760,7 @@ def attack_system(system, player):
 
         # Determine the outcome based on player's attack power and enemy resistance
         if player.attack > system.enemy_resistance:
-            print("We have successfully counterattacked the enemy planet!")
+            print("   >> We have successfully counterattacked the enemy planet!")
             system.planets.remove(enemy_planet)
         else:
             type_text("\n   >> State your directives for our next course of action.\n")
