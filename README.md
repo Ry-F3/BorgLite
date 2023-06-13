@@ -517,8 +517,8 @@ In the future, I will keep in mind the importance of adhering to coding conventi
 
 **List of fixed bugs**
 
-* ZeroDivisionError: This error occurred due to a division by zero in the calculation of success_chance = attack_power / system.enemy_resistance. To fix this, a check can be added to ensure that system.enemy_resistance is not zero before performing the division. For example: <code> <br>
-    if system.enemy_resistance != 0: <br>
+* ZeroDivisionError: This error occurred due to a division by zero in the calculation of success_chance = attack_power / system.enemy_resistance. To fix this, a check can be added to ensure that system.enemy_resistance is not zero before performing the division. For example: <br>
+<code>if system.enemy_resistance != 0: <br>
         success_chance = attack_power / system.enemy_resistance <br>
     else:</code>
 
