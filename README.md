@@ -66,7 +66,6 @@ Here's an expanded explanation of the gameplay:
 
 <br>    
 
-
 3. User Interface and Experience:
 
     * Develop a user-friendly CLI interface for smooth interaction.
@@ -485,7 +484,7 @@ The leaderboard.py module is imported and used in the run.py main file, where th
 
 * Favicon Issue: The favicon could not be displayed on the Heroku app. Unfortunately, this issue could not be fixed as it might be a limitation or configuration issue specific to the Heroku platform. Alternative solutions or workarounds can be explored, such as using a different hosting platform or adjusting the favicon format.
 
-### run.py PEP8
+### Module - run.py PEP8
 
 In my project, I made a conscious decision not to conform to the PEP 8 guidelines regarding line length. The reason behind this choice was that I had an array of indentations for my strings, which allowed me to create a neater and less crowded display in the terminal for my text-based game.
 
@@ -499,7 +498,7 @@ In the future, I will keep in mind the importance of adhering to coding conventi
 
 * list errors
 
-### leaderboard.py PEP8
+### Module - leaderboard.py PEP8
 
 * 11: W291 trailing whitespace
 * 16: E501 line too long (93 > 79 characters)
@@ -606,8 +605,6 @@ Developed by **Rhys.Alexander.Few**
 
 * **Antonio Rodriguez** 
   
-
-
 **Other Resources**
 
 
