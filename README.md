@@ -251,6 +251,52 @@ If players fail to guess the code within the given attempts, the hacking is cons
 
 The hacking mini-game aims to provide an interactive and engaging experience for players while drawing inspiration from the captivating visuals of the "Matrix" movie's code rain effect. It adds a sense of tension and challenge to the gameplay, requiring players to use their problem-solving skills to crack the access code and successfully infiltrate the planet's defences.
 
+# Events 
+
+<br>
+
+The events section I created is triggered when all the planets in a selected system have been assimilated. It adds an exciting element to the game by presenting the player with unique scenarios and choices that affect their gameplay.
+
+I implemented a function called <code>check_assimilation_events()</code> that handles different scenarios or backstories that occur during the assimilation process in the game. This function is called when all the planets in a selected system have been assimilated.
+
+Here's how the events works:
+
+1. The function receives the system, player, and backstories as parameters. The system represents the selected system in the game, the player represents the player's Borg character, and backstories is a list of different backstories or scenarios.
+
+2. Inside the function, a random backstory is selected from the backstories list. This is done by generating a random index between 0 and the length of the backstories list. The selected backstory is then stored in the backstory variable.
+
+3. The relevant information from the selected backstory is extracted, such as the backstory text, the choice prompt text, and the text for each choice. These values are stored in separate variables for later use.
+
+4. The function displays some introductory text.
+
+5. The selected backstory text is printed, providing the player with a narrative description of the current situation or event.
+
+6. The choice prompt text is printed, presenting the player with a set of choices to respond to the event.
+
+7. The player's choice is obtained through user input, and the chosen option is processed accordingly.
+
+8. Based on the chosen option, specific actions are taken. These actions can include modifying the player's stats (such as increasing processing power, decreasing attack power, etc.) and displaying relevant messages.
+
+9. Finally, the function handles any invalid input by providing an error message and prompting the player to make a valid choice.
+
+The purpose of this events section is to introduce dynamic and engaging elements into the game, allowing players to make choices that impact their gameplay experience. The randomly selected backstories and corresponding choices add variety and unpredictability to the assimilation process, making each playthrough unique.
+
+By incorporating different backstories and outcomes, the events section enhances the immersion and storytelling aspects of the game, providing players with a sense of agency and decision-making throughout their Borg assimilation journey.
+
+# Future Works
+
+<br>
+
+Upon receiving feedback from test players, they suggested introducing events earlier in the game to break the repetitive cycle of continuously pressing similar buttons mapped on the keyboard. This valuable feedback highlighted the need for more diverse and engaging gameplay mechanics.
+
+To address this feedback, I plan to implement events at earlier stages of the game within the given time frame. By introducing events sooner, players will experience a greater sense of variety and unpredictability, enhancing their overall gaming experience. These events will introduce new challenges, choices, and consequences, injecting excitement and breaking the monotony of gameplay.
+
+Additionally, I would have liked to make the planets more unique and incorporate a wider variety of defences. While the assimilation process forms the core gameplay mechanic, having distinct planetary attributes and defences would have added depth and strategic elements to the game. Each planet could have possessed its own set of challenges, requiring the player to adapt their assimilation strategies accordingly.
+
+Although time constraints prevented me from implementing these features during the development phase, I acknowledge their potential to enhance the game further. In future iterations or expansions, I would prioritise incorporating diverse planet characteristics and defences to create a richer and more immersive gameplay experience.
+
+Overall, feedback from test players has provided valuable insights and ideas for future improvements. By incorporating early events and introducing varied planet attributes and defences, I aim to address player feedback, enhance gameplay diversity, and create a more engaging and dynamic game for all players to enjoy.
+
 # **Python Game Logic Overview**
 The Python game code represents a text-based strategy game where the player controls a collective of drones tasked with assimilating planets in different systems. The game follows a turn-based approach and involves attacking enemy systems, upgrading the player's abilities, and managing resources.
 
