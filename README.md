@@ -552,7 +552,10 @@ In the future, I will keep in mind the importance of adhering to coding conventi
     * Used to test code and research ideas.
 
 * [CI Python Linter](https://pep8ci.herokuapp.com/)
-    * Used to test pep8 compatibility 
+    * Used to test pep8 compatibility.
+
+* [Heroku](https://id.heroku.com/login)
+    * Used to deploy my project.
 
 <br>
 
