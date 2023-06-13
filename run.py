@@ -784,6 +784,7 @@ def game_over():
 # When run.py is loaded programme runs
 if __name__ == "__main__":
     
+    
     # Load upgrades data
     upgrades = Upgrades.load_upgrades_data("❤️", "⚔️", "🛡️")
     systems_data = load_systems_data()

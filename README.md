@@ -229,6 +229,25 @@ To ensure an interesting presentation of information, I focused on incorporating
 
 By prioritising an intuitive and visually engaging interface and leveraging ASCII art and dynamic statistical display, I aimed to enhance the player's experience and provide them with an immersive text-based gameplay environment.
 
+# Hacking mini-game 
+
+<br>
+
+In the game I developed, I implemented a hacking mini-game inspired by the iconic "Matrix" movie's code rain effect. When players encounter a planet with defences, there is a chance for the hacking mini-game to be initiated.
+
+The mini-game begins with an animated display of falling characters, resembling the code rain effect from the "Matrix." I used ASCII art and a set of code rain characters like |, /, -, and \ to create this effect.
+
+To proceed with the hacking, players are presented with a six-digit access code they need to crack. I generated a random access code consisting of six digits, with two leading zeros to make it more challenging. Additionally, I added a fake code with one random digit to mislead the player.
+
+Players are prompted to enter the access code by typing it in. The code they enter is then compared with the actual access code using a function called <code>check_code()</code>. This function checks each digit of the input code against the corresponding digit in the access code.
+
+If the input code matches the access code, the hacking attempt is successful. Players gain access to the planet's defences, allowing them to proceed with assimilating the planet.
+
+However, if the input code is incorrect, players have a limited number of attempts to guess the correct code. With each incorrect attempt, the remaining attempts are decremented, and the player is informed about the number of attempts left.
+
+If players fail to guess the code within the given attempts, the hacking is considered unsuccessful. They may also take damage based on the player_damage calculation, which adds an element of risk and consequences to the hacking process.
+
+The hacking mini-game aims to provide an interactive and engaging experience for players while drawing inspiration from the captivating visuals of the "Matrix" movie's code rain effect. It adds a sense of tension and challenge to the gameplay, requiring players to use their problem-solving skills to crack the access code and successfully infiltrate the planet's defences.
 
 # **Python Game Logic Overview**
 The Python game code represents a text-based strategy game where the player controls a collective of drones tasked with assimilating planets in different systems. The game follows a turn-based approach and involves attacking enemy systems, upgrading the player's abilities, and managing resources.
@@ -418,6 +437,25 @@ The leaderboard.py module is imported and used in the run.py main file, where th
 
 * Favicon Issue: The favicon could not be displayed on the Heroku app. Unfortunately, this issue could not be fixed as it might be a limitation or configuration issue specific to the Heroku platform. Alternative solutions or workarounds can be explored, such as using a different hosting platform or adjusting the favicon format.
 
+### run.py PEP8
+
+In my project, I made a conscious decision not to conform to the PEP 8 guidelines regarding line length. The reason behind this choice was that I had an array of indentations for my strings, which allowed me to create a neater and less crowded display in the terminal for my text-based game.
+
+Although I became aware of PEP 8 guidelines later on in the project, I decided not to adhere to the recommended 79-line length in order to maintain the visual aesthetics of the game. By adjusting the line length and indentation, I was able to achieve a more visually appealing presentation without compromising the functionality of the game.
+
+I understand that adhering to coding conventions like PEP 8 is generally recommended for code consistency and maintainability. However, in this particular case, I prioritised the visual aspect of the game and made a deliberate choice to deviate from the guidelines.
+
+It's worth noting that while style conventions provide guidance, they are not strict rules, and there can be situations where it's acceptable to deviate from them. As a developer, it's important to be aware of these conventions and understand when it's appropriate to follow or deviate from them, depending on the specific context and requirements of the project.
+
+In the future, I will keep in mind the importance of adhering to coding conventions like PEP 8, as it can improve code readability and maintainability, especially when collaborating with others or returning to the code at a later stage.
+
+* list errors
+
+### leaderboard.py PEP8
+
+* list of erros
+
+
 
 
 **List of fixed bugs**
@@ -521,6 +559,30 @@ Developed by **Rhys.Alexander.Few**
 
 
 **Bibliography:**
+
+* Tutorial on YouTube - "Learn Python": [Youtube](https://www.youtube.com/watch?v=rfscVS0vtbw)
+
+* FontSpace - Arcade Fonts: [Link](https://www.fontspace.com/category/arcade)
+    * FontSpace offers a collection of arcade-style fonts. These fonts were used to create visually appealing headings and text styles within the game. The arcade fonts added a retro and nostalgic touch to the game's overall design.
+
+* ASCII Art from ASCII.co.uk - Star Trek: [Link](https://ascii.co.uk/art/startrek)
+    * ASCII.co.uk provides a selection of ASCII art, including a dedicated section for Star Trek-themed art. Some ASCII art from this website was incorporated into the game to enhance the visual experience and create a connection with the Star Trek universe.
+
+* Code Institute - Love Sandwiches Tutorial: API Boilerplate Code and Tutorial
+    * The Love Sandwiches tutorial from Code Institute offered guidance on working with APIs and provided boilerplate code for integrating a leaderboard feature into the game. This tutorial was instrumental in implementing the leaderboard functionality, allowing players to compete and track their scores.
+
+* Stack Overflow - A community-driven question-and-answer website for programming: Accessible at [https://stackoverflow.com](https://stackoverflow.com). Stack Overflow is a valuable resource for troubleshooting coding issues, seeking solutions, and gaining insights from the programming community.
+
+* GeeksforGeeks - Online platform with programming tutorials and articles: Visit [https://www.geeksforgeeks.org](https://www.geeksforgeeks.org) for a wide range of tutorials covering algorithms, data structures, and various coding concepts. It also provides examples and explanations related to game development.
+
+* Real Python - Online platform offering in-depth Python tutorials and articles: Find practical resources at [https://realpython.com](https://realpython.com), including comprehensive Python tutorials, step-by-step guides, and examples relevant to game development.
+
+* Python.org - The official website for the Python programming language: Visit [https://www.python.org](https://www.python.org) for official news, updates, and resources related to Python, including the Python Package Index (PyPI) for accessing third-party libraries.
+
+* Youtube - [Youtube](https://www.youtube.com/watch?v=3CoMsIiHabc) not strictly followed but was useful for my hacking mini game.
+
+* Python Tutor - A web-based tool for visualizing Python code execution: Explore [https://pythontutor.com](https://pythontutor.com) to visually debug and understand how Python code works. It provides a step-by-step visualization of code execution.
+
 
 
 
