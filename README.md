@@ -231,6 +231,8 @@ By prioritising an intuitive and visually engaging interface and leveraging ASCI
 
 # Hacking mini-game 
 
+![Hacking](/assets/images/hacking.png)
+
 <br>
 
 In the game I developed, I implemented a hacking mini-game inspired by the iconic "Matrix" movie's code rain effect. When players encounter a planet with defences, there is a chance for the hacking mini-game to be initiated.
