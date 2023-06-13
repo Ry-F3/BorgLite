@@ -14,15 +14,15 @@ class Player:
         self.processing = 0
         self.score = 0
         self.rank = ""
-        self.assimilate_planets = [] # List to store assimilated planets
-        self.upgrades = [] # List to store upgrades
+        self.assimilate_planets = []  # List to store assimilated planets
+        self.upgrades = []  # List to store upgrades
         
-    def leaderboard_player(self, level, score): # Player's leaderboard function calling the module leaderboard.py
+    def leaderboard_player(self, level, score):  # Player's leaderboard function calling the module leaderboard.py
         """
         This function connects player objects to the leaderboard.py module. 
         It extracts player information and passes it to the update_leaderboard() function, ensuring proper leaderboard updates.
         """    
-        player_row = {self.rank, self.name, self.level, self.score} # Create player_row object to pass to the update_leaderboard function
+        player_row = {self.rank, self.name, self.level, self.score}  # Create player_row object to pass to the update_leaderboard function
         update_leaderboard(player)
         
     def apply_upgrade(self, upgrade, processing):
@@ -40,27 +40,27 @@ class Player:
         else:
             print(f"\n   >> Upgrade applied successfully! No processing power consumed.")
         
-    def increase_attack(self): # Increase attack each level
+    def increase_attack(self):  # Increase attack each level
         self.attack += 2
         
-    def decrease_attack(self, val): # Decrease attack each level
+    def decrease_attack(self, val):  # Decrease attack each level
         self.attack -= val
 
-    def increase_defence(self, increase): # Increase defence each level
+    def increase_defence(self, increase):  # Increase defence each level
         increase = increase
         self.defence += increase
         
-    def increase_processing(self): # Increase processing power
+    def increase_processing(self):  # Increase processing power
         power = random.randint(25,50)
         self.processing += power
         print(f"   >> You recieved a power{power_icon} bonus: {power}")
         
-    def decrease_processing(self, amount): # Decrease processing power
+    def decrease_processing(self, amount):  # Decrease processing power
         power = random.randint(10, amount)
         self.processing -= power
         print(f"   >> You loose power {power_icon} : {power}")
 
-    def take_damage(self, damage): # Take damage from system by individual planets
+    def take_damage(self, damage):  # Take damage from system by individual planets
         if self.defence > 0:
             if damage <= self.defence:
                 self.defence -= damage
@@ -73,7 +73,7 @@ class Player:
         self.health = max(self.health, 0)  # Ensure health doesn't go below 0
         return self.defence and self.health
     
-    def hacking_damage(self, damage, has_defences): # Take damage from failure to hack defences
+    def hacking_damage(self, damage, has_defences):  # Take damage from failure to hack defences
         """
         Player takes damage from the hacking mini game, if the player fails three times to figure out the code.
         """
@@ -100,7 +100,7 @@ class Player:
             if self.processing < 0:
                 self.processing = 0
         else: 
-            self.processing -= processing  # Reduce processing even if input code is incorrect
+            self.processing -= processing   # Reduce processing even if input code is incorrect
             if self.processing < 0:
                 self.processing = 0
 
@@ -111,19 +111,17 @@ class Player:
         """
         Display game interface featuring ASCII art.
         """
-        
         num_planets = len(self.assimilate_planets)
         self.score = self.processing * num_planets * self.level * self.attack
         
-        sw = "\033[37m" # White
+        sw = "\033[37m"  # White
         ew = "\033[0m"
         
-        s = "\033[32m" # Green
+        s = "\033[32m"  # Green
         e = "\033[0m"
         
-        sr = "\033[31m" # Red
+        sr = "\033[31m"  # Red
         er = "\033[0m"
-        
         
         art = f"""  {s}                          
  ________.--------------._______________________________________________________________
@@ -154,9 +152,8 @@ class Player:
  {e} """
  
         print(art)
-        
-        
-    def display_game_finished(self): # Display end game score 
+           
+    def display_game_finished(self):  # Display end game score 
         num_planets = len(self.assimilate_planets)
         score = self.processing * num_planets * self.level * self.attack
         type_text(f"   >> Final Score: {score}\n")
@@ -208,7 +205,6 @@ class Upgrades:
         
         return upgrades
 
-
 # Define the Planet Class
 class Planet:
     def __init__(self, name, resources, level):
@@ -218,7 +214,7 @@ class Planet:
         self.level = level + 1
         self.attack_points = random.randint(5, 25) + level
         self.defence_points = random.randint(5, 25) + level
-        self.has_defences = random.choice([True, False]) # Randomise defences for planets
+        self.has_defences = random.choice([True, False])  # Randomise defences for planets
 
     def attack_player(self, player):
         # Color Yellow
@@ -240,7 +236,7 @@ class Planet:
     def assimilate(self, player):
         self.assimilated = True
         player.processing += self.resources.get("processing", 0)
-        player.assimilate_planets.append(self) # Add the assimilated planet to the player's list
+        player.assimilate_planets.append(self)  # Add the assimilated planet to the player's list
 
     def is_assimilated(self):
         return self.assimilated
@@ -260,13 +256,13 @@ class System:
         if planet_index in range(len(self.planets)):
             planet = self.planets[planet_index]
             if not planet.is_assimilated():
-                if planet.has_defences: # Hacking mini game initiated randomly if boolean value is True
+                if planet.has_defences:  # Hacking mini game initiated randomly if boolean value is True
                     type_text(f"\n   >> {planet.name}'s defences initiated ...\n")
                     type_text("   >> Hacking sequence ... \n")
                     type_text("   >> START \n")
                     print("\n")
                     # ASCII art for code rain characters
-                    s = "\033[32m" # Green
+                    s = "\033[32m"  # Green
                     e = "\033[0m"
                     code_rain_chars = ['|', '/', '-', '\\']
                     
@@ -301,7 +297,7 @@ class System:
                     def generate_fake_code():
                         code = []
                         for _ in range(1):
-                            fake_digit = random.randint(1, 2) # Random number
+                            fake_digit = random.randint(1, 2)  # Random number
                             code.append(fake_digit)
                         return code
 
@@ -337,7 +333,7 @@ class System:
                     # Start the code rain static animation
                     print_code_rain(access_code, fake_code)
 
-                    # Game loop
+                 # Game loop
                     attempts_left = 3
                     while attempts_left > 0:
                         # Read user input
@@ -409,7 +405,7 @@ class System:
         if all(planet.is_assimilated() for planet in selected_system.planets):
             
             # Randomly select a backstory
-            backstory_index = random.randint(0, len(backstories) -1) # Subtract 1 to stay within the list indices
+            backstory_index = random.randint(0, len(backstories) -1)  # Subtract 1 to stay within the list indices
             backstory = backstories[backstory_index]  # Retrieve the actual backstory dictionary
 
             backstory_text = backstory["backstory"]
@@ -486,7 +482,6 @@ class System:
                     else:
                         pass
                     
-                    
                 if backstory_index == 2:
 
                     result = random.choice([True, False])
@@ -521,16 +516,14 @@ class System:
                 
             else:
                 type_text("   >> Invalid input. Please enter 1 or 2.")
-                # Handle invalid choice
-
-         
+            # Handle invalid choice
 
 # Define AttackManager Class   
 class AttackManager:
     used_resistance_levels = []  # Class variable to store used resistance levels
 
     @staticmethod
-    def attack(system, attack_power, player):    # Update the resistance level within a randomised range
+    def attack(system, attack_power, player):  # Update the resistance level within a randomised range
         """
         The attack method is a static method because it doesn't need access to any specific instance or class variables.
         It takes the system, attack_power, and player as parameters and performs the attack calculations accordingly.
@@ -568,7 +561,7 @@ class AttackManager:
         return success_chance >= 1
 
     @classmethod
-    def get_unique_resistance_level(cls, lower_bound, upper_bound): # Generate a unique resistance level that hasn't been used before
+    def get_unique_resistance_level(cls, lower_bound, upper_bound):  # Generate a unique resistance level that hasn't been used before
         """
         The get_unique_resistance_level method is a class method because it needs access to the 
         used_resistance_levels class variable to check for unique resistance levels. 
@@ -582,7 +575,6 @@ class AttackManager:
             resistance_level = random.randint(lower_bound, upper_bound)
         cls.used_resistance_levels.append(resistance_level)
         return resistance_level
-    
     
 # Define the help class  
 class HelpSection:
@@ -638,8 +630,6 @@ class HelpSection:
         type_text("   3. GAMMA\n")
         type_text("   4. DELTA\n")
         type_text("   5. EPSILON\n")
-
-
 
 # Load systems data
 def load_systems_data():
@@ -702,23 +692,22 @@ def load_systems_data():
     ]
     return systems_data
     
-
 # Assimilate a planet within a system
 def attack_system(system, player):
     initial_upgrade_applied = True
     success = AttackManager.attack(system, player.attack, player)
     if success:
         while True:
-            main_loop= False # Stop the main loop
+            main_loop= False  # Stop the main loop
              
             type_text("   >> We are Borg. Existence as you know it is over. Resistance is futile.\n")
             # Display the available planets for assimilation
             print("\n   >> Available planets for assimilation:")
             for i, planet in enumerate(system.planets):
-                s = "\033[32m" # Green
+                s = "\033[32m"  # Green
                 e = "\033[0m"
                 if planet.is_assimilated():
-                    print(f"   {str(i + 1)}.{s} {''.join(chr(822) + c for c in planet.name)} {e}") # Put a line through planet names that have been assimilated
+                    print(f"   {str(i + 1)}.{s} {''.join(chr(822) + c for c in planet.name)} {e}")  # Put a line through planet names that have been assimilated
                 else:
                     print(f"   {i + 1}. {planet.name}")
                         
@@ -729,13 +718,13 @@ def attack_system(system, player):
                 if choice not in range(1, 6):
                     print("   >> Invalid system index. Please try again.")
                 else:
-                    choice -= 1  # Adjust the choice to match the index
+                    choice -= 1   # Adjust the choice to match the index
                     assimilated = system.assimilate_planet(choice, player)
                     if assimilated:
                         player.level += 1
                         player.increase_attack()
                         player.increase_defence(increase = 2)
-                        type_text(f'\n   >> You have assimilated {system.planets[choice].name.upper()}\n')
+                        type_text(f"\n   >> You have assimilated {system.planets[choice].name.upper()} \n")
                         if selected_upgrade is not None:
                             if initial_upgrade_applied:
                                 player.apply_upgrade(selected_upgrade, 0)  # Apply the upgrade without deducting processing power
@@ -745,11 +734,11 @@ def attack_system(system, player):
                         break
                         # if planets all assimilated what happens??? add here
                         
-                        break # Break back to main loop
+                        break  # Break back to main loop
                     else:
                         print("   >> Assimilation failed!\n")
-                        return player.health # Return player's health before loop broken
-                        break # Break the loop
+                        return player.health  # Return player's health before loop broken
+                        break  # Break the loop
             except ValueError:
                 print("   >> Invalid index. Please choose either 1, 2, 3, 4, 5.\n")
 
@@ -768,7 +757,6 @@ def attack_system(system, player):
         else:
             type_text("\n   >> State your directives for our next course of action.\n")
 
-
 # Decrease player life
 def decrease_player_life(player, damage_dealt):
     player.take_damage(damage_dealt)
@@ -778,7 +766,6 @@ def decrease_player_life(player, damage_dealt):
         player.display_game_finished()
         game_over(delay=0.08)
         
-
 # Time delay function
 def type_text(text, delay=0.02):
     for char in text:
@@ -801,7 +788,7 @@ if __name__ == "__main__":
     upgrades = Upgrades.load_upgrades_data("❤️", "⚔️", "🛡️")
     systems_data = load_systems_data()
     
-    s = "\033[32m" # Green
+    s = "\033[32m"  # Green
     e = "\033[0m"
     game_name = f""" {s}
 
@@ -849,10 +836,6 @@ if __name__ == "__main__":
     while main_loop == True:
         player.display_stats()
         
-        # print(player.upgrades)
-        # print(selected_upgrade)
-        
-        # print(AttackManager.used_resistance_levels) uncomment to check the stored resistance values
         choice = ""
         type_text("   >> Enter your choice: ")
         while not choice:
@@ -866,18 +849,18 @@ if __name__ == "__main__":
                     type_text("\n   >> Select a system to attack: ")
                     system_index = input().lower()
             
-                    if system_index == "q": # Breaking the game loop and exiting the system, for expanded player choice
+                    if system_index == "q":  # Breaking the game loop and exiting the system, for expanded player choice
                         level = ""
                         score = ""
                         player.leaderboard_player(level, score)
                         game_over()
                     else:
-                        system_index = int(system_index) - 1 # Indexing the stystems for player input
+                        system_index = int(system_index) - 1  # Indexing the stystems for player input
                         if system_index in range(len(systems)):
                             selected_system = systems[system_index]
                             if all(planet.is_assimilated() for planet in selected_system.planets):
                                 type_text(f"   >> {selected_system.name} is under our control. Please select another destination.\n")
-                                continue # Go back to the beginning of the loop.
+                                continue  # Go back to the beginning of the loop.
                             attack_system(selected_system, player)
                             
                             if all(all(planet.is_assimilated() for planet in system.planets) for system in systems):
@@ -892,7 +875,7 @@ if __name__ == "__main__":
             if not player.is_alive():
                 game_over()
         elif choice == "u":
-            type_text("\n   >> Available Upgrades:\n") # Display available upgrades
+            type_text("\n   >> Available Upgrades:\n")  # Display available upgrades
             print(f"   >> Costs power {power_icon} : - 100\n")
             upgrades_available = [upgrade for upgrade in upgrades if upgrade not in player.upgrades] 
             
@@ -902,7 +885,7 @@ if __name__ == "__main__":
                     
                 choice = input("\n   >> Select an upgrade to apply (or 'b' to go back): ")
 
-                if choice == "b": # Give the player the option to go back to the beginning of the outer loop
+                if choice == "b":  # Give the player the option to go back to the beginning of the outer loop
                     break
                 
                 try:
@@ -944,7 +927,7 @@ if __name__ == "__main__":
             else:
                 type_text("\n  >> System exiting ...")
                 sys.exit()
-        elif choice == "h": # Help section 
+        elif choice == "h":  # Help section 
             help_section = HelpSection()
             while True:
                 help_section.display()
@@ -969,7 +952,6 @@ if __name__ == "__main__":
                 print("\n   >> Press any key to continue", end=" ")
                 input()
                 
-
         elif choice == "q":
             game_over()
         else:
