@@ -414,14 +414,26 @@ The leaderboard.py module is imported and used in the run.py main file, where th
 
 ## **Bugs**
 
-**List of known bugs:**
+**List of known bugs & errors:**
 
+* Favicon Issue: The favicon could not be displayed on the Heroku app. Unfortunately, this issue could not be fixed as it might be a limitation or configuration issue specific to the Heroku platform. Alternative solutions or workarounds can be explored, such as using a different hosting platform or adjusting the favicon format.
 
 
 
 **List of fixed bugs**
 
+* ZeroDivisionError: This error occurred due to a division by zero in the calculation of success_chance = attack_power / system.enemy_resistance. To fix this, a check can be added to ensure that system.enemy_resistance is not zero before performing the division. For example: <code> <br>
+    if system.enemy_resistance != 0: <br>
+        success_chance = attack_power / system.enemy_resistance <br>
+    else:</code>
 
+* Upgrades Applied Without Power Requirement: The bug allowed upgrades to be applied without considering the power requirement. To fix this, an if statement can be added to check if the player has enough power before applying the upgrade. If there is not enough power, the upgrade should not be applied. 
+
+* Terminal Display Issues: Some strings were too long for the terminal and caused formatting issues. To fix this, you can break the long strings into multiple lines or truncate them to fit within the available space. 
+
+* Planet Invalid Key Resetting Loop: The bug caused the loop to reset when an invalid key was entered for planet selection. To fix this, a try-except block can be added around the input statement to catch any invalid input and handle it accordingly. 
+
+* Attack Feature Randomness: The bug caused the attack feature to be predictable. To make it more random, you can store a list of numbers that have already been used for attacks and prevent their reuse. You can use the random.sample function to select a random number from the available range and remove it from the list of available numbers.
 
 
 ## **Technologies**
@@ -444,7 +456,14 @@ The leaderboard.py module is imported and used in the run.py main file, where th
 * [Python-Tutor](https://www.python.org/)
     * Used to test code and research ideas.
 
+* [CI Python Linter](https://pep8ci.herokuapp.com/)
+    * Used to test pep8 compatibility 
+
+<br>
+
 ## **Testing**
+
+<br>
 
 ### **Testing User Stories**
 
@@ -457,10 +476,24 @@ As a Star Trek enthusiast, I wish to immerse myself in the captivating Star Trek
 | As a player, I want to engage in the hacking mini-game when encountering defended planets, where I can showcase my skills and intelligence by overcoming security measures to successfully assimilate the planet. | When the player encounters a defended planet, they will be presented with a hacking mini-game. The mini-game will challenge the player to solve puzzles, bypass security systems. Successfully completing the mini-game will allow the player to assimilate the planet and continue their conquest. 
 | As a player, I want a comprehensive help section within the game that provides clear instructions and guidance on how to play the overall game, including the mechanics, controls, and strategies involved. | The game includes a dedicated help section accessible from the main menu. The help section provides detailed instructions, explanations of game mechanics, controls, and strategies. It covers various aspects of gameplay, including attacking systems and upgrading the character. However, not all will be revealed as that would remove the challenge.
 
+<br>
+
 ### **Testing functionality**
 
-| Input     | Result   | Intention   |
-| ------------------------------------------------------------------ |:---------------------------------------------| :---------------------------------------------------------|
+Decision               | Input                         | Expected Outcome                               | Actual Outcome                                 |
+-----------------------| ----------------------------- | ---------------------------------------------- | -----------------------------------------------|
+Enter your name        | Player enter's name           | Game starts with the entered name              | Game starts with the entered name              |
+Attack a system        | Proceed -key press "a" or "A" | Initiates an attack on the selected system     | Initiates an attack on the selected system     |
+Upgrade player         | Proceed -key press "u" or "U" | Opens the upgrade menu for the player          | Opens the upgrade menu for the player          |
+Help                   | Proceed -key press "h" or "H" | Displays the available help options            | Displays the available help options            |
+Leaderboard            | Proceed -key press "l" or "L" | Shows the leaderboard with rankings            | Shows the leaderboard with rankings            |
+Select a system        | Index - 1-5                   | Initiates interaction with the selected system | Initiates interaction with the selected system |
+Assimilate a planet    | Index - 1-5                   | Attempts to assimilate the selected planet     | Attempts to assimilate the selected planet     |
+Events choice          | Index - [1], [2] and [3]      | Prompts the player to enter their choice       | Prompts the player to enter their choice       |
+Error message          | Prompt for correct input      | Prompts the player to enter a valid input      | Prompts the player to enter a valid input      |
+Hacking code           | Enter 6 digits - 0 - 9        | Prompts the player to enter a 6-digit code     | Prompts the player to enter a 6-digit code     |
+
+
 
 
 ### **Testing on different devices**
