@@ -501,10 +501,20 @@ In the future, I will keep in mind the importance of adhering to coding conventi
 
 ### leaderboard.py PEP8
 
-* list of erros
-
-
-
+* 11: W291 trailing whitespace
+* 16: E501 line too long (93 > 79 characters)
+* 18: E302 expected 2 blank lines, found 1
+* 26: E501 line too long (118 > 79 characters)
+* 27: E501 line too long (117 > 79 characters)
+* 36: E501 line too long (84 > 79 characters)
+* 39: E501 line too long (91 > 79 characters)
+* 45: E501 line too long (128 > 79 characters)
+* 49: E501 line too long (103 > 79 characters)
+* 60: E501 line too long (158 > 79 characters)
+* 72: E302 expected 2 blank lines, found 1
+* 74: E501 line too long (84 > 79 characters)
+* 79: E501 line too long (149 > 79 characters)
+* 83: W293 blank line contains whitespace
 
 **List of fixed bugs**
 
@@ -578,11 +588,6 @@ Assimilate a planet    | Index - 1-5                   | Attempts to assimilate 
 Events choice          | Index - [1], [2] and [3]      | Prompts the player to enter their choice       | Prompts the player to enter their choice       |
 Error message          | Prompt for correct input      | Prompts the player to enter a valid input      | Prompts the player to enter a valid input      |
 Hacking code           | Enter 6 digits - 0 - 9        | Prompts the player to enter a 6-digit code     | Prompts the player to enter a 6-digit code     |
-
-
-
-
-### **Testing on different devices**
 
 
 
