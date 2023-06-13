@@ -296,6 +296,18 @@ Although time constraints prevented me from implementing these features during t
 
 Overall, feedback from test players has provided valuable insights and ideas for future improvements. By incorporating early events and introducing varied planet attributes and defences, I aim to address player feedback, enhance gameplay diversity, and create a more engaging and dynamic game for all players to enjoy.
 
+## **Optimization**
+
+Throughout the development process, I have actively experimented with various builds and values to balance and optimise the game. It has been a challenging task to strike the right balance between difficulty and player engagement. While I have made significant progress in certain areas, there are still areas where further refinement is needed.
+
+One area that I have identified for improvement is the game's difficulty progression. Currently, the game starts off relatively easy, making it accessible for players to grasp the mechanics and get accustomed to the gameplay. However, as the game progresses past level 17, the difficulty ramps up quite aggressively. This sudden increase in challenge may potentially frustrate players and hinder their overall enjoyment of the game.
+
+Moving forward, I recognize the need to fine-tune the difficulty curve to ensure a more balanced and satisfying gameplay experience. This will involve carefully adjusting the parameters that govern the rate at which enemies spawn, their strength, and the resources available to the player. By striking a better balance between early and late-game challenges, I aim to create a more enjoyable and engaging experience for players of all skill levels.
+
+Furthermore, in terms of optimization, I have made efforts to streamline the code and enhance performance. However, as with any complex project, there are always opportunities for further optimization. I will continue to identify and implement optimization techniques to improve the game's overall performance, ensuring smooth gameplay even on lower-end systems.
+
+While balancing and optimization are ongoing processes, I acknowledge that further work is needed to achieve the desired level of refinement. As part of future work, I will continue to gather feedback from players and conduct thorough playtesting to address these areas of improvement. By refining the difficulty progression and optimising the game's performance, I aim to create a more polished and enjoyable experience for all players.
+
 # **Python Game Logic Overview**
 The Python game code represents a text-based strategy game where the player controls a collective of drones tasked with assimilating planets in different systems. The game follows a turn-based approach and involves attacking enemy systems, upgrading the player's abilities, and managing resources.
 
