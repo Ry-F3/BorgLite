@@ -11,7 +11,7 @@ class Player:
         self.defence = 10
         self.attack = 10
         self.level = 1
-        self.processing = 0
+        self.processing = 50
         self.score = 0
         self.rank = ""
         self.assimilate_planets = []  # List to store assimilated planets
@@ -58,7 +58,7 @@ class Player:
     def decrease_processing(self, amount):  # Decrease processing power
         power = random.randint(10, amount)
         self.processing -= power
-        print(f"   >> You loose power {power_icon} : {power}")
+        print(f"   >> You loose power : {power} {power_icon}")
 
     def take_damage(self, damage):  # Take damage from system by individual planets
         if self.defence > 0:
@@ -105,7 +105,7 @@ class Player:
                 self.processing = 0
 
     def is_alive(self):
-        return self.health > 0
+        return self.health > 0 and self.processing > 0
 
     def display_stats(self):
         """
@@ -156,11 +156,14 @@ class Player:
     def display_game_finished(self):  # Display end game score 
         num_planets = len(self.assimilate_planets)
         score = self.processing * num_planets * self.level * self.attack
-        type_text(f"   >> Final Score: {score}\n")
+        type_text(f"\n   >> Final Score: {score}\n")
         print(f"\n   >> Assimilated Planets {planet_icon} : {num_planets}")
         if self.assimilate_planets:
-            for planet in self.assimilate_planets:
-                print(f"   - {planet.name}")
+            for planet, destroyed in self.assimilate_planets:
+                if destroyed:
+                    print(f"   - {planet}")
+                else:
+                    print(f"   - {planet}")
         else:
             type_text("   >> No planets assimilated.\n")
                     
@@ -186,8 +189,8 @@ class Upgrades:
                 "add_attack": -2,
             },
             {
-                "name": f"Adaptive Shielding  {shield_icon}  +15  {heart_icon}  -5 {sword_icon}   +1",
-                "add_defence": 15,
+                "name": f"Adaptive Shielding  {shield_icon}  +10  {heart_icon}  -5 {sword_icon}   +1",
+                "add_defence": 10,
                 "add_health": -5,
                 "add_attack": 1,
             },
@@ -207,7 +210,7 @@ class Upgrades:
 
 # Define the Planet Class
 class Planet:
-    def __init__(self, name, resources, level):
+    def __init__(self, name, resources, level, population):
         self.name = name
         self.resources = resources
         self.assimilated = False
@@ -215,7 +218,123 @@ class Planet:
         self.attack_points = random.randint(5, 25) + level
         self.defence_points = random.randint(5, 25) + level
         self.has_defences = random.choice([True, False])  # Randomise defences for planets
+        self.population = population
+    
+    def __str__(self):  # planet names contained memory addresses and the __str__ method overrides the default string representation
+        return self.name
 
+    def pop(self):
+        game = True
+        player_wins = False
+        while game:
+            if not player.is_alive():
+                game = False
+                break
+            player_dice = self.get_dice_roll(self.population)
+            ai_dice = self.get_dice_roll(self.population)
+            player_rolls = self.roll_dice(player_dice)
+            ai_rolls = self.roll_dice(ai_dice)
+            print(f"\n   ++ {player.name} rolls {player_dice} dice: {', '.join(map(str, player_rolls))}")
+            print(f"   ++ AI rolls {ai_dice} dice: {', '.join(map(str, ai_rolls))}")
+
+            player_total = sum(player_rolls)
+            ai_total = sum(ai_rolls)
+
+            if player_total > ai_total:
+                print(f"\n   ++ You win the battle!")
+                player_wins = True
+                break
+            elif player_total < ai_total:
+                print("\n   >> AI wins! The planet is not assimilated.")
+                self.reduce_population(self.population // 2)
+                choice = input("\n   >> Do you want to roll again? (y/n): ")
+                if choice == 'y':
+                    player.decrease_processing(10)
+                    print(f"   >> Power left in storage : {player.processing} {power_icon}")
+                    continue
+                elif choice == 'n':
+                    game = False
+                    player_wins = False
+                    break
+            else:
+                print("   >> It's a draw! The assimilation attempt failed. Reducing population...\n")
+                self.reduce_population(self.population // 4)
+                
+        return player_wins
+
+    def reduce_population(self, reduction_amount):
+        s = "\033[32m"  # Green
+        e = "\033[0m"
+        self.population -= reduction_amount
+        print(f"   >> {self.name}'s population reduced to {s}{self.population}{e} ...")
+
+    @staticmethod
+    def get_dice_roll(population):
+        if population <= 10000000:
+            return 1
+        elif population <= 100000000:
+            return 2
+        else:
+            return 3
+
+    @staticmethod
+    def roll_dice(num_dice):
+        return [random.randint(1, 6) for _ in range(num_dice)]
+
+    def play_dice_game(self):
+        s = "\033[32m"  # Green
+        e = "\033[0m"
+
+        type_text(f"   >> {self.name}'s population: {s}{self.population}{e}\n")
+        continue_playing = True
+
+        while continue_playing:
+            assimilated = False
+            destroy_planet = False
+            while not assimilated:
+                if not player.is_alive():
+                    type_text("\n   >> You have lost all power...\n")
+                    type_text("   >> System failure...\n")
+                    game_over()
+                    sys.exit()
+                type_text("\n   >> The collective must make a choice:")
+                type_text(f"\n   - 'roll' the dice to try and assimilate {self.name} and gain power. Costs 10 {power_icon}")
+                type_text(f"\n   - 'destroy' all life on {self.name}, but gain 0 power{power_icon}")
+                type_text("\n   - 'flee' to fight another day...\n")
+                choice = input(f"\n   >> Enter one of the keywords to make your choice: ")
+
+                if choice == "roll":
+                    if player.processing >= 10:
+                        player.decrease_processing(10)
+                        print(f"   >> Power left in storage : {player.processing} {power_icon}")
+                        player_wins = self.pop()
+                        if player_wins:
+                            continue_playing = False
+                            assimilated = True
+                            break
+                        else:
+                            continue
+                    else:
+                        ("   >> Insufficient power")
+                elif choice == "destroy":
+                    if self.assimilate(player, destroy_planet=True):
+                        continue_playing = False
+                        assimilated = False
+                        break
+                    else:
+                        continue_playing = False
+                        assimilated = True
+                        break
+                else:
+                    print("   >> Invalid choice. Please enter 'roll', 'destroy' or 'flee'.\n")
+                    
+            if assimilated and not destroy_planet:
+                self.assimilate(player)
+                break
+            elif destroy_planet:
+                self.assimilate(player, destroy_planet=True)
+                break    
+                
     def attack_player(self, player):
         # Color Yellow
         ys = "\033[33m"
@@ -233,11 +352,20 @@ class Planet:
             print("\n  >> GAME OVER")
             sys.exit()
             
-    def assimilate(self, player):
+    def assimilate(self, player, destroy_planet=False):
         self.assimilated = True
-        player.processing += self.resources.get("processing", 0)
-        player.assimilate_planets.append(self)  # Add the assimilated planet to the player's list
-
+        if destroy_planet:
+            destroyed_planet_name = self.name
+            print("   >> The planet is dust and rubble, 0 power {} is harvested.".format(power_icon))
+            player.assimilate_planets.append((destroyed_planet_name, True))
+            destroy_planet = True
+            return True
+        else:
+            player.processing += self.resources.get("processing", 0)
+            player.assimilate_planets.append((self, True))  # Add the assimilated planet to the player's list
+            type_text("   ++ You harvested precious resources and gained power {} {}\n".format(self.resources.get("processing", 0), power_icon))
+            return False
+        
     def is_assimilated(self):
         return self.assimilated
 
@@ -248,7 +376,7 @@ class System:
         self.enemy_resistance = enemy_resistance
         self.planets = planets
 
-    def assimilate_planet(self, planet_index, player):
+    def assimilate_planet(self, planet_index, player, destroy_planet=False):
         """
         The function responsible for assimilating planets and incorporates an embedded hacking mini-game,
         that becomes active, when the planet's defenses are activated.
@@ -256,6 +384,8 @@ class System:
         if planet_index in range(len(self.planets)):
             planet = self.planets[planet_index]
             if not planet.is_assimilated():
+                if not planet.has_defences:
+                    planet.play_dice_game()
                 if planet.has_defences:  # Hacking mini game initiated randomly if boolean value is True
                     type_text(f"\n   >> {planet.name}'s defences initiated ...\n")
                     type_text("   >> Hacking sequence ... \n")
@@ -363,7 +493,7 @@ class System:
                                 player_damage = player.hacking_damage(random.randint(1, 50), planet.has_defences)
                                 print(f"\n   >> You took damage {player_damage}. Health remaining {player.health}.")
                 else:
-                    planet.assimilate(player)
+                    # planet.assimilate(player)
                     self.check_assimilation_events(system, player, self.backstories)
                     return True
             else:
@@ -532,22 +662,22 @@ class AttackManager:
         ys = "\033[33m"
         ye = "\033[0m"
         if player.level < 6:
-            lower_bound = 1 + random.randint(-3, 3)
+            lower_bound = max(1 + random.randint(-3, 3), 1)
             upper_bound = 15 + random.randint(-3, 3)
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
             system.enemy_resistance = resistance_level
         elif player.level >= 6 and player.level <= 10:
-            lower_bound = 10 + random.randint(-3, 5)
+            lower_bound = max(20 + random.randint(-3, 5), 1)
             upper_bound = 30 + random.randint(-3, 5)
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
             system.enemy_resistance = resistance_level
         elif player.level >= 11 and player.level <= 16:
-            lower_bound = 20 + random.randint(-6, 5)
-            upper_bound = 45 + random.randint(-3, 5)
+            lower_bound = max(35 + random.randint(-6, 5), 1)
+            upper_bound = 55 + random.randint(-3, 5)
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
             system.enemy_resistance = resistance_level
         else:
-            lower_bound = 50 + random.randint(-3, 10)
+            lower_bound = max(45 + random.randint(-3, 10), 1)
             upper_bound = 75 + random.randint(-3, 10)
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
             system.enemy_resistance = resistance_level
@@ -638,55 +768,55 @@ def load_systems_data():
             "name": "Alpha System",
             "enemy_resistance": random.randint(25, 60),
             "planets": [
-                Planet("Earth", {"processing": random.randint(20, 50)}, 1),
-                Planet("Vulcan", {"processing": random.randint(20, 50)}, 1),
-                Planet("Klingon", {"processing": random.randint(20, 50)}, 1),
-                Planet("Romulus", {"processing": random.randint(20, 50)}, 1),
-                Planet("Andoria", {"processing": random.randint(20, 50)}, 1)
+                Planet("Earth", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Vulcan", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Klingon", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Romulus", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Andoria", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000))
             ]
         },
         {
             "name": "Beta System",
             "enemy_resistance": random.randint(9, 60),
             "planets": [
-                Planet("Cardassia Prime", {"processing": random.randint(20, 50)}, 1),
-                Planet("Bajor", {"processing": random.randint(20, 50)}, 1),
-                Planet("Ferenginar", {"processing": random.randint(20, 50)}, 1),
-                Planet("Qo'noS", {"processing": random.randint(20, 50)}, 1),
-                Planet("Trill", {"processing": random.randint(20, 50)}, 1)
+                Planet("Cardassia Prime", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Bajor", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Ferenginar", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Qo'noS", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Trill", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000))
             ]
         },
         {
             "name": "Gamma System",
             "enemy_resistance": random.randint(9, 60),
             "planets": [
-                Planet("Betazed", {"processing": random.randint(20, 50)}, 1),
-                Planet("Risa", {"processing": random.randint(20, 50)}, 1),
-                Planet("Tellar Prime", {"processing": random.randint(20, 50)}, 1),
-                Planet("Q'uorath", {"processing": random.randint(20, 50)}, 1),
-                Planet("Federation Outpost 112", {"processing": random.randint(20, 50)}, 1)
+                Planet("Betazed", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Risa", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Tellar Prime", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Q'uorath", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Federation Outpost 112", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000))
             ]
         },
         {
             "name": "Delta System",
             "enemy_resistance": random.randint(1, 30),
             "planets": [
-                Planet("Vorta", {"processing": random.randint(20, 50)}, 1),
-                Planet("Founders' Homeworld", {"processing": random.randint(20, 50)}, 1),
-                Planet("Breen Homeworld", {"processing": random.randint(20, 50)}, 1),
-                Planet("Talax", {"processing": random.randint(20, 50)}, 1),
-                Planet("Ocampa", {"processing": random.randint(20, 50)}, 1)
+                Planet("Vorta", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Founders' Homeworld", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Breen Homeworld", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Talax", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Ocampa", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000))
             ]
         },
         {
             "name": "Epsilon System",
             "enemy_resistance": random.randint(9, 50),
             "planets": [
-                Planet("Nimbus III", {"processing": random.randint(20, 50)}, 1),
-                Planet("Rigel VII", {"processing": random.randint(20, 50)}, 1),
-                Planet("Sheliak", {"processing": random.randint(20, 50)}, 1),
-                Planet("Tribble Homeworld", {"processing": random.randint(20, 50)}, 1),
-                Planet("Deneb IV", {"processing": random.randint(20, 50)}, 1)
+                Planet("Nimbus III", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Rigel VII", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Sheliak", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Tribble Homeworld", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000)),
+                Planet("Deneb IV", {"processing": random.randint(20, 50)}, 1, random.randint(10000, 1000000000))
             ]
         }
     ]
@@ -719,19 +849,21 @@ def attack_system(system, player):
                     print("   >> Invalid system index. Please try again.")
                 else:
                     choice -= 1   # Adjust the choice to match the index
-                    assimilated = system.assimilate_planet(choice, player)
+                    assimilated = system.assimilate_planet(choice, player, destroy_planet=True)
                     if assimilated:
                         player.level += 1
                         player.increase_attack()
                         player.increase_defence(increase = 2)
-                        type_text(f"\n   >> You have assimilated {system.planets[choice].name.upper()} \n")
-                        if selected_upgrade is not None:
-                            if initial_upgrade_applied:
-                                player.apply_upgrade(selected_upgrade, 0)  # Apply the upgrade without deducting processing power
-                            else:
-                                player.apply_upgrade(selected_upgrade, player.processing)
-                                initial_upgrade_applied = True
-                        break
+                        type_text(f"\n   >> You have assimilated {system.planets[choice].name.upper()} ")
+                        choice = input("\n   >> Enter any key: ")
+                        if choice == '':  
+                            if selected_upgrade is not None:
+                                if initial_upgrade_applied:
+                                    player.apply_upgrade(selected_upgrade, 0)  # Apply the upgrade without deducting processing power
+                                else:
+                                    player.apply_upgrade(selected_upgrade, player.processing)
+                                    initial_upgrade_applied = True
+                            break
                         # if planets all assimilated what happens??? add here
                         
                         break  # Break back to main loop
