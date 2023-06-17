@@ -328,7 +328,7 @@ class Planet:
                         break
                 elif choice == "flee":
                     type_text("   >> Are you sure you want to flee? (y/n): ")
-                    choice = input()
+                    choice == input()
                     if choice == "y":
                         is_alive = False
                         type_text("   >> We, the Borg, do not flee. Drone terminated ...\n")
@@ -731,9 +731,30 @@ class HelpSection:
         print("   1. Level Up")
         print("   2. Upgrades")
         print("   3. Objective")
-        print("   4. System Names")
-        print("   5. Exit")
-
+        print("   4. Controls")
+        print("   5. System Names")
+        print("   6. Exit")
+        
+    def show_controls(self):
+        ys = "\033[33m"
+        ye = "\033[0m"
+        print(f"\n   >>{ys} Controls:{ye}")
+        type_text("   >> Pick a choice:\n")
+        type_text("      - Attack a system = 'a' or 'A'.\n")
+        type_text("      - Upgrades = 'u' or 'U'.\n")
+        type_text("      - Leaderboards = 'l' or 'L'.\n")
+        type_text("      - Help = 'h' or 'H'.\n")
+        type_text("   >> Pick a System:\n")
+        type_text("      - Index 1-5.\n")
+        type_text("   >> Pick a Planet:\n")
+        type_text("      - Index 1-5.\n")
+        type_text("   >> Hacking Game:\n")
+        type_text("      - Digits 0-9.\n")
+        type_text("   >> Population Game Keywords:\n")
+        type_text("      - Keyword = 'roll'.\n")
+        type_text("      - Keyword = 'destroy'.\n")
+        type_text("      - Keyword = 'flee'.\n")
+        
     def show_level_up(self):
         ys = "\033[33m"
         ye = "\033[0m"
@@ -1086,8 +1107,10 @@ if __name__ == "__main__":
                 elif section_choice == "3":
                     help_section.show_objective()
                 elif section_choice == "4":
-                    help_section.show_system_names()
+                    help_section.show_controls()
                 elif section_choice == "5":
+                    help_section.show_system_names()
+                elif section_choice == "6":
                     type_text("\n   >> Exiting Help Section...\n")
                     print("")
                     break
