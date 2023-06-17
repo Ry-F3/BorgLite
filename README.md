@@ -508,7 +508,339 @@ It's worth noting that while style conventions provide guidance, they are not st
 
 In the future, I will keep in mind the importance of adhering to coding conventions like PEP 8, as it can improve code readability and maintainability, especially when collaborating with others or returning to the code at a later stage.
 
-* list errors
+* 7: E302 expected 2 blank lines, found 1
+* 19: W293 blank line contains whitespace
+* 20: E501 line too long (114 > 79 characters)
+* 22: W291 trailing whitespace
+* 23: E501 line too long (127 > 79 characters)
+* 24: W291 trailing whitespace
+* 25: E501 line too long (138 > 79 characters)
+* 27: W293 blank line contains whitespace
+* 35: W293 blank line contains whitespace
+* 41: E501 line too long (89 > 79 characters)
+* 42: W293 blank line contains whitespace
+* 45: W293 blank line contains whitespace
+* 52: W293 blank line contains whitespace
+* 54: E231 missing whitespace after ','
+* 57: W293 blank line contains whitespace
+* 63: E501 line too long (83 > 79 characters)
+* 71: W291 trailing whitespace
+* 75: W293 blank line contains whitespace
+* 76: E501 line too long (96 > 79 characters)
+* 78: E501 line too long (111 > 79 characters)
+* 82: E501 line too long (88 > 79 characters)
+* 91: W291 trailing whitespace
+* 93: W293 blank line contains whitespace
+* 102: W291 trailing whitespace
+* 103: E501 line too long (95 > 79 characters)
+* 116: W293 blank line contains whitespace
+* 119: W293 blank line contains whitespace
+* 122: W293 blank line contains whitespace
+* 125: W293 blank line contains whitespace
+* 126: W291 trailing whitespace
+* 128: E501 line too long (89 > 79 characters)
+* 129: E501 line too long (154 > 79 characters)
+* 129: W291 trailing whitespace
+* 130: W291 trailing whitespace
+* 131: E501 line too long (122 > 79 characters)
+* 132: E501 line too long (208 > 79 characters)
+* 132: W291 trailing whitespace
+* 133: W291 trailing whitespace
+* 134: E501 line too long (89 > 79 characters)
+* 134: W291 trailing whitespace
+* 135: E501 line too long (100 > 79 characters)
+* 135: W291 trailing whitespace
+* 136: E501 line too long (100 > 79 characters)
+* 137: W605 invalid escape sequence '\`'
+* 137: E501 line too long (89 > 79 characters)
+* 138: E501 line too long (89 > 79 characters)
+* 139: E501 line too long (89 > 79 characters)
+* 139: W291 trailing whitespace
+* 140: E501 line too long (89 > 79 characters)
+* 140: W291 trailing whitespace
+* 141: E501 line too long (100 > 79 characters)
+* 142: E501 line too long (100 > 79 characters)
+* 143: E501 line too long (100 > 79 characters)
+* 144: E501 line too long (89 > 79 characters)
+* 145: E501 line too long (100 > 79 characters)
+* 146: W291 trailing whitespace
+* 147: E501 line too long (111 > 79 characters)
+* 148: E501 line too long (111 > 79 characters)
+* 149: E501 line too long (133 > 79 characters)
+* 150: E501 line too long (100 > 79 characters)
+* 151: E501 line too long (89 > 79 characters)
+* 153: W293 blank line contains whitespace
+* 155: W293 blank line contains whitespace
+* 156: W291 trailing whitespace
+* 169: W293 blank line contains whitespace
+* 171: E302 expected 2 blank lines, found 1
+* 181: E501 line too long (144 > 79 characters)
+* 181: W291 trailing whitespace
+* 182: E501 line too long (124 > 79 characters)
+* 186: E501 line too long (102 > 79 characters)
+* 192: E501 line too long (102 > 79 characters)
+* 198: E501 line too long (85 > 79 characters)
+* 198: E203 whitespace before ','
+* 203: W293 blank line contains whitespace
+* 208: W293 blank line contains whitespace
+* 212: E302 expected 2 blank lines, found 1
+* 220: E501 line too long (90 > 79 characters)
+* 222: W293 blank line contains whitespace
+* 223: E501 line too long (132 > 79 characters)
+* 237: E501 line too long (105 > 79 characters)
+* 238: E501 line too long (84 > 79 characters)
+* 253: E501 line too long (92 > 79 characters)
+* 260: E501 line too long (101 > 79 characters)
+* 262: W293 blank line contains whitespace
+* 269: E501 line too long (87 > 79 characters)
+* 301: E501 line too long (124 > 79 characters)
+* 302: E501 line too long (100 > 79 characters)
+* 304: E501 line too long (90 > 79 characters)
+* 309: E501 line too long (96 > 79 characters)
+* 329: E501 line too long (94 > 79 characters)
+* 330: W293 blank line contains whitespace
+* 336: W291 trailing whitespace
+* 337: W293 blank line contains whitespace
+* 344: E201 whitespace after <code>'('</Code>
+* 344: E501 line too long (93 > 79 characters)
+* 354: W293 blank line contains whitespace
+* 359: E501 line too long (101 > 79 characters)
+* 365: E501 line too long (109 > 79 characters)
+* 366: E501 line too long (144 > 79 characters)
+* 368: W293 blank line contains whitespace
+* 373: E302 expected 2 blank lines, found 1
+* 381: E501 line too long (105 > 79 characters)
+* 389: E501 line too long (104 > 79 characters)
+* 390: E501 line too long (82 > 79 characters)
+* 398: W293 blank line contains whitespace
+* 403: E501 line too long (116 > 79 characters)
+* 406: E501 line too long (88 > 79 characters)
+* 415: W293 blank line contains whitespace
+* 422: E501 line too long (99 > 79 characters)
+* 425: W293 blank line contains whitespace
+* 426: E501 line too long (83 > 79 characters)
+* 436: E501 line too long (82 > 79 characters)
+* 439: E501 line too long (81 > 79 characters)
+* 443: W291 trailing whitespace
+* 460: E501 line too long (110 > 79 characters)
+* 471: E501 line too long (96 > 79 characters)
+* 472: E501 line too long (121 > 79 characters)
+* 474: E501 line too long (121 > 79 characters)
+* 475: E501 line too long (102 > 79 characters)
+* 476: W293 blank line contains whitespace
+* 483: E501 line too long (92 > 79 characters)
+* 488: E501 line too long (100 > 79 characters)
+* 489: W291 trailing whitespace
+* 490: E501 line too long (101 > 79 characters)
+* 493: E501 line too long (113 > 79 characters)
+* 494: E501 line too long (116 > 79 characters)
+* 497: E501 line too long (84 > 79 characters)
+* 504: W293 blank line contains whitespace
+* 507: W291 trailing whitespace
+* 511: E501 line too long (393 > 79 characters)
+* 512: E501 line too long (271 > 79 characters)
+* 513: E501 line too long (97 > 79 characters)
+* 514: E501 line too long (111 > 79 characters)
+* 515: E501 line too long (86 > 79 characters)
+* 518: W293 blank line contains whitespace
+* 519: E501 line too long (371 > 79 characters)
+* 520: E501 line too long (342 > 79 characters)
+* 521: E501 line too long (151 > 79 characters)
+* 522: E501 line too long (182 > 79 characters)
+* 523: E501 line too long (191 > 79 characters)
+* 524: W291 trailing whitespace
+* 526: E501 line too long (370 > 79 characters)
+* 527: E501 line too long (328 > 79 characters)
+* 528: E501 line too long (200 > 79 characters)
+* 529: E501 line too long (182 > 79 characters)
+* 530: E501 line too long (232 > 79 characters)
+* 531: W291 trailing whitespace
+* 533: W293 blank line contains whitespace
+* 536: W293 blank line contains whitespace
+* 538: E225 missing whitespace around operator
+* 538: E501 line too long (114 > 79 characters)
+* 539: E501 line too long (96 > 79 characters)
+* 546: W293 blank line contains whitespace
+* 547: E501 line too long (105 > 79 characters)
+* 551: W293 blank line contains whitespace
+* 553: E501 line too long (95 > 79 characters)
+* 554: W293 blank line contains whitespace
+* 559: E712 comparison to True should be 'if cond is True
+* 561: E712 comparison to False should be 'if cond is False
+* 566: W293 blank line contains whitespace
+* 569: E712 comparison to True should be 'if cond is True
+* 571: E712 comparison to False should be 'if cond is False
+* 576: W293 blank line contains whitespace
+* 579: E712 comparison to True should be 'if cond is True
+* 581: E712 comparison to False should be 'if cond is False
+* 586: W293 blank line contains whitespace
+* 591: E712 comparison to True should be 'if cond is True
+* 593: E501 line too long (83 > 79 characters)
+* 595: E712 comparison to False should be 'if cond is False
+* 598: E501 line too long (83 > 79 characters)
+* 601: W293 blank line contains whitespace
+* 604: E712 comparison to True should be 'if cond is True
+* 606: E501 line too long (82 > 79 characters)
+* 608: E712 comparison to False should be 'if cond is False
+* 611: E501 line too long (83 > 79 characters)
+* 614: W293 blank line contains whitespace
+* 618: E712 comparison to True should be 'if cond is True
+* 620: E501 line too long (83 > 79 characters)
+* 622: E712 comparison to False should be 'if cond is False
+* 625: E501 line too long (112 > 79 characters)
+* 629: E501 line too long (89 > 79 characters)
+* 632: W293 blank line contains whitespace
+* 637: E501 line too long (99 > 79 characters)
+* 640: E501 line too long (99 > 79 characters)
+* 641: W293 blank line contains whitespace
+* 644: E501 line too long (99 > 79 characters)
+* 645: W293 blank line contains whitespace
+* 646: W293 blank line contains whitespace
+* 647: E303 too many blank lines (2)
+* 651: W291 trailing whitespace
+* 652: E302 expected 2 blank lines, found 1
+* 653: E501 line too long (81 > 79 characters)
+* 656: E501 line too long (102 > 79 characters)
+* 658: E501 line too long (120 > 79 characters)
+* 659: E501 line too long (117 > 79 characters)
+* 667: E501 line too long (98 > 79 characters)
+* 672: E501 line too long (98 > 79 characters)
+* 677: E501 line too long (98 > 79 characters)
+* 682: E501 line too long (98 > 79 characters)
+* 684: W293 blank line contains whitespace
+* 686: W293 blank line contains whitespace
+* 687: E225 missing whitespace around operator
+* 689: E501 line too long (110 > 79 characters)
+* 690: E501 line too long (87 > 79 characters)
+* 694: E501 line too long (134 > 79 characters)
+* 696: E501 line too long (95 > 79 characters)
+* 696: W291 trailing whitespace
+* 697: E501 line too long (84 > 79 characters)
+* 697: W291 trailing whitespace
+* 698: E501 line too long (89 > 79 characters)
+* 699: E501 line too long (87 > 79 characters)
+* 699: W291 trailing whitespace
+* 700: E501 line too long (112 > 79 characters)
+* 701: E501 line too long (105 > 79 characters)
+* 708: W293 blank line contains whitespace
+* 709: W291 trailing whitespace
+* 710: E302 expected 2 blank lines, found 1
+* 714: W293 blank line contains whitespace
+* 730: E501 line too long (83 > 79 characters)
+* 731: E501 line too long (91 > 79 characters)
+* 732: E501 line too long (103 > 79 characters)
+* 738: E501 line too long (99 > 79 characters)
+* 739: E501 line too long (88 > 79 characters)
+* 740: E501 line too long (96 > 79 characters)
+* 741: E501 line too long (93 > 79 characters)
+* 742: E501 line too long (104 > 79 characters)
+* 748: E501 line too long (103 > 79 characters)
+* 749: E501 line too long (97 > 79 characters)
+* 750: E501 line too long (84 > 79 characters)
+* 751: E501 line too long (83 > 79 characters)
+* 752: E501 line too long (113 > 79 characters)
+* 765: E302 expected 2 blank lines, found 1
+* 771: E501 line too long (110 > 79 characters)
+* 772: E501 line too long (111 > 79 characters)
+* 773: E501 line too long (112 > 79 characters)
+* 774: E501 line too long (112 > 79 characters)
+* 775: E501 line too long (111 > 79 characters)
+* 782: E501 line too long (120 > 79 characters)
+* 783: E501 line too long (110 > 79 characters)
+* 784: E501 line too long (115 > 79 characters)
+* 785: E501 line too long (111 > 79 characters)
+* 786: E501 line too long (109 > 79 characters)
+* 793: E501 line too long (112 > 79 characters)
+* 794: E501 line too long (109 > 79 characters)
+* 795: E501 line too long (117 > 79 characters)
+* 796: E501 line too long (113 > 79 characters)
+* 797: E501 line too long (126 > 79 characters)
+* 804: E501 line too long (110 > 79 characters)
+* 805: E501 line too long (124 > 79 characters)
+* 806: E501 line too long (120 > 79 characters)
+* 807: E501 line too long (110 > 79 characters)
+* 808: E501 line too long (110 > 79 characters)
+* 815: E501 line too long (115 > 79 characters)
+* 816: E501 line too long (114 > 79 characters)
+* 817: E501 line too long (112 > 79 characters)
+* 818: E501 line too long (122 > 79 characters)
+* 819: E501 line too long (112 > 79 characters)
+* 824: W293 blank line contains whitespace
+* 826: E302 expected 2 blank lines, found 1
+* 831: E225 missing whitespace around operator
+* 832: W293 blank line contains whitespace
+* 833: E501 line too long (101 > 79 characters)
+* 840: E501 line too long (160 > 79 characters)
+* 843: W293 blank line contains whitespace
+* 852: E501 line too long (95 > 79 characters)
+* 856: E251 unexpected spaces around keyword / parameter equals
+* 856: E251 unexpected spaces around keyword / parameter equals
+* 857: E501 line too long (105 > 79 characters)
+* 859: W291 trailing whitespace
+* 862: E501 line too long (133 > 79 characters)
+* 864: E501 line too long (93 > 79 characters)
+* 868: W293 blank line contains whitespace
+* 872: E501 line too long (89 > 79 characters)
+* 875: E501 line too long (83 > 79 characters)
+* 878: E501 line too long (86 > 79 characters)
+* 885: E501 line too long (83 > 79 characters)
+* 887: E501 line too long (81 > 79 characters)
+* 890: E501 line too long (87 > 79 characters)
+* 893: E302 expected 2 blank lines, found 1
+* 895: E501 line too long (90 > 79 characters)
+* 900: W293 blank line contains whitespace
+* 902: E302 expected 2 blank lines, found 1
+* 908: E302 expected 2 blank lines, found 1
+* 917: E305 expected 2 blank lines after class or function definition, found 1
+* 918: W293 blank line contains whitespace
+* 919: W293 blank line contains whitespace
+* 920: E303 too many blank lines (2)
+* 923: W293 blank line contains whitespace
+* 939: W293 blank line contains whitespace
+* 941: E501 line too long (80 > 79 characters)
+* 952: E501 line too long (101 > 79 characters)
+* 954: W293 blank line contains whitespace
+* 971: W293 blank line contains whitespace
+* 979: W293 blank line contains whitespace
+* 980: W291 trailing whitespace
+* 984: W293 blank line contains whitespace
+* 985: E501 line too long (120 > 79 characters)
+* 991: E501 line too long (102 > 79 characters)
+* 994: E501 line too long (98 > 79 characters)
+* 995: E501 line too long (133 > 79 characters)
+* 996: E501 line too long (81 > 79 characters)
+* 998: W293 blank line contains whitespace
+* 999: E501 line too long (116 > 79 characters)
+* 1000: E501 line too long (114 > 79 characters)
+* 1001: W291 trailing whitespace
+* 1004: E501 line too long (86 > 79 characters)
+* 1006: E501 line too long (102 > 79 characters)
+* 1007: W293 blank line contains whitespace
+* 1011: E501 line too long (84 > 79 characters)
+* 1013: E501 line too long (100 > 79 characters)
+* 1013: W291 trailing whitespace
+* 1014: W293 blank line contains whitespace
+* 1018: W293 blank line contains whitespace
+* 1019: E501 line too long (90 > 79 characters)
+* 1021: E501 line too long (109 > 79 characters)
+* 1023: W293 blank line contains whitespace
+* 1026: E501 line too long (84 > 79 characters)
+* 1026: W291 trailing whitespace
+* 1027: E501 line too long (87 > 79 characters)
+* 1030: W291 trailing whitespace
+* 1034: W293 blank line contains whitespace
+* 1036: E501 line too long (85 > 79 characters)
+* 1039: E501 line too long (112 > 79 characters)
+* 1041: E501 line too long (102 > 79 characters)
+* 1043: E501 line too long (117 > 79 characters)
+* 1049: W293 blank line contains whitespace
+* 1051: E501 line too long (109 > 79 characters)
+* 1051: W291 trailing whitespace
+* 1063: W291 trailing whitespace
+* 1067: E501 line too long (87 > 79 characters)
+* 1083: E501 line too long (103 > 79 characters)
+* 1087: W293 blank line contains whitespace
+* 1092: W293 blank line contains whitespace
 
 ### Module - leaderboard.py PEP8
 
@@ -526,6 +858,24 @@ In the future, I will keep in mind the importance of adhering to coding conventi
 * 74: E501 line too long (84 > 79 characters)
 * 79: E501 line too long (149 > 79 characters)
 * 83: W293 blank line contains whitespace
+
+### **Explaining development choices:**
+
+After seeking advice from my friend, he informed me that in most cases, it is considered best practice to include an else block to handle scenarios that don't meet the conditions of the if/elif statements. However, he also mentioned that if you are specifically anticipating certain values and want to handle them individually, using only if/elif statements without an else block can be acceptable. He provided an example from his job, where he checks URLs in this manner.
+
+Regarding the use of "pass," (starting from line 559) he advised that it is more commonly employed in function and class definitions when you need a placeholder that doesn't perform any actions. For instance, he personally uses it while constructing form classes in Django.
+
+He recommended documenting this specific approach, explaining the rationale behind omitting the else block or using "pass." 
+
+### **Rationale:**
+
+The syntax in the code (line 559) follows a specific structure to handle different scenarios based on the values of choice and <code>backstory_index</code>. Each section of the code corresponds to a specific combination of these values and performs certain actions accordingly.
+
+The pass statement is used as a placeholder in the else blocks where no additional actions are required. It essentially acts as a no-operation statement, indicating that the code should continue execution without performing any specific operations in those cases.
+
+The use of pass is justified when the intention is to explicitly omit any additional code execution for those specific scenarios. By using pass, it clearly communicates that no further actions are necessary and prevents any unintended behavior or potential errors that may arise from leaving the else blocks empty.
+
+In summary, the pass statements are intentionally used to maintain the structure and flow of the code while explicitly indicating that no further operations are needed in those specific cases.
 
 **List of fixed bugs**
 
@@ -614,14 +964,13 @@ Developed by **Rhys.Alexander.Few**
 **Peer Review**
 
 * **Adam Boley** 
-    *  - [Github](https://github.com/AdamBoley).
+    * I express my heartfelt appreciation to my friend for attentively listening to my inquiries and generously offering me valuable information and constructive feedback. Their support has been immensely beneficial to me - [Github](https://github.com/AdamBoley).
 
 <br>
 
 * **Antonio Rodriguez** 
+    * I extend my utmost gratitude to my mentor Antonio for consistently providing me with invaluable insights. He has always been a boundless well of knowledge and a constant source of inspiration.
   
-**Other Resources**
-
 
 **Bibliography:**
 
@@ -637,10 +986,12 @@ Developed by **Rhys.Alexander.Few**
     * The Love Sandwiches tutorial from Code Institute offered guidance on working with APIs and provided boilerplate code for integrating a leaderboard feature into the game. This tutorial was instrumental in implementing the leaderboard functionality, allowing players to compete and track their scores.
 
 * Stack Overflow - A community-driven question-and-answer website for programming: Accessible at [https://stackoverflow.com](https://stackoverflow.com). Stack Overflow is a valuable resource for troubleshooting coding issues, seeking solutions, and gaining insights from the programming community.
+    * Boiler plate code for invoking the python script [Link](https://stackoverflow.com/questions/419163/what-does-if-name-main-do)
 
 * GeeksforGeeks - Online platform with programming tutorials and articles: Visit [https://www.geeksforgeeks.org](https://www.geeksforgeeks.org) for a wide range of tutorials covering algorithms, data structures, and various coding concepts. It also provides examples and explanations related to game development.
 
 * Real Python - Online platform offering in-depth Python tutorials and articles: Find practical resources at [https://realpython.com](https://realpython.com), including comprehensive Python tutorials, step-by-step guides, and examples relevant to game development.
+    * How to convert Python objects into strings [Link](https://realpython.com/lessons/how-and-when-use-str/).
 
 * Python.org - The official website for the Python programming language: Visit [https://www.python.org](https://www.python.org) for official news, updates, and resources related to Python, including the Python Package Index (PyPI) for accessing third-party libraries.
 

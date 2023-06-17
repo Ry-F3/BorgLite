@@ -5,6 +5,7 @@ from leaderboard import update_leaderboard, display_leaderboard
 
 # Define the Player class
 class Player:
+    
     def __init__(self):
         self.name = ""
         self.health = 100
@@ -463,7 +464,7 @@ class System:
                     # Start the code rain static animation
                     print_code_rain(access_code, fake_code)
 
-                 # Game loop
+                    # Game loop
                     attempts_left = 3
                     while attempts_left > 0:
                         # Read user input
@@ -643,7 +644,6 @@ class System:
                     player.decrease_processing(10)
                     type_text("   >> A small amount of power was expended for this mission ... \n")
                 
-                
             else:
                 type_text("   >> Invalid input. Please enter 1 or 2.")
             # Handle invalid choice
@@ -667,7 +667,7 @@ class AttackManager:
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
             system.enemy_resistance = resistance_level
         elif player.level >= 6 and player.level <= 10:
-            lower_bound = max(20 + random.randint(-3, 5), 1)
+            lower_bound = max(18 + random.randint(-3, 5), 1)
             upper_bound = 30 + random.randint(-3, 5)
             resistance_level = AttackManager.get_unique_resistance_level(lower_bound, upper_bound)
             system.enemy_resistance = resistance_level
@@ -916,7 +916,7 @@ def game_over():
 # When run.py is loaded programme runs
 if __name__ == "__main__":
     
-    
+
     # Load upgrades data
     upgrades = Upgrades.load_upgrades_data("❤️", "⚔️", "🛡️")
     systems_data = load_systems_data()
@@ -966,7 +966,7 @@ if __name__ == "__main__":
     initial_upgrade_applied = False
 
     upgrade_applied = False
-    while main_loop == True:
+    while main_loop:
         player.display_stats()
         
         choice = ""
