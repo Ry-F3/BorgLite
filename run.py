@@ -326,6 +326,18 @@ class Planet:
                         continue_playing = False
                         assimilated = True
                         break
+                elif choice == "flee":
+                    type_text("   >> Are you sure you want to flee? (y/n): ")
+                    choice = input()
+                    if choice == "y":
+                        is_alive = False
+                        type_text("   >> We, the Borg, do not flee. Drone terminated ...\n")
+                        game_over()
+                        sys.exit()
+                    elif choice == "n":
+                        continue
+                    else:
+                        type_text("   >> Invalid input.\n")
                 else:
                     print("   >> Invalid choice. Please enter 'roll', 'destroy' or 'flee'.\n")
                     
