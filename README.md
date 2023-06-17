@@ -892,6 +892,8 @@ In summary, the pass statements are intentionally used to maintain the structure
 
 * Attack Feature Randomness: The bug caused the attack feature to be predictable. To make it more random, you can store a list of numbers that have already been used for attacks and prevent their reuse. You can use the random.sample function to select a random number from the available range and remove it from the list of available numbers.
 
+* I encountered an issue where the memory object was being displayed instead of the planet names. To address this problem, I implemented the <code>__str__</code> method. By defining this method within the class representing the planets, I was able to specify the desired string representation. Consequently, when converting the planet objects to strings, the correct planet names were displayed, resolving the bug.
+
 
 ## **Technologies**
 
